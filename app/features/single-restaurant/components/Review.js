@@ -34,9 +34,9 @@ export default class Review extends Component {
   	let reviews = this.props.reviews.map((singleReview)=>{
 				    return(
 				    	<Paper style={style} zDepth={1}>
-				    		<Avatar style ={style1} src={singleReview.Person.photoUrl} />
-				    		<div>{singleReview.Stars}</div>
-				    		<div>{singleReview.Comment}</div>
+				    		<Avatar style ={style1} src={singleReview.user.photoUrl} />
+				    		<div>{singleReview.stars}</div>
+				    		<div>{singleReview.comment}</div>
 				    	</Paper>
 				    )
 				});

@@ -21,7 +21,7 @@ import {
   purple500,
 } from 'material-ui/styles/colors';
 
-export default class SingleRestaurant extends Component {
+export default class Item extends Component {
 
 	render(){
 		let items = this.props.items;
@@ -30,13 +30,13 @@ export default class SingleRestaurant extends Component {
 			return (
 				<Card>
 					<CardHeader
-					    title={item.ItemName}
+					    title={item.name}
 					    subtitle = '⭐'
 					    actAsExpander={true}
 					    showExpandableButton={true}
 					/>
 					<CardText expandable={true}>
-					  	<Review reviews={item.Review}/>s
+					  	<Review reviews={item.reviews}/>s
 					 </CardText>
 	  			</Card>)
 		});
@@ -45,6 +45,6 @@ export default class SingleRestaurant extends Component {
 				{listItem}
 			</div>
 		)
-		
+
 	}
 }

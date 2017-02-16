@@ -41,36 +41,41 @@ export default class SingleRestaurant extends Component {
 
 
   	render() {
-  	let placeId= 1;
-  	let placeName = 'Shack Shack';
-  	let placeAddress = 'E 23rd St & Madison Ave New York, NY 10010';
-  	let item = [
-          { ItemId: 1, PlaceId: 1, ItemName: 'Shack Burger', Review:[
-		{ ReviewId: 1, Stars: 4, ItemId: 1, Comment:'Awesome', Person: {
-			"id":1, "name":"Aitken Thompson", "email":"athompson@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/19101228/Aitken.png"
-		}},
-		{ ReviewId: 2, Stars: 2, ItemId: 1, Comment:'Great',Person: {
-			"id":2, "name":"Akeem Boatswain", "email":"aboatswain@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/20064407/TaskstreamJan12-Akeem-6875-427x640.jpg"
-		} },
-		{ ReviewId: 3, Stars: 3, ItemId: 1, Comment:'Awefull',Person: {
-			"id":3, "name":"Alex Swaim", "email":"aswaim@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/23094347/Alex.png"
-		}},
-		{ ReviewId: 9, Stars: 4, ItemId: 1, Comment:'Good',Person:{
-			"id":4, "name":"Allison Holt", "email":"aholt@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/20121013/Allison1.png"
-		} }
+      console.log('currentRestaurant', this.props.currentRestaurant)
+      // placeId = currentRestaurant.id ,...name, ...address
+      const { currentRestaurant } = this.props
+      const { id, name, address, items } = currentRestaurant
+      console.log('CURRAENT', currentRestaurant)
+ //  	let placeId= 1;
+ //  	let placeName = 'Shack Shack';
+ //  	let placeAddress = 'E 23rd St & Madison Ave New York, NY 10010';
+ //  	let item = [
+ //          { id: 1, name: 'Shack Burger', Review:[
+	// 	{ id: 1, stars: 4, comment:'Awesome', Person: {
+	// 		"id":1, "name":"Aitken Thompson", "email":"athompson@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/19101228/Aitken.png"
+	// 	}},
+	// 	{ id: 2, stars: 2, comment:'Great',Person: {
+	// 		"id":2, "name":"Akeem Boatswain", "email":"aboatswain@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/20064407/TaskstreamJan12-Akeem-6875-427x640.jpg"
+	// 	} },
+	// 	{ id: 3, stars: 3, comment:'Awefull',Person: {
+	// 		"id":3, "name":"Alex Swaim", "email":"aswaim@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/23094347/Alex.png"
+	// 	}},
+	// 	{ id: 9, stars: 4, comment:'Good',Person:{
+	// 		"id":4, "name":"Allison Holt", "email":"aholt@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/20121013/Allison1.png"
+	// 	} }
 
-	]},
-		  { ItemId: 2, PlaceId: 1, ItemName: 'Shroom Burger'},
-		  { ItemId: 3, PlaceId: 1, ItemName: 'Hamburger'},
-		  { ItemId: 4, PlaceId: 2, ItemName: 'Pad Thai'},
-		  { ItemId: 5, PlaceId: 2, ItemName: 'Orange Chicken'},
-		  { ItemId: 6, PlaceId: 2, ItemName: 'Drunk Man Noodles'},
-		  { ItemId: 6, PlaceId: 2, ItemName: 'Tamarind Whole Fish'}
-	];
+	// ]},
+	// 	  { id: 2, name: 'Shroom Burger'},
+	// 	  { id: 3, name: 'Hamburger'},
+	// 	  { id: 4, name: 'Pad Thai'},
+	// 	  { id: 5, name: 'Orange Chicken'},
+	// 	  { id: 6, name: 'Drunk Man Noodles'},
+	// 	  { id: 6, name: 'Tamarind Whole Fish'}
+	// ];
 
-	let listItems= item.map((singleItem)=>{
-		return (<MenuItem value={singleItem.ItemId} key={singleItem.ItemId} primaryText={singleItem.ItemName} />);
-	})
+	let listItems = items ? items.map((singleItem)=>{
+		return (<MenuItem value={singleItem.id} key={singleItem.id} primaryText={singleItem.name} />);
+	}) : []
 
 	let stars = [];
 	for(let ndx=1;ndx<=5;ndx++){
@@ -79,9 +84,9 @@ export default class SingleRestaurant extends Component {
 
     return (
       <div>
-      	<h2>{placeName}</h2>
-      	<h6>{placeAddress}</h6>
-      	<Item items={item}/>
+      	<h2>{name}</h2>
+      	<h6>{address}</h6>
+      	<Item items={items || []}/>
       	<DropDownMenu maxHeight={300} value={1} onChange={this.onSelectItem}>
         	{listItems}
       	</DropDownMenu>
