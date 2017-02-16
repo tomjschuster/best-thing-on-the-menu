@@ -1,5 +1,6 @@
 /*----------  INITIAL STATE  ----------*/
-export const initialState = [{ id: 1, name: 'Toastees' }, { id: 2, name: 'Essen' }, { id: 3, name: 'Go-Go Curry' }]
+// export const initialState = []
+export const initialState = require('../seed/restaurants').default
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -10,12 +11,12 @@ const ADD_RESTAURANT = 'ADD_RESTAURANT'
 /*----------  ACTIONS  ----------*/
 export const actions = {
   // Action Creators
-  signIn: restaurants => (
+  receiveRestaurants: restaurants => (
     { type: RECEIVE_RESTAURANTS,
       restaurants
     }),
   addRestaurant: restaurant => (
-    { type: RECEIVE_RESTAURANT,
+    { type: ADD_RESTAURANT,
       restaurant
     })
 }
@@ -24,7 +25,7 @@ export const actions = {
 /*----------  REDUCER  ----------*/
 const reducer =  {
   [RECEIVE_RESTAURANTS]: (state, action) => ([ ...action.restaurants ]),
-  [ADD_RESTAURANT]: (state, action) => ([ ...state, action.restauarant ])
+  [ADD_RESTAURANT]: (state, action) => ([ ...state, action.restaurant ])
 }
 
 
