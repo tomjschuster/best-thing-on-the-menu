@@ -1,43 +1,40 @@
 import React, { Component } from 'react'
-import Paper from 'material-ui/Paper'
-import { component as RestaurantList } from '../../restaurants'
+import Restaurants from './Restaurants'
+import { denormalizeRestaurants } from '../../../utils'
+import { autocompleteOptions } from '../../../config'
 
 export default class Home extends Component {
   componentDidMount() {
+    // get input field
     const input = this.refs.autocomplete
-    const autocompleteOptions = {
-      types: ['establishment'],
-      bounds: {
-        south: 40.734634,
-        north: 40.752200,
-        west: -74.002601,
-        east: -73.981465
-      },
-      strictBounds: true
-    }
+
+    // bind autocomplete functionality to input field
     const autocomplete = new google.maps.places.Autocomplete(input, autocompleteOptions)
+
+    // on select, get google place and go to page
     autocomplete.addListener('place_changed', () => {
-          const googlePlace = autocomplete.getPlace()
-          const { restaurants, addRestaurant, router } = this.props
-          if (!restaurants.find(({ placeId }) => placeId === googlePlace.id)) {
-            const place = {
-              id: googlePlace.id,
-              name: googlePlace.name,
-              address: googlePlace.formatted_address || '',
-              photos: googlePlace.photos || []
-            }
-            addRestaurant(place)
-          }
-          console.log(googlePlace)
-          router.push(`/restaurants/${googlePlace.id}`)
+      const { restaurants, addRestaurant, router } = this.props
+
+      const place = autocomplete.getPlace()
+      const { id, name, address, photos } = place
+
+      // if we have don'te entry for google place add to store
+      if (!restaurants.find(({ placeId }) => placeId === place.id)) {
+        addRestaurant({ id, name, address, photos })
+      }
+
+      // Navigate to restaurant page
+      router.push(`/restaurants/${place.id}`)
     })
   }
 
   render() {
+    const { restaurants, items, reviews, users } = this.props
+    const denormRestaurants = denormalizeRestaurants(restaurants, items, reviews, users)
     return (
       <div>
         <input ref='autocomplete' />
-        <RestaurantList/>
+        <Restaurants denormRestaurants={denormRestaurants} />
       </div>
     )
   }
