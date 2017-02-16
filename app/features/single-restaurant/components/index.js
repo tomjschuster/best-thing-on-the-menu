@@ -26,8 +26,21 @@ export default class SingleRestaurant extends Component {
 	onSelectItem = (event, index, value) => this.setState({value});
 	onSelectStar = (event, index, value) => this.setState({value});
 
+    componentWillMount() {
+    const { location, formattedRestaurants, receiveCurrentRestaurant, router } = this.props
+    const splitPath = location.pathname.split('/')
+    const id = splitPath[splitPath.length - 1]
+    const currentRestaurant = formattedRestaurants.find(restaurant => id === restaurant.id)
+    if (currentRestaurant) receiveCurrentRestaurant(currentRestaurant)
+    else router.push('/')
+  }
+
+  componentWillUnmount() {
+    this.props.clearCurrentRestaurant()
+  }
+
+
   	render() {
-  	
   	let placeId= 1;
   	let placeName = 'Shack Shack';
   	let placeAddress = 'E 23rd St & Madison Ave New York, NY 10010';
@@ -44,7 +57,7 @@ export default class SingleRestaurant extends Component {
 		}},
 		{ ReviewId: 9, Stars: 4, ItemId: 1, Comment:'Good',Person:{
 			"id":4, "name":"Allison Holt", "email":"aholt@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/20121013/Allison1.png"
-		} }	
+		} }
 
 	]},
 		  { ItemId: 2, PlaceId: 1, ItemName: 'Shroom Burger'},
@@ -54,7 +67,7 @@ export default class SingleRestaurant extends Component {
 		  { ItemId: 6, PlaceId: 2, ItemName: 'Drunk Man Noodles'},
 		  { ItemId: 6, PlaceId: 2, ItemName: 'Tamarind Whole Fish'}
 	];
-	
+
 	let listItems= item.map((singleItem)=>{
 		return (<MenuItem value={singleItem.ItemId} key={singleItem.ItemId} primaryText={singleItem.ItemName} />);
 	})
@@ -63,7 +76,7 @@ export default class SingleRestaurant extends Component {
 	for(let ndx=1;ndx<=5;ndx++){
 		stars.push(<MenuItem value={ndx} key={ndx} primaryText={ndx} />);
 	}
-	
+
     return (
       <div>
       	<h2>{placeName}</h2>

@@ -8,9 +8,9 @@ const CLEAR_CURRENT_RESTAURANT = 'CLEAR_CURRENT_RESTAURANT'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
-  receiveCurrentRestaurant: restaurant => (
+  receiveCurrentRestaurant: currentRestaurant => (
     { type: RECEIVE_CURRENT_RESTAURANT,
-      restaurant
+      currentRestaurant
     }),
 
   clearCurrentRestaurant: () => (
@@ -22,7 +22,7 @@ export const actions = {
 /*----------  REDUCER  ----------*/
 const reducer =  {
   _name: 'currentRestaurant',
-  [RECEIVE_CURRENT_RESTAURANT]: restaurant => ({ ...restaurant }),
+  [RECEIVE_CURRENT_RESTAURANT]: (state, action) => ({ ...action.currentRestaurant }),
   [CLEAR_CURRENT_RESTAURANT]: () => ({})
 }
 
