@@ -36,7 +36,7 @@ export default class Item extends Component {
 					    showExpandableButton={true}
 					/>
 					<CardText expandable={true}>
-					  	<Review reviews={item.reviews}/>s
+					  	<Review reviews={item.reviews}/>
 					 </CardText>
 	  			</Card>)
 		});
