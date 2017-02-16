@@ -5,21 +5,15 @@ import Subheader from 'material-ui/Subheader'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import Paper from 'material-ui/Paper'
 import RestaurantCard from './RestaurantCard'
+import RestaurantList from './RestaurantList'
 
 const Restaurants = props => (
   <div className='row'>
-    { props.restaurants.map(restaurant => (
-      <div
-        key={restaurant.id}
-        className='col s12 m6 l4'
-      >
+
         <Paper>
-          <RestaurantCard
-            title={restaurant.name}
-          />
+          <RestaurantList />
         </Paper>
-      </div>
-      )) }
+
   </div>
 )
 
