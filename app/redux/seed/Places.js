@@ -1,7 +1,4 @@
-
-
-
-export const places: [
+export default [
       { PlaceId:1, Name: 'Shake Shack', Address: 'E 23rd St & Madison Ave New York, NY 10010' },
 	  { PlaceId:2, Name: 'Spice', Address: '236 8th Ave, New York, NY 10011' },
 	  { PlaceId:3, Name: 'Num Pang', Address: '1129 Broadway, New York, NY 10010'},
