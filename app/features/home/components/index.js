@@ -4,7 +4,17 @@ import Paper from 'material-ui/Paper'
 export default class Home extends Component {
   componentDidMount() {
     const input = this.refs.autocomplete
-    const autocomplete = new google.maps.places.Autocomplete(input)
+    const autocompleteOptions = {
+      types: ['establishment'],
+      bounds: {
+        south: 40.734634,
+        north: 40.752200,
+        west: -74.002601,
+        east: -73.981465
+      },
+      strictBounds: true
+    }
+    const autocomplete = new google.maps.places.Autocomplete(input, autocompleteOptions)
     autocomplete.addListener('place_changed', () => {
           const googlePlace = autocomplete.getPlace()
           const { restaurants, addRestaurant, router } = this.props
@@ -17,6 +27,7 @@ export default class Home extends Component {
             }
             addRestaurant(place)
           }
+          console.log(googlePlace)
           router.push(`/restaurants/${googlePlace.id}`)
     })
   }
