@@ -10,12 +10,12 @@ const ADD_RESTAURANT = 'ADD_RESTAURANT'
 /*----------  ACTIONS  ----------*/
 export const actions = {
   // Action Creators
-  signIn: restaurants => (
+  receiveRestaurants: restaurants => (
     { type: RECEIVE_RESTAURANTS,
       restaurants
     }),
   addRestaurant: restaurant => (
-    { type: RECEIVE_RESTAURANT,
+    { type: ADD_RESTAURANT,
       restaurant
     })
 }
@@ -24,7 +24,7 @@ export const actions = {
 /*----------  REDUCER  ----------*/
 const reducer =  {
   [RECEIVE_RESTAURANTS]: (state, action) => ([ ...action.restaurants ]),
-  [ADD_RESTAURANT]: (state, action) => ([ ...state, action.restauarant ])
+  [ADD_RESTAURANT]: (state, action) => ([ ...state, action.restaurant ])
 }
 
 

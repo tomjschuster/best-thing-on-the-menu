@@ -20,6 +20,7 @@ export default class Home extends Component {
           }
           console.log(place)
           this.setState({ place })
+          this.props.addRestaurant(place)
     })
   }
 
@@ -28,7 +29,7 @@ export default class Home extends Component {
       <div>
         <input ref='autocomplete' />
         <Paper>
-          { JSON.stringify(this.state.place)}
+          { this.props.restaurants && this.props.restaurants.map(JSON.stringify)}
         </Paper>
       </div>
     )

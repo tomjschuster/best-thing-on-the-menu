@@ -17,6 +17,7 @@ export const actions = {
 
 /*----------  REDUCER  ----------*/
 const reducer =  {
+  _name: 'currentRestaurant',
   [RECEIVE_CURRENT_RESTAURANT]: restaurant => ({ ...restaurant })
 }
 
