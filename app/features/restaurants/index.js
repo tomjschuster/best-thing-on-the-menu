@@ -12,6 +12,5 @@ const mapState = state => {
   return { ...state, formattedRestaurants }
 }
 const mapDispatch = { ...actions }
-const component = connect(mapState, mapDispatch)(Restaurants)
-
+export const component = connect(mapState, mapDispatch)(Restaurants)
 export default { path, component }

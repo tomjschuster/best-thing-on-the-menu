@@ -22,6 +22,9 @@ import {
 } from 'material-ui/styles/colors';
 
 export default class SingleRestaurant extends Component {
+  constructor(props) {
+    super(props)
+  }
 
 	onSelectItem = (event, index, value) => this.setState({value});
 	onSelectStar = (event, index, value) => this.setState({value});
@@ -46,32 +49,6 @@ export default class SingleRestaurant extends Component {
       const { currentRestaurant } = this.props
       const { id, name, address, items } = currentRestaurant
       console.log('CURRAENT', currentRestaurant)
- //  	let placeId= 1;
- //  	let placeName = 'Shack Shack';
- //  	let placeAddress = 'E 23rd St & Madison Ave New York, NY 10010';
- //  	let item = [
- //          { id: 1, name: 'Shack Burger', Review:[
-	// 	{ id: 1, stars: 4, comment:'Awesome', Person: {
-	// 		"id":1, "name":"Aitken Thompson", "email":"athompson@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/19101228/Aitken.png"
-	// 	}},
-	// 	{ id: 2, stars: 2, comment:'Great',Person: {
-	// 		"id":2, "name":"Akeem Boatswain", "email":"aboatswain@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/20064407/TaskstreamJan12-Akeem-6875-427x640.jpg"
-	// 	} },
-	// 	{ id: 3, stars: 3, comment:'Awefull',Person: {
-	// 		"id":3, "name":"Alex Swaim", "email":"aswaim@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/23094347/Alex.png"
-	// 	}},
-	// 	{ id: 9, stars: 4, comment:'Good',Person:{
-	// 		"id":4, "name":"Allison Holt", "email":"aholt@taskstream.com", "photoUrl":"https://uploadsbiz.taskstream.com/2017/01/20121013/Allison1.png"
-	// 	} }
-
-	// ]},
-	// 	  { id: 2, name: 'Shroom Burger'},
-	// 	  { id: 3, name: 'Hamburger'},
-	// 	  { id: 4, name: 'Pad Thai'},
-	// 	  { id: 5, name: 'Orange Chicken'},
-	// 	  { id: 6, name: 'Drunk Man Noodles'},
-	// 	  { id: 6, name: 'Tamarind Whole Fish'}
-	// ];
 
 	let listItems = items ? items.map((singleItem)=>{
 		return (<MenuItem value={singleItem.id} key={singleItem.id} primaryText={singleItem.name} />);

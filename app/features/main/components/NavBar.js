@@ -34,10 +34,10 @@ class NavBar extends Component {
           title='Best Thing On The Menu'
           iconElementLeft={<IconButton><RoomService /></IconButton>}
           iconElementRight={
-            <FlatButton onClick={console.log} label='user@taskstream.com' />
+            <FlatButton onClick={() => this.navigate(null, '/')} label='Restaurants' />
           }
         />
-      <Paper zDepth={1}>
+      {/*<Paper zDepth={1}>
         <BottomNavigation selectedIndex={this.state.selectedIndex}>
           <BottomNavigationItem
             label=''
@@ -50,7 +50,7 @@ class NavBar extends Component {
             onTouchTap={() => this.navigate(1, '/restaurants')}
           />
         </BottomNavigation>
-      </Paper>
+      </Paper>*/}
       </div>
     )
   }

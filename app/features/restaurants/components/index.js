@@ -6,8 +6,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import Paper from 'material-ui/Paper'
 import RestaurantList from './RestaurantList'
 
-const Restaurants = props => {
-  return (
+const Restaurants = props => (
   <div className='row'>
 
         <Paper>
@@ -15,6 +14,6 @@ const Restaurants = props => {
         </Paper>
 
   </div>
-)}
+)
 
 export default Restaurants

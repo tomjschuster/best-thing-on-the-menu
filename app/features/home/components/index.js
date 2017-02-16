@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
+import { component as RestaurantList } from '../../restaurants'
 
 export default class Home extends Component {
   componentDidMount() {
@@ -36,6 +37,7 @@ export default class Home extends Component {
     return (
       <div>
         <input ref='autocomplete' />
+        <RestaurantList/>
       </div>
     )
   }
