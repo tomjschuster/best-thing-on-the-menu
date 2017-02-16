@@ -1,4 +1,4 @@
-export const menuItem = [
+export default [
           { ItemId: 1, PlaceId: 1, ItemName: 'Shack Burger'},
 		  { ItemId: 2, PlaceId: 1, ItemName: 'Shroom Burger'},
 		  { ItemId: 3, PlaceId: 1, ItemName: 'Hamburger'},
