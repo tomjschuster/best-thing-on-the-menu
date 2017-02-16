@@ -5,6 +5,7 @@ import users from './ducks/users'
 import restaurants from './ducks/restaurants'
 import currentRestaurant from './ducks/currentRestaurant'
 import reviews from './ducks/reviews'
+import items from './ducks/items'
 
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   users,
   restaurants,
   currentRestaurant,
-  reviews
+  reviews,
+  items
 })
