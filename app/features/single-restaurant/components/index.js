@@ -30,7 +30,7 @@ export default class SingleRestaurant extends Component {
     const { location, formattedRestaurants, receiveCurrentRestaurant, router } = this.props
     const splitPath = location.pathname.split('/')
     const id = splitPath[splitPath.length - 1]
-    const currentRestaurant = formattedRestaurants.find(restaurant => id === restaurant.id)
+    const currentRestaurant = formattedRestaurants.find(restaurant => id == restaurant.id)
     if (currentRestaurant) receiveCurrentRestaurant(currentRestaurant)
     else router.push('/')
   }

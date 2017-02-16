@@ -8,12 +8,13 @@ import FlatButton from 'material-ui/FlatButton'
 export default class RestaurantList extends Component {
 
     render () {
+      const { formattedRestaurants } = this.props
         let items = [
             { id: 1, name: '1', address: '2', numOfReviews: 3, numOfStarts: 4},
             { id: 2, name: '2', address: '2', numOfReviews: 3, numOfStarts: 4}
         ]
 
-    let restaurants = items.map((o) => (
+    let restaurants = formattedRestaurants.map((o) => (
         <tr key={o.id}>
             <td>
                 <Link to={'/restaurants/'+o.id}>{o.name}</Link>
@@ -22,10 +23,10 @@ export default class RestaurantList extends Component {
                 {o.address}
             </td>
             <td>
-                {o.numOfReviews}
+                {o.reviews && o.reviews.length}
             </td>
             <td>
-                {o.numOfStarts}
+                {o.stars}
             </td>
         </tr>
     ))
