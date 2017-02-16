@@ -1,5 +1,3 @@
-import createReducer from '../../utils'
-
 /*----------  INITIAL STATE  ----------*/
 export const initialState = {}
 
@@ -19,8 +17,9 @@ export const actions = {
 
 /*----------  REDUCER  ----------*/
 const reducer =  {
-  [SIGN_IN]: data => ({ ...data })
+  [SIGN_IN]: (_, action) => ({ ...action.data })
 }
 
 
-export default createReducer(reducer)
+import { createReducer } from '../../utils'
+export default createReducer(initialState, reducer)

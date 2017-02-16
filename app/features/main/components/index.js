@@ -5,8 +5,10 @@ export default class Main extends Component {
   render() {
     return (
       <div>
-        <NavBar />
-        {this.props.children}
+        <NavBar router={this.props.router}/>
+          <div className='container'>
+            {this.props.children}
+          </div>
       </div>
     )
   }

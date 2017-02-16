@@ -1,7 +1,5 @@
-import createReducer from '../../utils'
-
 /*----------  INITIAL STATE  ----------*/
-export const initialState = {}
+export const initialState = []
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -23,4 +21,5 @@ const reducer =  {
 }
 
 
-export default createReducer(reducer)
+import { createReducer } from '../../utils'
+export default createReducer(initialState, reducer)
