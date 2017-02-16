@@ -36,9 +36,6 @@ export default class Home extends Component {
     return (
       <div>
         <input ref='autocomplete' />
-        <Paper>
-          { this.props.restaurants && this.props.restaurants.map(JSON.stringify)}
-        </Paper>
       </div>
     )
   }

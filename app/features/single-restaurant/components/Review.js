@@ -23,7 +23,7 @@ export default class Review extends Component {
   render() {
   	const style = {
 	  height: 100,
-	  width: '80%',
+	  width: '90%',
 	  margin: 20,
 	  textAlign: 'left',
 	  display: 'inline-block',
