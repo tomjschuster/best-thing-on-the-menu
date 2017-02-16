@@ -1,17 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import NavBar from './Navbar'
 
-export default class Main extends Component {
-  render() {
-  console.log(this.props)
-    return (
+const Main = props => (
       <div>
-        <NavBar router={this.props.router}/>
-          <div style={{textAlign:'center'}}><h4>Taskstreamer's Lunch Menu Review</h4></div>
-          <div className='container' style={{padding: '2%'}}>
-            {this.props.children}
+        <NavBar router={props.router} />
+          <div className='tagline'><h4>Taskstreamer's Lunch Menu Review</h4></div>
+          <div id='content' className='container'>
+            {props.children}
           </div>
       </div>
     )
-  }
-}
+
+export default Main
