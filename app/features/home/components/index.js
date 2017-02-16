@@ -2,25 +2,22 @@ import React, { Component } from 'react'
 import Paper from 'material-ui/Paper'
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { place: {} }
-  }
-
   componentDidMount() {
     const input = this.refs.autocomplete
     const autocomplete = new google.maps.places.Autocomplete(input)
     autocomplete.addListener('place_changed', () => {
           const googlePlace = autocomplete.getPlace()
-          const place = {
-            PlaceId: googlePlace.id,
-            Name: googlePlace.name,
-            Address: googlePlace.formatted_address || '',
-            Photos: googlePlace.photos || []
+          const { restaurants, addRestaurant, router } = this.props
+          if (!restaurants.find(({ placeId }) => placeId === googlePlace.id)) {
+            const place = {
+              PlaceId: googlePlace.id,
+              Name: googlePlace.name,
+              Address: googlePlace.formatted_address || '',
+              Photos: googlePlace.photos || []
+            }
+            addRestaurant(place)
           }
-          console.log(place)
-          this.setState({ place })
-          this.props.addRestaurant(place)
+          router.push(`/restaurants/${googlePlace.id}`)
     })
   }
 
