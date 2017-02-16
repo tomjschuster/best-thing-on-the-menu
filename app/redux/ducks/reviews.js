@@ -1,5 +1,6 @@
 /*----------  INITIAL STATE  ----------*/
-export const initialState = []
+// export const initialState = []
+export const initialState = require('../seed/reviews').default
 
 
 /*----------  ACTION TYPES  ----------*/

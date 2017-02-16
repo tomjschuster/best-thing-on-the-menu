@@ -10,10 +10,10 @@ export default class Home extends Component {
           const { restaurants, addRestaurant, router } = this.props
           if (!restaurants.find(({ placeId }) => placeId === googlePlace.id)) {
             const place = {
-              PlaceId: googlePlace.id,
-              Name: googlePlace.name,
-              Address: googlePlace.formatted_address || '',
-              Photos: googlePlace.photos || []
+              id: googlePlace.id,
+              name: googlePlace.name,
+              address: googlePlace.formatted_address || '',
+              photos: googlePlace.photos || []
             }
             addRestaurant(place)
           }

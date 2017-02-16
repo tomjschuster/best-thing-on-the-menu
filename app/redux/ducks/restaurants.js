@@ -1,5 +1,6 @@
 /*----------  INITIAL STATE  ----------*/
-export const initialState = [{ id: 1, name: 'Toastees' }, { id: 2, name: 'Essen' }, { id: 3, name: 'Go-Go Curry' }]
+// export const initialState = []
+export const initialState = require('../seed/restaurants').default
 
 
 /*----------  ACTION TYPES  ----------*/
