@@ -8,5 +8,6 @@ export default [
 	  { id: 7, name: 'El Quijote', address: '226 W 23rd St (btwn 7th & 8th Ave.), New York, NY', photos: [] },
 	  { id: 8, name: 'Hu Kitchen', address: '78 5th AveNew York, NY', photos: [] },
 	  { id: 9, name: 'Eataly', address: '200 5th Ave New York, NY 10010', photos: [] },
-	  { id: 10, name: 'Tres Carnes', address: '688 6th Ave New York, NY', photos: [] }
+	  { id: 10, name: 'Tres Carnes', address: '688 6th Ave New York, NY', photos: [] },
+	  { id: 11, name: 'Toasties', address: '688 7th Ave New York, NY', photos: [] }
 ]
