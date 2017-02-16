@@ -1,0 +1,54 @@
+{
+  "name": "best-thing-on-the-menu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
+    "build": "webpack",
+    "build-watch": "webpack -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomjschuster/best-thing-on-the-menu.git"
+  },
+  "author": "Tom Schuster",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomjschuster/best-thing-on-the-menu/issues"
+  },
+  "homepage": "https://github.com/tomjschuster/best-thing-on-the-menu#readme",
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "body-parser": "^1.16.0",
+    "chalk": "^1.1.3",
+    "express": "^4.14.1",
+    "lodash": "^4.17.4",
+    "material-ui": "^0.17.0",
+    "morgan": "^1.7.0",
+    "path": "^0.12.7",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "react-router": "^3.0.2",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.8.0",
+    "redux-thunk": "^2.2.0",
+    "webpack": "^2.2.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.15.0",
+    "eslint-config-fullstack": "^2.6.0",
+    "eslint-plugin-react": "^6.9.0",
+    "nodemon": "^1.11.0"
+  }
+}
