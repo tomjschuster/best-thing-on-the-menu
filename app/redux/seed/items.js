@@ -5,5 +5,6 @@ export default [
 		  { id: 4, restaurantId: 2, name: 'Pad Thai'},
 		  { id: 5, restaurantId: 2, name: 'Orange Chicken'},
 		  { id: 6, restaurantId: 2, name: 'Drunk Man Noodles'},
-		  { id: 6, restaurantId: 2, name: 'Tamarind Whole Fish'}
+		  { id: 7, restaurantId: 2, name: 'Tamarind Whole Fish'},
+		  { id: 8, restaurantId: 11, name: 'Chicken Teriyaki Sandwich'}
 ]

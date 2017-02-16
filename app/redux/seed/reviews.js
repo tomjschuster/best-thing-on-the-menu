@@ -7,5 +7,9 @@ export default [
 		{ id: 6, stars: 4, itemId: 5, userId: 55, comment: 'The food was good and the service was even better! I left my phone at the restaurant and they saved it for me! ' },
 		{ id: 7, stars: 5, itemId: 5, userId: 76, comment: 'Lunch specials are bombbbbb.' },
 		{ id: 8, stars: 5, itemId: 5, userId: 78, comment: 'I was sitting next to someone at school who was eating some food that smelled so good that I couldn\'t resist the urge to ask him where he bought it from. Bless his heart for not getting creeped out, and for telling me about this restaurant\'s lunch special. My life will never be the same.' },
-		{ id: 9, stars: 1, itemId: 5, userId: 23, comment: 'How is this place so popular? I ordered in from one of their locations last night, and I was up all night not feeling well.' }
+		{ id: 9, stars: 1, itemId: 5, userId: 23, comment: 'How is this place so popular? I ordered in from one of their locations last night, and I was up all night not feeling well.' },
+		{ id: 10, stars: 5, itemId: 8, userId: 23, comment: 'Good' },
+		{ id: 11, stars: 5, itemId: 8, userId: 23, comment: 'Great' },
+		{ id: 12, stars: 5, itemId: 8, userId: 23, comment: 'Awesome' },
+		{ id: 13, stars: 5, itemId: 8, userId: 23, comment: 'Wooooooooooooooooooooooooow' }
 ]
