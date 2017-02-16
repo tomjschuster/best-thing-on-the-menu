@@ -7,7 +7,7 @@ export default class Main extends Component {
     return (
       <div>
         <NavBar router={this.props.router}/>
-          <div className='container'>
+          <div className='container' style={{padding: '2%'}}>
             {this.props.children}
           </div>
       </div>
