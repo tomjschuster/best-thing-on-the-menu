@@ -1,56 +1,37 @@
-import React, { Component } from 'react'
-import {GridList, GridTile} from 'material-ui/GridList'
-import IconButton from 'material-ui/IconButton'
-import Subheader from 'material-ui/Subheader'
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
+import React from 'react'
 import Paper from 'material-ui/Paper'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Avatar from 'material-ui/Avatar';
+import {Card, CardHeader, CardText} from 'material-ui/Card'
 
-import {
-  blue300,
-  indigo900,
-  orange200,
-  deepOrange300,
-  pink400,
-  purple500,
-} from 'material-ui/styles/colors';
-
-
-export default class Review extends Component {
-
-  render() {
-  	const style = {
-	  height: 100,
-	  width: '90%',
-	  margin: 20,
-	  textAlign: 'left',
-	  display: 'inline-block',
-	};
-	const style1={
-		margin: 20
-	};
-  	let reviews = this.props.reviews.map((singleReview)=>{
-				    return(
-				    	<Paper style={style} zDepth={1}>
-              <Card>
-                <CardHeader
-                  title={singleReview.user.name}
-                  subtitle={singleReview.stars + ' ⭐'}
-                  avatar={singleReview.user.photoUrl}
-                />
-                <CardText>
-                  {singleReview.comment}
-                </CardText>
-                </Card>
-				    	</Paper>
-				    )
-				});
-  	return(
-  		<div>
-  			{reviews}
-  		</div>
-  	)
+const Review = props => {
+  const style = {
+    height: 100,
+    width: '90%',
+    margin: 20,
+    textAlign: 'left',
+    display: 'inline-block',
   }
+
+  const reviews = props.reviews.map((singleReview) => (
+    <Paper key={singleReview.id} style={style} zDepth={1}>
+      <Card>
+        <CardHeader
+          title={singleReview.user.name}
+          subtitle={singleReview.stars + ' ⭐'}
+          avatar={singleReview.user.photoUrl}
+        />
+        <CardText>
+          {singleReview.comment}
+        </CardText>
+      </Card>
+    </Paper>
+    )
+  )
+
+  return (
+    <div>
+      {reviews}
+    </div>
+  )
 }
+
+export default Review
