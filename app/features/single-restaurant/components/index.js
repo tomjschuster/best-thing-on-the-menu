@@ -24,10 +24,28 @@ import {
 export default class SingleRestaurant extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      item: 0,
+      stars: 0,
+      comment: ''
+    }
   }
 
-	onSelectItem = (event, index, value) => this.setState({value});
-	onSelectStar = (event, index, value) => this.setState({value});
+	onSelectItem = (event, index, value) => this.setState({ item: value});
+  onSelectStar = (event, index, value) => this.setState({ stars: value});
+	onChangeComment = (event) => this.setState({ comment: event.target.value});
+  onReviewSubmit = () => {
+    const { currentRestaurant, addReview, auth, reviews } = this.props
+    const { item, stars, comment } = this.state
+    addReview({
+      id: reviews.length,
+      userId: auth.id,
+      itemId: item,
+      comment,
+      stars
+    })
+  }
+
 
     componentWillMount() {
     const { location, formattedRestaurants, receiveCurrentRestaurant, router } = this.props
@@ -44,11 +62,8 @@ export default class SingleRestaurant extends Component {
 
 
   	render() {
-      console.log('currentRestaurant', this.props.currentRestaurant)
-      // placeId = currentRestaurant.id ,...name, ...address
       const { currentRestaurant } = this.props
       const { id, name, address, items } = currentRestaurant
-      console.log('CURRAENT', currentRestaurant)
 
 	let listItems = items ? items.map((singleItem)=>{
 		return (<MenuItem value={singleItem.id} key={singleItem.id} primaryText={singleItem.name} />);
@@ -64,18 +79,21 @@ export default class SingleRestaurant extends Component {
       	<h2>{name}</h2>
       	<h6>{address}</h6>
       	<Item items={items || []}/>
-      	<DropDownMenu maxHeight={300} value={1} onChange={this.onSelectItem}>
+      	<DropDownMenu maxHeight={300} value={this.state.item} onChange={this.onSelectItem}>
         	{listItems}
       	</DropDownMenu>
       	<TextField
+          value={this.state.comment}
       		hintText="Add Comment"
       		multiLine={true}
       		rows={2}
       		rowsMax={4}
+          onInput={this.onChangeComment}
     	/>
-    	<DropDownMenu maxHeight={300} value={1} onChange={this.onSelectStar}>
+    	<DropDownMenu maxHeight={300} value={this.state.stars} onChange={this.onSelectStar}>
         	{stars}
       	</DropDownMenu>
+        <FlatButton label='Submit' onClick={() => this.onReviewSubmit()}/>
       </div>
     )
   }

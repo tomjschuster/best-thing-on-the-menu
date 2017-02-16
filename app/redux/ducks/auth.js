@@ -1,5 +1,5 @@
 /*----------  INITIAL STATE  ----------*/
-export const initialState = {}
+export const initialState = { id: 78 }
 
 
 /*----------  ACTION TYPES  ----------*/
