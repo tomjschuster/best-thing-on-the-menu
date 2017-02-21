@@ -29,12 +29,15 @@ export default class Home extends Component {
   }
 
   render() {
-    const { restaurants, items, reviews, users } = this.props
+    const { restaurants, items, reviews, users, router } = this.props
     const denormRestaurants = denormalizeRestaurants(restaurants, items, reviews, users)
     return (
       <div>
         <input ref='autocomplete' />
-        <Restaurants denormRestaurants={denormRestaurants} />
+        <Restaurants
+          denormRestaurants={denormRestaurants}
+          router={router}
+        />
       </div>
     )
   }
