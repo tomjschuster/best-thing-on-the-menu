@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import FlatButton from 'material-ui/FlatButton'
 import DropDownMenu from 'material-ui/DropDownMenu'
+import AutoComplete from 'material-ui/AutoComplete'
 import MenuItem from 'material-ui/MenuItem'
-import TextField from 'material-ui/TextField'
+import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card'
 import Item from './Item'
 import { denormalizeRestaurants } from '../../../utils'
+import { itemAutoCompleteDataConfig } from '../../../config'
 
 export default class SingleRestaurant extends Component {
   constructor(props) {
@@ -32,8 +34,19 @@ export default class SingleRestaurant extends Component {
   }
 
   componentWillMount() {
-    const { restaurants, items, reviews, users, receiveCurrentRestaurant, router } = this.props
-    const denormRestaurants = denormalizeRestaurants(restaurants, items, reviews, users)
+    const { restaurants,
+            items,
+            reviews,
+            users,
+            receiveCurrentRestaurant,
+            router
+          } = this.props
+
+    const denormRestaurants = denormalizeRestaurants( restaurants,
+                                                      items,
+                                                      reviews,
+                                                      users
+                                                    )
 
     const splitPath = location.pathname.split('/')
     const id = splitPath[splitPath.length - 1]
@@ -49,39 +62,24 @@ export default class SingleRestaurant extends Component {
 
 
   render() {
-    const { currentRestaurant } = this.props
-    const { name, address, items } = currentRestaurant
-
-    let listItems = items ? items.map((singleItem) => {
-      return (<MenuItem value={singleItem.id} key={singleItem.id} primaryText={singleItem.name} />)
-    }) : []
-
-    let stars = []
-    for (let ndx = 1; ndx <= 5; ndx++) {
-      stars.push(<MenuItem value={ndx} key={ndx} primaryText={ndx} />)
-    }
+    const { currentRestaurant: { name, address, items } } = this.props
 
     return (
-      <div>
-        <h2>{name}</h2>
-        <h6>{address}</h6>
-        <Item items={ items || []} />
-        <DropDownMenu maxHeight={300} value={this.state.item} onChange={this.onSelectItem}>
-          {listItems}
-        </DropDownMenu>
-        <TextField
-          value={this.state.comment}
-          hintText='Add Comment'
-          multiLine={true}
-          rows={2}
-          rowsMax={4}
-          onInput={this.onChangeComment}
-        />
-      <DropDownMenu maxHeight={300} value={this.state.stars} onChange={this.onSelectStar}>
-        {stars}
-      </DropDownMenu>
-      <FlatButton label='Submit' onClick={() => this.onReviewSubmit()} />
-      </div>
+      <Card>
+        <CardTitle title={name} subtitle={address} />
+        <CardHeader>
+          <AutoComplete
+            floatingLabelText='Select or enter a menu item.'
+            openOnFocus
+            filter={AutoComplete.caseInsensitiveFilter}
+            dataSource={items || []}
+            dataSourceConfig={itemAutoCompleteDataConfig}
+          />
+        </CardHeader>
+        <CardText>
+          { items && items.map(item => <Item key={item.id} item={item} />) }
+        </CardText>
+      </Card>
     )
   }
 }

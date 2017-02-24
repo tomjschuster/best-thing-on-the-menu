@@ -27,3 +27,4 @@ export const denormalizeRestaurants = (restaurants, items, reviews, users) => {
 
   return denormRestaurants
 }
+

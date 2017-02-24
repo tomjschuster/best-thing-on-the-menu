@@ -1,42 +1,32 @@
 import React from 'react'
-import { Link } from 'react-router'
+import {List, ListItem} from 'material-ui/List'
+import Divider from 'material-ui/Divider'
+import Subheader from 'material-ui/Subheader'
+import Paper from 'material-ui/Paper'
+import ActionInfo from 'material-ui/svg-icons/action/info'
 
 
-const Restaurants =  ({ denormRestaurants }) => {
-  let restaurants = denormRestaurants.map((o) => (
-      <tr key={o.id}>
-          <td>
-              <Link to={'/restaurants/' + o.id}>{o.name}</Link>
-          </td>
-          <td>
-              {o.address}
-          </td>
-          <td>
-              {o.items && o.items.length}
-          </td>
-      </tr>
-  ))
-
-  return (
-    <div>
-      <table>
-        <thead>
-          <th>
-            Restaurant
-          </th>
-          <th>
-            Address
-          </th>
-          <th>
-            Menu Items Reviewed
-          </th>
-        </thead>
-        <tbody>
-          {restaurants}
-        </tbody>
-      </table>
-    </div>
-  )
-}
+const Restaurants =  ({ denormRestaurants, router }) => (
+  <Paper>
+    <List>
+    <Subheader>Featured Restaurants</Subheader>
+      { denormRestaurants.map(({ id, name, items, address }) => {
+        const itemCount = items ? items.length : 0
+        return (
+          <div key={ id }>
+            <ListItem
+              rightIcon={<ActionInfo />}
+              primaryText={ `${name} (${itemCount})` }
+              secondaryText={ address }
+              secondaryTextLines={1}
+              onClick={() => router.push(`/restaurants/${id}`)}
+            />
+            <Divider inset />
+          </div>
+          )
+      })}
+    </List>
+  </Paper>
+)
 
 export default Restaurants

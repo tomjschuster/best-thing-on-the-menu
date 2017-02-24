@@ -1,7 +1,6 @@
 import React from 'react'
 
 import AppBar from 'material-ui/AppBar'
-import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import RoomService from 'material-ui/svg-icons/places/room-service'
 
@@ -13,10 +12,7 @@ const NavBar = props => (
       <div>
         <AppBar
           title='Best Thing On The Menu'
-          iconElementLeft={<IconButton><RoomService /></IconButton>}
-          iconElementRight={
-            <FlatButton onClick={() => props.router.push('/')} label='Restaurants' />
-          }
+          iconElementLeft={<IconButton onClick={() => props.router.push('/')}><RoomService /></IconButton>}
         />
       </div>
     )
