@@ -12,26 +12,13 @@ export default class SingleRestaurant extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      itemName: '',
       item: 0,
       stars: 0,
       comment: ''
     }
   }
 
-  onSelectItem = (event, index, value) => this.setState({ item: value})
-  onSelectStar = (event, index, value) => this.setState({ stars: value})
-  onChangeComment = (event) => this.setState({ comment: event.target.value})
-  onReviewSubmit = () => {
-    const { addReview, auth, reviews } = this.props
-    const { item, stars, comment } = this.state
-    addReview({
-      id: reviews.length,
-      userId: auth.id,
-      itemId: item,
-      comment,
-      stars
-    })
-  }
 
   componentWillMount() {
     const { restaurants,
@@ -61,7 +48,36 @@ export default class SingleRestaurant extends Component {
   }
 
 
+  onItemSelect = (chosenRequest, idx) => {
+    const { addItem, addItemToCurrentRestaurant, currentRestaurant } = this.props
+    if (idx === -1) {
+      const item = { id: Math.random().toString(36).substring(7),
+                name: chosenRequest,
+                restaurantId: currentRestaurant.id
+              }
+      addItem(item)
+      addItemToCurrentRestaurant({...item, reviews: []})
+    }
+  }
+  onSelectStar = (event, index, value) => this.setState({ stars: value})
+  onSelectItem = (event, index, value) => this.setState({ item: value})
+  onChangeItemName = (...args) => console.log(...args)
+  onChangeComment = (event) => this.setState({ comment: event.target.value})
+  onReviewSubmit = () => {
+    const { addReview, auth, reviews } = this.props
+    const { item, stars, comment } = this.state
+    addReview({
+      id: reviews.length,
+      userId: auth.id,
+      itemId: item,
+      comment,
+      stars
+    })
+  }
+
+
   render() {
+    const { onChangeItemName, onItemSelect } = this
     const { currentRestaurant: { name, address, items } } = this.props
 
     return (
@@ -74,6 +90,8 @@ export default class SingleRestaurant extends Component {
             filter={AutoComplete.caseInsensitiveFilter}
             dataSource={items || []}
             dataSourceConfig={itemAutoCompleteDataConfig}
+            onNewRequest={onItemSelect}
+            onUpdateInput={onChangeItemName}
           />
         </CardHeader>
         <CardText>

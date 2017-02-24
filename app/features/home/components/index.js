@@ -7,9 +7,9 @@ import { denormalizeRestaurants } from '../../../utils'
 import { autocompleteOptions } from '../../../config'
 
 export default class Home extends Component {
-  getAutocompleteInput = c => {
-    if (c) {
-      this.autocompleteInput = c.input
+  getAutocompleteInput = node => {
+    if (node) {
+      this.autocompleteInput = node.input
     }
   }
 
