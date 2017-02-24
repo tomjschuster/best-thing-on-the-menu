@@ -14,6 +14,7 @@ const Restaurants =  ({ denormRestaurants, router }) => (
         const itemCount = items ? items.length : 0
         return (
           <div key={ id }>
+            <Divider />
             <ListItem
               rightIcon={<ActionInfo />}
               primaryText={ `${name} (${itemCount})` }
@@ -21,7 +22,6 @@ const Restaurants =  ({ denormRestaurants, router }) => (
               secondaryTextLines={1}
               onClick={() => router.push(`/restaurants/${id}`)}
             />
-            <Divider inset />
           </div>
           )
       })}
