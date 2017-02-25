@@ -1,3 +1,14 @@
+/*=============================================
+=            TODO           =
+=============================================
+1. Check menu item on submit
+2. Clear redux form on submit/cancel/unmount
+3. Update current restaurant on submit
+4. Change component did mount logic to only denormalize current restaurant, in thunk
+5. Styling and modularization
+=====  END TODO  ======*/
+
+
 import React, { Component } from 'react'
 
 import Item from './Item'
@@ -7,21 +18,19 @@ import IconButton from 'material-ui/IconButton'
 import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import Paper from 'material-ui/Paper'
 import Star from 'material-ui/svg-icons/toggle/star'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 
 import { denormalizeRestaurants } from '../../../utils'
 import { itemAutoCompleteDataConfig } from '../../../config'
-import { times } from 'lodash'
 
 
 const RatingStars = ({ starCount, onClick }) => (
     <div>
       { Array(5).fill(0).map((_, idx) => (
             <IconButton
-              key={`star-${idx}`}
-              onClick={ () => onClick(idx) }>
+              key={`star-${idx + 1}`}
+              onClick={ () => onClick(idx + 1) }>
               { starCount <= idx ? <StarBorder /> : <Star /> }
             </IconButton>
           )
@@ -34,9 +43,6 @@ export default class SingleRestaurant extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      itemName: '',
-      item: 0,
-      stars: 0,
       comment: ''
     }
   }
@@ -50,13 +56,13 @@ export default class SingleRestaurant extends Component {
             receiveCurrentRestaurant,
             router
           } = this.props
-          console.log(times(5, (...args) => console.log(...args)))
 
-    const denormRestaurants = denormalizeRestaurants( restaurants,
-                                                      items,
-                                                      reviews,
-                                                      users
-                                                    )
+    const denormRestaurants = denormalizeRestaurants(
+      restaurants,
+      items,
+      reviews,
+      users
+    )
 
     const splitPath = location.pathname.split('/')
     const id = splitPath[splitPath.length - 1]
@@ -72,76 +78,106 @@ export default class SingleRestaurant extends Component {
 
 
   onItemSelect = (chosenRequest, idx) => {
-    const { addItem, addItemToCurrentRestaurant, currentRestaurant } = this.props
+    const { addToItemsAndCurrentRestaurant, currentRestaurant } = this.props
     if (idx === -1) {
-      const item = { id: Math.random().toString(36).substring(7),
-                name: chosenRequest,
-                restaurantId: currentRestaurant.id
-              }
-      addItem(item)
-      addItemToCurrentRestaurant({...item, reviews: []})
+      addToItemsAndCurrentRestaurant(chosenRequest, currentRestaurant.id)
     }
   }
   setStars = (idx) => this.setState({ stars: idx + 1})
-  onSelectItem = (event, index, value) => this.setState({ item: value})
   onChangeItemName = (...args) => console.log(...args)
   onChangeComment = (event) => this.setState({ comment: event.target.value})
+
   onReviewSubmit = () => {
-    const { addReview, auth, reviews } = this.props
-    const { item, stars, comment } = this.state
+    const { addReview,
+            addToItemsAndCurrentRestaurant,
+            auth: { id: userId },
+            forms: { addReview: addReviewForm },
+            currentRestaurant: { id: restaurantId },
+            reviews
+          } = this.props
+    const { item, stars, comment } = addReviewForm
+    let itemId = item.id
+    if (item.isNew) {
+      itemId = addToItemsAndCurrentRestaurant(item.name, restaurantId)
+    }
     addReview({
       id: reviews.length,
-      userId: auth.id,
-      itemId: item,
+      userId,
+      itemId,
       comment,
       stars
     })
   }
 
-
   render() {
-    const { onChangeItemName, onItemSelect, setStars } = this
-    const { currentRestaurant: { name, address, items } } = this.props
-    const { stars } = this.state
+    const { onChangeItemName, onReviewSubmit } = this
+    const { currentRestaurant: { name, address, items },
+            ux: { isShowAddReview },
+            forms: { addReview: addReviewForm },
+            showAddReview,
+            hideAddReview,
+            updateItemNewOrOld,
+            updateStars,
+            updateComment
+          } = this.props
 
     return (
       <Card>
         <CardTitle title={name} subtitle={address} />
         <CardActions>
-            <RaisedButton label='Add a Review' primary={true} />
-            <Paper>
-              <ul style={{listStyle: 'none'}}>
-                <li>
-                  <AutoComplete
-                    floatingLabelText='Select or enter a menu item.'
-                    openOnFocus
-                    filter={AutoComplete.caseInsensitiveFilter}
-                    dataSource={items || []}
-                    dataSourceConfig={itemAutoCompleteDataConfig}
-                    onNewRequest={onItemSelect}
-                    onUpdateInput={onChangeItemName}
-                    style={{paddingLeft: '12px'}}
+          { isShowAddReview ?
+              <Card>
+                <CardText>
+                  <h4>Write a Review</h4>
+                  <ul style={{listStyle: 'none'}}>
+                    <li>
+                      <AutoComplete
+                        floatingLabelText='Select or enter a menu item.'
+                        openOnFocus
+                        filter={AutoComplete.caseInsensitiveFilter}
+                        dataSource={items || []}
+                        dataSourceConfig={itemAutoCompleteDataConfig}
+                        onNewRequest={updateItemNewOrOld}
+                        onUpdateInput={onChangeItemName}
+                        style={{paddingLeft: '12px'}}
+                      />
+                    </li>
+                    <li>
+                      <RatingStars
+                        starCount={addReviewForm.stars}
+                        onClick={updateStars}
+                      />
+                    </li>
+                    <li>
+                      <TextField
+                        name='comment-field'
+                        multiLine
+                        rows={3}
+                        floatingLabelText='Comment'
+                        style={ {paddingLeft: '12px'} }
+                        onChange={ (_, comment) => updateComment(comment) }
+                      />
+                    </li>
+                  </ul>
+                </CardText>
+                <CardActions>
+                  <RaisedButton
+                    label='Submit'
+                    primary={true}
+                    onClick={onReviewSubmit}/>
+                  <RaisedButton
+                    label='Cancel'
+                    primary={true}
+                    onClick={hideAddReview}
                   />
-                </li>
-                <li>
-                  <RatingStars
-                    starCount={stars}
-                    onClick={setStars}
-                  />
-                </li>
-                <li>
-                  <TextField
-                    name='comment-field'
-                    multiLine
-                    rows={3}
-                    floatingLabelText='Comment'
-                    style={{paddingLeft: '12px'}}
-                  />
-                </li>
-              </ul>
-              <RaisedButton label='Submit' primary={true} />
-              <RaisedButton label='Cancel' primary={true} />
-            </Paper>
+                </CardActions>
+              </Card> :
+              <RaisedButton
+                label='Add a Review'
+                primary={true}
+                onClick={showAddReview}
+              />
+          }
         </CardActions>
         <CardText>
           { items && items.map(item => <Item key={item.id} item={item} />) }

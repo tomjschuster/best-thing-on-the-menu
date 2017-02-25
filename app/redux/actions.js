@@ -4,6 +4,8 @@ import { actions as restaurants } from './ducks/restaurants'
 import { actions as currentRestaurant } from './ducks/currentRestaurant'
 import { actions as reviews } from './ducks/reviews'
 import { actions as items } from './ducks/items'
+import { actions as ux } from './ducks/ux'
+import { actions as forms } from './ducks/forms'
 
 export default {
   ...auth,
@@ -11,5 +13,7 @@ export default {
   ...restaurants,
   ...currentRestaurant,
   ...reviews,
-  ...items
+  ...items,
+  ...ux,
+  ...forms
 }
