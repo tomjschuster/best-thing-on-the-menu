@@ -1,11 +1,8 @@
 /*=============================================
 =            TODO           =
 =============================================
-x1. Check menu item on submit
-x2. Clear redux form on submit/cancel/unmount
-x3. Update current restaurant on submit
-xx4. Change component did mount logic to only denormalize current restaurant, in thunk
-5. Styling and modularization
+1. Fix AutoComplete Data
+2. Styling
 =====  END TODO  ======*/
 
 
