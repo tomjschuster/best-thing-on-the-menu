@@ -104,7 +104,7 @@ export default class SingleRestaurant extends Component {
         <CardActions>
           { isShowAddReview ?
               <AddReview
-                item={items}
+                items={items}
                 addReviewForm={addReviewForm}
                 closeAndClearAddReview={closeAndClearAddReview}
                 updateItemNewOrOld={updateItemNewOrOld}
