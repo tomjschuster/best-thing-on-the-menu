@@ -10,14 +10,13 @@ const HIDE_ADD_REVIEW = 'HIDE_ADD_REVIEW'
 /*----------  ACTIONS  ----------*/
 export const actions = {
   // Action Creators
-  showAddReview: restaurants => (
-    { type: SHOW_ADD_REVIEW,
-      restaurants
+  showAddReview: () => (
+    { type: SHOW_ADD_REVIEW
     }),
-  hideAddReview: restaurant => (
-    { type: HIDE_ADD_REVIEW,
-      restaurant
-    })
+  hideAddReview: () => (
+    { type: HIDE_ADD_REVIEW
+    }),
+
 }
 
 

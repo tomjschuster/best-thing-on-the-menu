@@ -1,8 +1,8 @@
 /*=============================================
 =            TODO           =
 =============================================
-1. Check menu item on submit
-2. Clear redux form on submit/cancel/unmount
+x1. Check menu item on submit
+x2. Clear redux form on submit/cancel/unmount
 3. Update current restaurant on submit
 4. Change component did mount logic to only denormalize current restaurant, in thunk
 5. Styling and modularization
@@ -40,14 +40,8 @@ const RatingStars = ({ starCount, onClick }) => (
   )
 
 export default class SingleRestaurant extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      comment: ''
-    }
-  }
 
-
+  /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentWillMount() {
     const { restaurants,
             items,
@@ -73,50 +67,61 @@ export default class SingleRestaurant extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearCurrentRestaurant()
+    const { clearCurrentRestaurant, clearAddReview } = this.props
+    clearCurrentRestaurant()
+    clearAddReview()
   }
 
 
+  /*----------  INSTANCE METHODS  ----------*/
   onItemSelect = (chosenRequest, idx) => {
     const { addToItemsAndCurrentRestaurant, currentRestaurant } = this.props
     if (idx === -1) {
       addToItemsAndCurrentRestaurant(chosenRequest, currentRestaurant.id)
     }
   }
-  setStars = (idx) => this.setState({ stars: idx + 1})
-  onChangeItemName = (...args) => console.log(...args)
-  onChangeComment = (event) => this.setState({ comment: event.target.value})
 
   onReviewSubmit = () => {
     const { addReview,
             addToItemsAndCurrentRestaurant,
+            closeAndClearAddReview,
             auth: { id: userId },
             forms: { addReview: addReviewForm },
-            currentRestaurant: { id: restaurantId },
+            currentRestaurant: { id: restaurantId, items },
             reviews
           } = this.props
     const { item, stars, comment } = addReviewForm
     let itemId = item.id
-    if (item.isNew) {
-      itemId = addToItemsAndCurrentRestaurant(item.name, restaurantId)
+
+    if (item.isSet) {
+      if (item.isNew) {
+        itemId = addToItemsAndCurrentRestaurant(item.name, restaurantId)
+      }
+    } else {
+      const foundItem = items.find(currentItem => currentItem.name === item.name)
+      itemId = foundItem ? foundItem.id : addToItemsAndCurrentRestaurant(item.name, restaurantId)
     }
     addReview({
-      id: reviews.length,
-      userId,
-      itemId,
-      comment,
-      stars
-    })
+        id: reviews.length,
+        userId,
+        itemId,
+        comment,
+        stars
+      })
+    closeAndClearAddReview()
   }
 
+
+/*----------  RENDER  ----------*/
   render() {
-    const { onChangeItemName, onReviewSubmit } = this
+    const { onReviewSubmit } = this
     const { currentRestaurant: { name, address, items },
             ux: { isShowAddReview },
             forms: { addReview: addReviewForm },
             showAddReview,
-            hideAddReview,
+            closeAndClearAddReview,
             updateItemNewOrOld,
+            updateItemName,
             updateStars,
             updateComment
           } = this.props
@@ -137,8 +142,9 @@ export default class SingleRestaurant extends Component {
                         filter={AutoComplete.caseInsensitiveFilter}
                         dataSource={items || []}
                         dataSourceConfig={itemAutoCompleteDataConfig}
+                        searchText={addReviewForm.item.name}
                         onNewRequest={updateItemNewOrOld}
-                        onUpdateInput={onChangeItemName}
+                        onUpdateInput={updateItemName}
                         style={{paddingLeft: '12px'}}
                       />
                     </li>
@@ -155,6 +161,7 @@ export default class SingleRestaurant extends Component {
                         rows={3}
                         floatingLabelText='Comment'
                         style={ {paddingLeft: '12px'} }
+                        value={addReviewForm.comment}
                         onChange={ (_, comment) => updateComment(comment) }
                       />
                     </li>
@@ -164,11 +171,12 @@ export default class SingleRestaurant extends Component {
                   <RaisedButton
                     label='Submit'
                     primary={true}
-                    onClick={onReviewSubmit}/>
+                    onClick={onReviewSubmit}
+                  />
                   <RaisedButton
                     label='Cancel'
                     primary={true}
-                    onClick={hideAddReview}
+                    onClick={closeAndClearAddReview}
                   />
                 </CardActions>
               </Card> :
