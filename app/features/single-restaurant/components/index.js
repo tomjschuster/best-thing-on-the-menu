@@ -3,8 +3,8 @@
 =============================================
 x1. Check menu item on submit
 x2. Clear redux form on submit/cancel/unmount
-3. Update current restaurant on submit
-4. Change component did mount logic to only denormalize current restaurant, in thunk
+x3. Update current restaurant on submit
+xx4. Change component did mount logic to only denormalize current restaurant, in thunk
 5. Styling and modularization
 =====  END TODO  ======*/
 
@@ -21,7 +21,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Star from 'material-ui/svg-icons/toggle/star'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 
-import { denormalizeRestaurants } from '../../../utils'
+import { denormalizeSingleRestaurant } from '../../../utils'
 import { itemAutoCompleteDataConfig } from '../../../config'
 
 
@@ -42,29 +42,27 @@ const RatingStars = ({ starCount, onClick }) => (
 export default class SingleRestaurant extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
-  componentWillMount() {
+  componentDidUpdate(prevProps) {
     const { restaurants,
             items,
             reviews,
             users,
+            currentRestaurant,
             receiveCurrentRestaurant,
-            router
           } = this.props
 
-    const denormRestaurants = denormalizeRestaurants(
-      restaurants,
-      items,
-      reviews,
-      users
-    )
+    if (reviews !== prevProps.reviews) {
+      const updatedCurrentRestaurant = denormalizeSingleRestaurant(
+        currentRestaurant.id,
+        restaurants,
+        items,
+        reviews,
+        users
+      )
+      receiveCurrentRestaurant(updatedCurrentRestaurant)
+    }
 
-    const splitPath = location.pathname.split('/')
-    const id = splitPath[splitPath.length - 1]
-
-    const currentRestaurant = denormRestaurants.find(restaurant => id == restaurant.id)
-    if (currentRestaurant) receiveCurrentRestaurant(currentRestaurant)
-    else router.push('/')
-  }
+}
 
   componentWillUnmount() {
     const { clearCurrentRestaurant, clearAddReview } = this.props
