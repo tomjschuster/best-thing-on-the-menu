@@ -1,9 +1,9 @@
 /*global google*/
 
 import React, { Component } from 'react'
-import Restaurants from './Restaurants'
+import Places from './Places'
 import SearchBar from './SearchBar'
-import { denormalizeRestaurants } from '../../../utils'
+import { denormalizePlaces } from '../../../utils'
 import { autocompleteOptions } from '../../../config'
 
 export default class Home extends Component {
@@ -23,32 +23,32 @@ export default class Home extends Component {
 
       // on select, get google place and go to page
       autocomplete.addListener('place_changed', () => {
-        const { restaurants, addRestaurant, router } = this.props
+        const { places, addPlace, router } = this.props
 
         const place = autocomplete.getPlace()
         const { id, name, address, photos } = place
 
         // if we have don'te entry for google place add to store
-        if (!restaurants.find(({ placeId }) => placeId === place.id)) {
-          addRestaurant({ id, name, address, photos })
+        if (!places.find(({ placeId }) => placeId === place.id)) {
+          addPlace({ id, name, address, photos })
         }
 
-        // Navigate to restaurant page
-        router.push(`/restaurants/${place.id}`)
+        // Navigate to place page
+        router.push(`/places/${place.id}`)
       })
     }
   }
 
   render() {
     const { getAutocompleteInput } = this
-    const { restaurants, items, reviews, users, router } = this.props
-    const denormRestaurants = denormalizeRestaurants(restaurants, items, reviews, users)
+    const { places, items, reviews, users, router } = this.props
+    const denormPlaces = denormalizePlaces(places, items, reviews, users)
     return (
       <div>
         <div className='tagline'><h4>Taskstreamer's Lunch Menu Review</h4></div>
         <SearchBar getAutocompleteInput={getAutocompleteInput} />
-        <Restaurants
-          denormRestaurants={denormRestaurants}
+        <Places
+          denormPlacess={denormPlaces}
           router={router}
         />
       </div>

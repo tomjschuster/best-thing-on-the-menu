@@ -1,4 +1,4 @@
-import { actions as currentRestaurantActions } from './currentRestaurant'
+import { actions as currentPlaceActions } from './currentPlace'
 
 /*----------  INITIAL STATE  ----------*/
 // export const initialState = []
@@ -23,13 +23,13 @@ export const actions = {
     }),
 
   // Thunk Creators
-  addToItemsAndCurrentRestaurant: (name, restaurantId) => dispatch => {
+  addToItemsAndCurrentPlace: (name, placeId) => dispatch => {
     const id = Math.random().toString(36).substring(7) // temporary
-    const item = { id, restaurantId, name }
-    const currentRestaurantItem = { ...item, reviews: [] }
+    const item = { id, placeId, name }
+    const currentPlaceItem = { ...item, reviews: [] }
 
     dispatch(actions.addItem(item))
-    dispatch(currentRestaurantActions.addItemToCurrentRestaurant(currentRestaurantItem))
+    dispatch(currentPlaceActions.addItemToCurrentPlace(currentPlaceItem))
 
     return id
   }

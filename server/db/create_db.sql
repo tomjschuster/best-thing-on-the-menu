@@ -8,12 +8,12 @@ CREATE TABLE user (
   is_admin BOOLEAN DEFAULT 0 NOT NULL
 );
 
-CREATE TABLE place (
+CREATE TABLE restaurant (
   id INT AUTOINCREMENT PRIMARY KEY,
-  google_place_id VARCHAR UNIQUE,
+  google_restaurant_id VARCHAR UNIQUE,
   name VARCHAR(255) NOT NULL,
   address_id INT NULL,
-  CONSTRAINT FOREIGN KEY place__address (address_id)
+  CONSTRAINT FOREIGN KEY restaurant__address (address_id)
     REFERENCES address (id)
 );
 
@@ -33,10 +33,10 @@ CREATE TABLE address (
 CREATE TABLE item (
   id INT AUTOINCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  place_id INT NOT NULL,
-  CONSTRAINT UNIQUE (name, place_id),
-  CONSTRAINT FOREIGN KEY item__place (place_id)
-    REFERENCES place (id)
+  restaurant_id INT NOT NULL,
+  CONSTRAINT UNIQUE (name, restaurant_id),
+  CONSTRAINT FOREIGN KEY item__restaurant (restaurant_id)
+    REFERENCES restaurant (id)
 );
 
 CREATE TABLE review (

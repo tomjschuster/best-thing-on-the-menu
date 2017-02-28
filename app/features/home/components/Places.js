@@ -6,11 +6,11 @@ import Paper from 'material-ui/Paper'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 
 
-const Restaurants =  ({ denormRestaurants, router }) => (
+const Places =  ({ denormPlaces, router }) => (
   <Paper>
     <List>
-    <Subheader>Featured Restaurants</Subheader>
-      { denormRestaurants.map(({ id, name, items, address }) => {
+    <Subheader>Featured Places</Subheader>
+      { denormPlaces.map(({ id, name, items, address }) => {
         const itemCount = items ? items.length : 0
         return (
           <div key={ id }>
@@ -20,7 +20,7 @@ const Restaurants =  ({ denormRestaurants, router }) => (
               primaryText={ `${name} (${itemCount})` }
               secondaryText={ address }
               secondaryTextLines={1}
-              onClick={() => router.push(`/restaurants/${id}`)}
+              onClick={() => router.push(`/places/${id}`)}
             />
           </div>
           )
@@ -29,4 +29,4 @@ const Restaurants =  ({ denormRestaurants, router }) => (
   </Paper>
 )
 
-export default Restaurants
+export default Places
