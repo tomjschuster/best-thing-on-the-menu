@@ -73,7 +73,7 @@ export default class SinglePlace extends Component {
     }
 
     addReview({
-        id: reviews.length,
+        id: reviews.length + 1,
         userId,
         itemId,
         comment,

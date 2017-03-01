@@ -8,6 +8,7 @@ import reviews from './ducks/reviews'
 import items from './ducks/items'
 import ux from './ducks/ux'
 import forms from './ducks/forms'
+import errors from './ducks/errors'
 
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
   reviews,
   items,
   ux,
-  forms
+  forms,
+  errors
 })

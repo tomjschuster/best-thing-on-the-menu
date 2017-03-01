@@ -11,20 +11,21 @@ const Places =  ({ denormPlaces, router }) => (
     <List>
     <Subheader>Featured Places</Subheader>
       { denormPlaces.map(({ id, name, items, address }) => {
-        const itemCount = items ? items.length : 0
-        return (
-          <div key={ id }>
-            <Divider />
-            <ListItem
-              rightIcon={<ActionInfo />}
-              primaryText={ `${name} (${itemCount})` }
-              secondaryText={ address }
-              secondaryTextLines={1}
-              onClick={() => router.push(`/places/${id}`)}
-            />
-          </div>
+          const itemCount = items ? items.length : 0
+          return (
+            <div key={ id }>
+              <Divider />
+              <ListItem
+                rightIcon={<ActionInfo />}
+                primaryText={ `${name} (${itemCount})` }
+                secondaryText={ address }
+                secondaryTextLines={1}
+                onClick={() => router.push(`/places/${id}`)}
+              />
+            </div>
           )
-      })}
+        })
+      }
     </List>
   </Paper>
 )
