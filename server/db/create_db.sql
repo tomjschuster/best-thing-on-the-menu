@@ -3,46 +3,55 @@ CREATE DATABASE btotm;
 USE btotm;
 
 CREATE TABLE user (
-  id INT AUTOINCREMENT PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  is_admin BOOLEAN DEFAULT 0 NOT NULL
+  id INT  NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  photo_url VARCHAR(255) NOT NULL,
+  is_admin BOOLEAN NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq1__user__email (email)
 );
 
-CREATE TABLE restaurant (
-  id INT AUTOINCREMENT PRIMARY KEY,
-  google_restaurant_id VARCHAR UNIQUE,
+CREATE TABLE place (
+  id INT NOT NULL AUTO_INCREMENT,
+  google_id VARCHAR(255),
   name VARCHAR(255) NOT NULL,
-  address_id INT NULL,
-  CONSTRAINT FOREIGN KEY restaurant__address (address_id)
-    REFERENCES address (id)
+  address VARCHAR(255) NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq1__place__google_id (google_id)
 );
 
-
-# need GIS INDEX
-CREATE TABLE address (
-  id INT AUTOINCREMENT PRIMARY KEY,
-  street1 VARCHAR(255) NOT NULL,
-  street2 VARCHAR(255) NULL,
-  city VARCHAR(255) NOT NULL,
-  state VARCHAR(255) NOT NULL,
-  zip VARCHAR(10) NULL,
-  lat DECIMAL(9,6) NULL,
-  long DECIMAL(9,6) NULL
-);
 
 CREATE TABLE item (
-  id INT AUTOINCREMENT PRIMARY KEY,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
-  restaurant_id INT NOT NULL,
-  CONSTRAINT UNIQUE (name, restaurant_id),
-  CONSTRAINT FOREIGN KEY item__restaurant (restaurant_id)
-    REFERENCES restaurant (id)
+  place_id INT NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq2__item__name__place_id (name, place_id),
+  FOREIGN KEY fk__item__place (place_id)
+    REFERENCES place (id)
 );
 
 CREATE TABLE review (
-  id INT AUTOINCREMENT PRIMARY KEY,
+  id INT NOT NULL AUTO_INCREMENT,
   stars TINYINT NOT NULL,
   comment VARCHAR(510) NULL,
   user_id INT NOT NULL,
-  item_id INT NOT NULL
+  item_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY fk__review__user (user_id)
+    REFERENCES user (id),
+  FOREIGN KEY fk__review__item (item_id)
+    REFERENCES item (id)
 );
+
+CREATE TABLE place_photo (
+  id INT NOT NULL AUTO_INCREMENT,
+  place_id INT NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq2__place_photo__place_id__url (place_id, url),
+  FOREIGN KEY fk__place_photo__place (place_id)
+    REFERENCES place (id)
+)

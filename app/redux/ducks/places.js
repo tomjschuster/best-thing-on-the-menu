@@ -1,6 +1,8 @@
+import axios from 'axios'
+
 /*----------  INITIAL STATE  ----------*/
-// export const initialState = []
-export const initialState = require('../seed/places').default
+export const initialState = []
+// export const initialState = require('../seed/places').default
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -18,7 +20,14 @@ export const actions = {
   addPlace: place => (
     { type: ADD_PLACE,
       place
-    })
+    }),
+
+  // Thunk Creators
+  loadPlaces: () => dispatch => {
+    axios
+      .get('/api/places')
+      .then(({ data }) => dispatch(actions.receivePlaces(data)))
+    }
 }
 
 

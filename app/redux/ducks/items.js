@@ -1,8 +1,9 @@
+import axios from 'axios'
 import { actions as currentPlaceActions } from './currentPlace'
 
 /*----------  INITIAL STATE  ----------*/
-// export const initialState = []
-export const initialState = require('../seed/items').default
+export const initialState = []
+// export const initialState = require('../seed/items').default
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -23,6 +24,12 @@ export const actions = {
     }),
 
   // Thunk Creators
+  loadItems: () => dispatch => {
+    axios
+      .get('/api/items')
+      .then(({ data }) => dispatch(actions.receiveItems(data)))
+  },
+
   addToItemsAndCurrentPlace: (name, placeId) => dispatch => {
     const id = Math.random().toString(36).substring(7) // temporary
     const item = { id, placeId, name }

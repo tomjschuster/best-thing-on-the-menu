@@ -13,7 +13,7 @@ app.use(bodyParser.json())
    .use(bodyParser.urlencoded({ extended: false }))
    .use(morgan('dev'))
    .use(express.static(path.join(__dirname, '..', 'public')))
-   .use(router)
+   .use('/api', router)
 
 const indexHtmlPath = path.join(__dirname, '..', 'public', 'index.html')
 
