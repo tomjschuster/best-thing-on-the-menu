@@ -5,4 +5,12 @@ const db = {
   metadata: true
 }
 
-module.exports = { db }
+const procs = {
+  getUser: {
+    inParams: ['user_id'],
+    outParams: ['num_users']
+  }
+}
+
+
+module.exports = { db, procs }

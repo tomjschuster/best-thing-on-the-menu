@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 module.exports = router
-const pool = require('../db')
+const { pool, call } = require('../db')
 
 const mapUsers = dbUsers => dbUsers.map(
   ({ id,
@@ -53,5 +53,15 @@ router.get('/places', (req, res, next) => {
 router.get('/items', (req, res, next) => {
   pool.query('select * from item')
     .then(item => res.send(mapItems(item)))
+    .catch(next)
+})
+
+router.post('/proc', (req, res, next) => {
+  const query = call.getUser({ user_id: 2 }, ['num_users'])
+  console.log(query)
+  pool.query(query)
+    .then(results => {
+      res.send(results)
+    })
     .catch(next)
 })

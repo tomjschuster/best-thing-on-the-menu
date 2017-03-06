@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS btotm;
+
 CREATE DATABASE btotm;
 
 USE btotm;
@@ -54,4 +56,12 @@ CREATE TABLE place_photo (
   UNIQUE KEY uq2__place_photo__place_id__url (place_id, url),
   FOREIGN KEY fk__place_photo__place (place_id)
     REFERENCES place (id)
-)
+);
+
+delimiter //
+CREATE PROCEDURE getUser (OUT num_users INT, IN user_id INT)
+  BEGIN
+    SELECT * FROM user WHERE id = user_id;
+    SELECT * FROM item WHERE id = 1;
+    SELECT COUNT(*) INTO num_users FROM user;
+  END//
