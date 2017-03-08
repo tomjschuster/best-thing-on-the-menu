@@ -7,8 +7,12 @@ const db = {
 
 const procs = {
   getUser: {
+    inParams: ['user_id', 'place_id'],
+    outParams: ['num_users', 'num_items']
+  },
+  getUserReviews: {
     inParams: ['user_id'],
-    outParams: ['num_users']
+    outParams: []
   }
 }
 

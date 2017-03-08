@@ -11,7 +11,6 @@ const pool = mysql.createPool({
   multipleStatements: true
 })
 
-const call = callMysql(procs)
-
-module.exports = { pool, call}
+const call = callMysql(pool, procs)
+module.exports = { pool, call }
 

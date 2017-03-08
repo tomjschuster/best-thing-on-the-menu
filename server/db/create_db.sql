@@ -59,9 +59,17 @@ CREATE TABLE place_photo (
 );
 
 delimiter //
-CREATE PROCEDURE getUser (OUT num_users INT, IN user_id INT)
+CREATE PROCEDURE getUser (OUT num_users INT, OUT num_items INT, IN user_id INT, place_id INT)
   BEGIN
     SELECT * FROM user WHERE id = user_id;
+    SELECT * FROM place WHERE id = place_id;
     SELECT * FROM item WHERE id = 1;
     SELECT COUNT(*) INTO num_users FROM user;
+    SELECT COUNT(*) INTO num_items FROM item;
+  END//
+
+delimiter //
+CREATE PROCEDURE getUserReviews (IN reviewer_id INT)
+  BEGIN
+    SELECT * FROM review WHERE user_id = user_id;
   END//

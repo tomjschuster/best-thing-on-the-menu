@@ -57,11 +57,15 @@ router.get('/items', (req, res, next) => {
 })
 
 router.post('/proc', (req, res, next) => {
-  const query = call.getUser({ user_id: 2 }, ['num_users'])
-  console.log(query)
-  pool.query(query)
+  call.getUser({user_id: 3, place_id: 2}, ['num_users', 'num_items'])
     .then(results => {
       res.send(results)
     })
-    .catch(next)
+    .catch(err => res.send([err]))
+
+  // call.getUserReviews({user_id: 23})
+  //   .then(results => {
+  //     res.send(results)
+  //   })
+  //   .catch(err => res.send([err]))
 })
