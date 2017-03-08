@@ -57,7 +57,7 @@ router.get('/items', (req, res, next) => {
 })
 
 router.post('/proc', (req, res, next) => {
-  call.getUser({user_id: 3, place_id: 2}, ['num_users', 'num_items'])
+  call.getUser({user_id: 3, placeId: 2})
     .then(results => {
       res.send(results)
     })
