@@ -23,7 +23,7 @@ export const actions = {
     }),
 
   // Thunk Creators
-  loadPlaces: () => dispatch => {
+  getPlaces: () => dispatch => {
     axios
       .get('/api/places')
       .then(({ data }) => dispatch(actions.receivePlaces(data)))

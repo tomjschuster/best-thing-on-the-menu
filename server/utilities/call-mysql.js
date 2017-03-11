@@ -19,21 +19,6 @@ const camelProps = value => {
   return value
 }
 
-const camelAll = value => {
-  if (Array.isArray(value)) {
-    return value.map(camelAll)
-  }
-  if (typeof value === 'object' && value !== null) {
-    return Object.keys(value).reduce((output, key) => {
-      output[camelCase(key)] = camelAll(value[key])
-      return output
-    }, {})
-  }
-  if (typeof value === 'string') {
-    return camelCase(value)
-  }
-  return value
-}
 
 const setParams = (inParams = []) =>
   inParams
@@ -71,9 +56,7 @@ const callMysql = (db, config) => {
         throw Error(`Configuration for stored procedure '${name} not provided.`)
       }
       return (inParams) => {
-        const camelInParams = camelProps(inParams)
-        const configParams = camelAll(target[name])
-        console.log('config', configParams)
+        const configParams = target[name]
         const snakeConfigParams = snakeConfig(configParams)
 
 
@@ -81,19 +64,18 @@ const callMysql = (db, config) => {
           setParams(snakeConfigParams.inParams) +
           callProc(name, snakeConfigParams) +
           selectParams(snakeConfigParams.outParams)
-        console.log(query, configParams)
-        const placeHolderValues = configParams.inParams.map(param => camelInParams[param])
-        console.log(placeHolderValues)
+        const placeHolderValues = configParams.inParams.map(param => inParams[param])
         return db.query(query.trim(), placeHolderValues)
                 .then(response => {
                   const filteredResponse = response.filter(result => Array.isArray(result))
                   const splitIdx = filteredResponse.length - configParams.outParams.length
 
                   const results = camelProps(filteredResponse.slice(0, splitIdx))
+
                   const outParamsResults = filteredResponse.slice(splitIdx)
                   const outParams = getOutParams(configParams.outParams, outParamsResults)
 
-                  return { results, outParams }
+                  return { results: results, outParams }
                 })
                 .catch(err => { throw err })
       }

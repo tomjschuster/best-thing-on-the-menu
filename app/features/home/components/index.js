@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import Places from './Places'
 import SearchBar from './SearchBar'
-import { denormalizePlaces } from '../../../utils'
 import { autocompleteOptions } from '../../../config'
 
 export default class Home extends Component {
-  getAutocompleteInput = node => {
-    if (node) {
-      this.autocompleteInput = node.input
-    }
+  componentWillMount() {
+    this.props.getPlaces()
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     const { setNoGoogle, clearNoGoogle } = this.props
 
     // get input field
@@ -56,10 +53,15 @@ export default class Home extends Component {
     }
   }
 
+  getAutocompleteInput = node => {
+    if (node) {
+      this.autocompleteInput = node.input
+    }
+  }
+
   render() {
     const { getAutocompleteInput } = this
-    const { places, items, reviews, users, router, errors: { noGoogle } } = this.props
-    const denormPlaces = denormalizePlaces(places, items, reviews, users)
+    const { places, router, errors: { noGoogle } } = this.props
     return (
       <div>
         <div className='tagline'><h4>Taskstreamer's Lunch Menu Review</h4></div>
@@ -71,7 +73,7 @@ export default class Home extends Component {
             </p>
         }
         <Places
-          denormPlaces={denormPlaces}
+          places={places}
           router={router}
         />
       </div>

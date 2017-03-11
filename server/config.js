@@ -6,12 +6,12 @@ const db = {
 }
 
 const procs = {
-  getUser: {
-    inParams: ['userId', 'place_id'],
-    outParams: ['num_users', 'numItems']
+  getPlaces: {
+    inParams: [],
+    outParams: []
   },
-  getUserReviews: {
-    inParams: ['userId'],
+  getRestaurantPlaceReviews: {
+    inParams: ['placeId'],
     outParams: []
   }
 }

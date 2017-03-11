@@ -6,12 +6,11 @@ import Paper from 'material-ui/Paper'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 
 
-const Places =  ({ denormPlaces, router }) => (
+const Places =  ({ places, router }) => (
   <Paper>
     <List>
     <Subheader>Featured Places</Subheader>
-      { denormPlaces.map(({ id, name, items, address }) => {
-          const itemCount = items ? items.length : 0
+      { places.map(({ id, name, address, itemCount }) => {
           return (
             <div key={ id }>
               <Divider />

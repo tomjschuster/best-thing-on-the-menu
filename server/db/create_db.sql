@@ -4,6 +4,9 @@ CREATE DATABASE btotm;
 
 USE btotm;
 
+
+# SCHEMA
+
 CREATE TABLE user (
   id INT  NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(255) NOT NULL,
@@ -58,18 +61,72 @@ CREATE TABLE place_photo (
     REFERENCES place (id)
 );
 
-delimiter //
-CREATE PROCEDURE getUser (OUT num_users INT, OUT num_items INT, IN user_id INT, place_id INT)
-  BEGIN
-    SELECT * FROM user WHERE id = user_id;
-    SELECT * FROM place WHERE id = place_id;
-    SELECT * FROM item WHERE id = 1;
-    SELECT COUNT(*) INTO num_users FROM user;
-    SELECT COUNT(*) INTO num_items FROM item;
-  END//
+
+# STORED PROCEDURES
 
 delimiter //
-CREATE PROCEDURE getUserReviews (IN reviewer_id INT)
+
+
+CREATE PROCEDURE getPlaces ()
   BEGIN
-    SELECT * FROM review WHERE user_id = user_id;
+    SELECT
+      p.id,
+      p.google_id,
+      p.name,
+      p.address,
+      COUNT(DISTINCT(i.id)) num_items,
+      COUNT(*) num_reviews,
+      AVG(r.stars) avg_stars
+    FROM place p
+      LEFT JOIN item i ON i.place_id = p.id
+      LEFT JOIN review r ON r.item_id = i.id
+    GROUP BY p.id;
   END//
+
+
+CREATE PROCEDURE getPlaceById (IN place_id INT)
+  BEGIN
+    SELECT
+      p.id,
+      p.google_id,
+      p.name,
+      p.address,
+      COUNT(DISTINCT(i.id)) num_items,
+      COUNT(*) num_reviews,
+      AVG(r.stars) avg_stars
+    FROM place p
+      LEFT JOIN item i ON i.place_id = p.id
+      LEFT JOIN review r ON r.item_id = i.id
+    WHERE p.id = place_id
+    GROUP BY p.id
+    LIMIT 1;
+  END//
+
+
+CREATE PROCEDURE getRestaurantPlaceReviews (IN place_id INT)
+  BEGIN
+
+    CALL getPlaceById(place_id);
+
+    SELECT i.id, i.name
+    FROM item i
+    WHERE i.place_id = place_id;
+
+    SELECT
+      r.id,
+      r.item_id,
+      u.id user_id,
+      u.first_name,
+      u.last_name,
+      u.photo_url,
+      r.stars,
+      rv.comment
+    FROM review r
+      INNER JOIN item i ON i.id = r.item_id
+      INNER JOIN user u ON u.id = r.user_id
+      INNER JOIN place p ON p.id = i.place_id
+    WHERE p.id = place_id;
+  END//
+
+
+delimiter ;

@@ -21,6 +21,11 @@ import { denormalizeSinglePlace} from '../../../utils'
 export default class SinglePlace extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
+  componentWillMount() {
+    const { params: { id }, getPlaceReviews } = this.props
+    getPlaceReviews(id)
+  }
+
   componentDidUpdate(prevProps) {
     const { places,
             items,
