@@ -1,5 +1,3 @@
-import { get } from 'axios'
-import { actions as itemActions } from './items'
 /*----------  INITIAL STATE  ----------*/
 // export const initialState = []
 export const initialState = require('../seed/reviews').default
@@ -25,13 +23,6 @@ export const actions = {
     }),
 
   // THUNK CREATORS
-  getPlaceReviews: placeId => dispatch => {
-    get(`/api/places/${placeId}/reviews`)
-      .then(({ data }) => {
-        dispatch(actions.receiveReviews(data.reviews))
-        dispatch(itemActions.receiveItems(data.items))
-      })
-  }
 }
 
 

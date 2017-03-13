@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { get } from 'axios'
 
 /*----------  INITIAL STATE  ----------*/
 export const initialState = {}
@@ -29,8 +29,7 @@ export const actions = {
 
   //  THUNK CREATORS
   getPlaceItemsReviews: (placeId, router) => dispatch => {
-    axios
-      .get(`/api/places/${placeId}/reviews`)
+    get(`/api/places/${placeId}/reviews`)
       .then(({ data }) => {
         const { found, place, items, reviews } = data
         if (found) {

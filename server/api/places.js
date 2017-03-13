@@ -17,7 +17,7 @@ router.get('/:placeId/reviews', (req, res, next) => {
 
   call.getPlaceItemsReviews({ placeId })
     .then(({ output, found }) => {
-      const place = output[0]
+      const place = output[0][0]
       const items = output[1]
       const reviews = output[2]
 
@@ -29,8 +29,8 @@ router.get('/:placeId/reviews', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
   call.getPlaces()
-    .then(({ results }) => {
-      const places = results[0]
+    .then(({ output }) => {
+      const places = output[0]
       res.send(places)
     })
     .catch(next)

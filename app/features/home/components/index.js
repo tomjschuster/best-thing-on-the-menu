@@ -17,26 +17,25 @@ export default class Home extends Component {
 
       clearNoGoogle()
       const input = this.autocompleteInput
-
+      console.log(google, input)
       // bind autocomplete functionality to input field
       const autocomplete = new google.maps.places.Autocomplete(input, autocompleteOptions)
 
       // on select, get google place and go to page
       autocomplete.addListener('place_changed', () => {
-        const { places, addPlace, router } = this.props
+        const { places, createPlaceAndGoToPage, router } = this.props
 
         const googlePlace = autocomplete.getPlace()
-        const { id: googleId, name, formatted_address: address, photos } = googlePlace
-        const foundPlace = places.find((place) => place.googleId === googleId)
-        // if we have don'te entry for google place add to store
-        const id = foundPlace ? foundPlace.id : places.length + 1
-        if (!foundPlace) {
-          // temporary length id
-          addPlace({ id, googleId, name, address, photos })
+        const { id: googleId, name, formatted_address: address } = googlePlace
+        const currentPlace = places.find((place) => place.googleId === googleId)
+        // if we have don'te entry for google place add database
+        if (!currentPlace) {
+          createPlaceAndGoToPage(googleId, name, address, router)
+        } else {
+          router.push(`/places/${currentPlace.id}`)
         }
 
         // Navigate to place page
-        router.push(`/places/${id}`)
       })
     } else {
       setNoGoogle()
