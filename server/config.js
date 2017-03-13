@@ -13,6 +13,14 @@ const procs = {
   getPlaceItemsReviews: {
     inParams: ['placeId'],
     outParams: ['placeFound']
+  },
+  createItem: {
+    inParams: ['name', 'placeId'],
+    outParams: []
+  },
+  createReview: {
+    inParams: ['stars', 'comment', 'itemId', 'userId'],
+    outParams: []
   }
 }
 
