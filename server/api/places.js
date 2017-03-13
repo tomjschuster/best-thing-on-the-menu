@@ -6,8 +6,8 @@ const { call } = require('../db')
 router.post('/', (req, res, next) => {
   const { googleId, name, address } = req.body
   call.createPlace({ googleId, name, address })
-    .then(() => {
-      res.send({ created: true })
+    .then(({ outParams: { id } }) => {
+      res.send({ id, created: true })
     })
     .catch(next)
 })

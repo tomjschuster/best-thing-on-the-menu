@@ -16,15 +16,15 @@ const procs = {
   },
   createPlace: {
     inParams: ['googleId', 'name', 'address'],
-    outParams: []
+    outParams: ['id']
   },
   createItem: {
     inParams: ['name', 'placeId'],
-    outParams: []
+    outParams: ['id']
   },
   createReview: {
     inParams: ['stars', 'comment', 'itemId', 'userId'],
-    outParams: []
+    outParams: ['id']
   }
 }
 
