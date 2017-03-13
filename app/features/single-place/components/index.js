@@ -22,8 +22,11 @@ export default class SinglePlace extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentWillMount() {
-    const { params: { id }, getPlaceReviews } = this.props
-    getPlaceReviews(id)
+    const { params: { id },
+            getPlaceItemsReviews,
+            router
+          } = this.props
+    getPlaceItemsReviews(id, router)
   }
 
   componentDidUpdate(prevProps) {

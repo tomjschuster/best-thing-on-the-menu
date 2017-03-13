@@ -84,8 +84,10 @@ CREATE PROCEDURE getPlaces ()
   END//
 
 
-CREATE PROCEDURE getPlaceById (IN place_id INT)
+CREATE PROCEDURE getPlaceById (OUT place_found BOOLEAN, IN place_id INT)
   BEGIN
+    SELECT if(COUNT(*) > 0, true, false) FROM place WHERE id = place_id LIMIT 1 INTO place_found;
+
     SELECT
       p.id,
       p.google_id,
@@ -103,10 +105,10 @@ CREATE PROCEDURE getPlaceById (IN place_id INT)
   END//
 
 
-CREATE PROCEDURE getRestaurantPlaceReviews (IN place_id INT)
+CREATE PROCEDURE getPlaceItemsReviews (OUT place_found BOOLEAN, IN place_id INT)
   BEGIN
 
-    CALL getPlaceById(place_id);
+    CALL getPlaceById(place_found, place_id);
 
     SELECT i.id, i.name
     FROM item i
@@ -120,7 +122,7 @@ CREATE PROCEDURE getRestaurantPlaceReviews (IN place_id INT)
       u.last_name,
       u.photo_url,
       r.stars,
-      rv.comment
+      r.comment
     FROM review r
       INNER JOIN item i ON i.id = r.item_id
       INNER JOIN user u ON u.id = r.user_id

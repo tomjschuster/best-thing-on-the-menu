@@ -6,14 +6,14 @@ const { call } = require('../db')
 router.get('/:placeId/reviews', (req, res, next) => {
   const { placeId } = req.params
 
-  call.getRestaurantPlaceReviews({ placeId })
-    .then(({ results }) => {
-
+  call.getPlaceItemsReviews({ placeId })
+    .then(({ results, outParams }) => {
+      const placeFound = !!outParams.placeFound
       const place = results[0]
       const items = results[1]
       const reviews = results[2]
 
-      res.send({ place, items, reviews })
+      res.send({ placeFound, place, items, reviews })
 
     })
     .catch(next)

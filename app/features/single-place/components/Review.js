@@ -14,9 +14,9 @@ const Review = ({ review }) => (
     <Paper style={reviewStyle} zDepth={1}>
       <Card>
         <CardHeader
-          title={ review.user.name }
+          title={ `${review.firstName} ${review.lastName}` }
           subtitle={ '⭐'.repeat(review.stars) }
-          avatar={ review.user.photoUrl }
+          avatar={ review.photoUrl }
         />
         <CardText>
           <span>{ review.comment }</span>

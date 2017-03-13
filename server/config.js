@@ -10,9 +10,9 @@ const procs = {
     inParams: [],
     outParams: []
   },
-  getRestaurantPlaceReviews: {
+  getPlaceItemsReviews: {
     inParams: ['placeId'],
-    outParams: []
+    outParams: ['placeFound']
   }
 }
 

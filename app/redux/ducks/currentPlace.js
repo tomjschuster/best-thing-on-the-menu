@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 /*----------  INITIAL STATE  ----------*/
 export const initialState = {}
 
@@ -23,8 +25,32 @@ export const actions = {
   addItemToCurrentPlace: item => (
     { type: ADD_ITEM_TO_CURRENT_PLACE,
       item
-    })
+    }),
 
+  //  THUNK CREATORS
+  getPlaceItemsReviews: (placeId, router) => dispatch => {
+    axios
+      .get(`/api/places/${placeId}/reviews`)
+      .then(({ data }) => {
+        const { placeFound, place, items, reviews } = data
+        if (placeFound) {
+          const currentPlace = {
+            ...place,
+            items: items.map(item => ({
+              ...item,
+              reviews: reviews.filter(({ itemId }) => itemId === item.id)
+            }))
+          }
+          dispatch(actions.receiveCurrentPlace(currentPlace))
+        } else {
+          router.push('/')
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        router.push('/')
+      })
+  }
 }
 
 

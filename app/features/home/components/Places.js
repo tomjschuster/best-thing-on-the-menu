@@ -10,13 +10,13 @@ const Places =  ({ places, router }) => (
   <Paper>
     <List>
     <Subheader>Featured Places</Subheader>
-      { places.map(({ id, name, address, itemCount }) => {
+      { places.map(({ id, name, address, numItems }) => {
           return (
             <div key={ id }>
               <Divider />
               <ListItem
                 rightIcon={<ActionInfo />}
-                primaryText={ `${name} (${itemCount})` }
+                primaryText={ `${name} (${numItems})` }
                 secondaryText={ address }
                 secondaryTextLines={1}
                 onClick={() => router.push(`/places/${id}`)}
