@@ -12,7 +12,7 @@ const procs = {
   },
   getPlaceItemsReviews: {
     inParams: ['placeId'],
-    outParams: ['placeFound']
+    outParams: ['found']
   },
   createPlace: {
     inParams: ['googleId', 'name', 'address'],

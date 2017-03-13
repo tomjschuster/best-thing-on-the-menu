@@ -32,8 +32,8 @@ export const actions = {
     axios
       .get(`/api/places/${placeId}/reviews`)
       .then(({ data }) => {
-        const { placeFound, place, items, reviews } = data
-        if (placeFound) {
+        const { found, place, items, reviews } = data
+        if (found) {
           const currentPlace = {
             ...place,
             items: items.map(item => ({

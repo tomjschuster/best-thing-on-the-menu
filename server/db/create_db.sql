@@ -84,9 +84,9 @@ CREATE PROCEDURE getPlaces ()
   END//
 
 
-CREATE PROCEDURE getPlaceById (OUT place_found BOOLEAN, IN place_id INT)
+CREATE PROCEDURE getPlaceById (OUT found BOOLEAN, IN place_id INT)
   BEGIN
-    SELECT if(COUNT(*) > 0, true, false) FROM place WHERE id = place_id LIMIT 1 INTO place_found;
+    SELECT if(COUNT(*) > 0, true, false) FROM place WHERE id = place_id LIMIT 1 INTO found;
 
     SELECT
       p.id,
@@ -105,10 +105,10 @@ CREATE PROCEDURE getPlaceById (OUT place_found BOOLEAN, IN place_id INT)
   END//
 
 
-CREATE PROCEDURE getPlaceItemsReviews (OUT place_found BOOLEAN, IN place_id INT)
+CREATE PROCEDURE getPlaceItemsReviews (OUT found BOOLEAN, IN place_id INT)
   BEGIN
 
-    CALL getPlaceById(place_found, place_id);
+    CALL getPlaceById(found, place_id);
 
     SELECT i.id, i.name
     FROM item i

@@ -6,7 +6,7 @@ const { call } = require('../db')
 router.post('/', (req, res, next) => {
   const { googleId, name, address } = req.body
   call.createPlace({ googleId, name, address })
-    .then(({ outParams: { id } }) => {
+    .then(({ id }) => {
       res.send({ id, created: true })
     })
     .catch(next)
@@ -16,13 +16,12 @@ router.get('/:placeId/reviews', (req, res, next) => {
   const { placeId } = req.params
 
   call.getPlaceItemsReviews({ placeId })
-    .then(({ results, outParams }) => {
-      const placeFound = !!outParams.placeFound
-      const place = results[0]
-      const items = results[1]
-      const reviews = results[2]
+    .then(({ output, found }) => {
+      const place = output[0]
+      const items = output[1]
+      const reviews = output[2]
 
-      res.send({ placeFound, place, items, reviews })
+      res.send({ found: !!found, place, items, reviews })
 
     })
     .catch(next)
