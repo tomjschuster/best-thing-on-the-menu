@@ -3,6 +3,15 @@ module.exports = router
 const { call } = require('../db')
 
 
+router.post('/', (req, res, next) => {
+  const { googleId, name, address } = req.body
+  call.createPlace({ googleId, name, address })
+    .then(() => {
+      res.send({ created: true })
+    })
+    .catch(next)
+})
+
 router.get('/:placeId/reviews', (req, res, next) => {
   const { placeId } = req.params
 

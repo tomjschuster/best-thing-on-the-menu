@@ -14,6 +14,10 @@ const procs = {
     inParams: ['placeId'],
     outParams: ['placeFound']
   },
+  createPlace: {
+    inParams: ['googleId', 'name', 'address'],
+    outParams: []
+  },
   createItem: {
     inParams: ['name', 'placeId'],
     outParams: []

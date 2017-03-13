@@ -130,14 +130,30 @@ CREATE PROCEDURE getPlaceItemsReviews (OUT place_found BOOLEAN, IN place_id INT)
     WHERE p.id = place_id;
   END//
 
+CREATE PROCEDURE createPlace (
+  google_id VARCHAR(255),
+  name VARCHAR(255),
+  address VARCHAR(255)
+)
+  BEGIN
+    INSERT INTO place (google_id, name, address)
+      VALUES (google_id, name, address);
+  END//
+
 CREATE PROCEDURE createItem (IN name VARCHAR(255), IN place_id INT)
   BEGIN
     INSERT INTO item (name, place_id) VALUES (name, place_id);
   END//
 
-CREATE PROCEDURE createReview (IN stars TINYINT, IN comment VARCHAR(255), IN item_id INT, IN user_id INT)
+CREATE PROCEDURE createReview (
+  IN stars TINYINT,
+  IN comment VARCHAR(255),
+  IN item_id INT,
+  IN user_id INT
+)
   BEGIN
-    INSERT INTO review (stars, comment, item_id, user_id) VALUES (stars, comment, item_id, user_id);
+    INSERT INTO review (stars, comment, item_id, user_id)
+      VALUES (stars, comment, item_id, user_id);
   END//
 
 
