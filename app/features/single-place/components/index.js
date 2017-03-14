@@ -60,35 +60,19 @@ export default class SinglePlace extends Component {
 
   /*----------  INSTANCE METHODS  ----------*/
   onReviewSubmit = () => {
-    const { addReview,
-            addToItemsAndCurrentPlace,
+    const { checkItemAndCreateReview,
             closeAndClearAddReview,
             auth: { id: userId },
             forms: { addReview: addReviewForm },
-            currentPlace: { id: placeId, items },
-            reviews
+            currentPlace: { id: placeId }
           } = this.props
     const { item, stars, comment } = addReviewForm
 
-    let itemId = item.id
-    if (item.isSet) {
-      if (item.isNew) {
-        itemId = addToItemsAndCurrentPlace(item.name, placeId)
-      }
-    } else {
-      const foundItem = items.find(currentItem => currentItem.name === item.name)
-      itemId = foundItem ? foundItem.id : addToItemsAndCurrentPlace(item.name, placeId)
+    if (item.name) {
+      // NEED TO IMPLEMENT checkItemAndCreateReview
+      checkItemAndCreateReview(placeId, item.name, stars, comment, userId)
+      closeAndClearAddReview()
     }
-
-    addReview({
-        id: reviews.length + 1,
-        userId,
-        itemId,
-        comment,
-        stars
-      })
-
-    closeAndClearAddReview()
   }
 
 

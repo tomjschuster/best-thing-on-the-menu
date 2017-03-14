@@ -3,9 +3,16 @@ module.exports = router
 const { call } = require('../db')
 
 
+router.post('/check/item', (req, res, next) => {
+  call.checkItemAndCreateReview(req.body)
+    .then(({ newItem }) => {
+      res.send({ newItem: !!newItem })
+    })
+    .catch(next)
+})
+
 router.post('/', (req, res, next) => {
-  const { stars, comment, itemId, userId } = req.body
-  call.createReview({ stars, comment, itemId, userId })
+  call.createReview(req.body)
     .then(({ id }) => {
       res.send({ id, created: true })
     })

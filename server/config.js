@@ -25,6 +25,10 @@ const procs = {
   createReview: {
     inParams: ['stars', 'comment', 'itemId', 'userId'],
     outParams: ['id']
+  },
+  checkItemAndCreateReview: {
+    inParams: ['placeId', 'itemName', 'stars', 'comment', 'userId'],
+    outParams: ['newItem']
   }
 }
 

@@ -1,4 +1,4 @@
-import { get } from 'axios'
+import { get, post } from 'axios'
 
 /*----------  INITIAL STATE  ----------*/
 export const initialState = {}
@@ -8,6 +8,7 @@ export const initialState = {}
 const RECEIVE_CURRENT_PLACE = 'RECEIVE_CURRENT_PLACE'
 const CLEAR_CURRENT_PLACE = 'CLEAR_CURRENT_PLACE'
 const ADD_ITEM_TO_CURRENT_PLACE = 'ADD_ITEM_TO_CURRENT_PLACE'
+const ADD_REVIEW_TO_CURRENT_PLACE = 'ADD_REVIEW_TO_CURRENT_PLACE'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
@@ -27,7 +28,20 @@ export const actions = {
       item
     }),
 
+  addReviewToCurrentPlace: review => (
+    { type: ADD_REVIEW_TO_CURRENT_PLACE,
+      review
+    }),
+
   //  THUNK CREATORS
+  checkItemAndCreateReview: (placeId, itemName, stars, comment, userId) => dispatch => {
+    post(`/api/reviews/check/item`, { placeId, itemName, stars, comment, userId })
+      .then(() => {
+        dispatch(actions.getPlaceItemsReviews(placeId))
+      })
+      .catch(console.error)
+  },
+
   getPlaceItemsReviews: (placeId, router) => dispatch => {
     get(`/api/places/${placeId}/reviews`)
       .then(({ data }) => {
@@ -49,18 +63,34 @@ export const actions = {
         console.error(err)
         router.push('/')
       })
-  }
+  },
+
 }
 
 
 /*----------  REDUCER  ----------*/
 const reducer =  {
-  _name: 'currentPlace',
-  [RECEIVE_CURRENT_PLACE]: (state, action) => ({ ...action.currentPlace }),
+  [RECEIVE_CURRENT_PLACE]: (state, action) => ({
+    ...action.currentPlace
+  }),
+
   [CLEAR_CURRENT_PLACE]: () => ({}),
-  [ADD_ITEM_TO_CURRENT_PLACE]: (state, action) => (
-    { ...state, items: [ ...state.items, action.item ] }
-  )
+
+  [ADD_ITEM_TO_CURRENT_PLACE]: (state, action) => ({ ...state,
+    items: [ ...state.items, action.item ]
+  }),
+
+  [ADD_REVIEW_TO_CURRENT_PLACE]: (state, action) => ({ ...state,
+    items: state.items.map(item => {
+      if (item.id === action.review.itemId) {
+        const itemWithNewReviews = { ...item, reviews: [ ...item.reviews, action.review ]}
+        console.log(itemWithNewReviews)
+        return itemWithNewReviews
+      } else {
+        return item
+      }
+    })
+  })
 }
 
 
