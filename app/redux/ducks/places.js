@@ -12,7 +12,8 @@ const ADD_PLACE = 'ADD_PLACE'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
-  // Action Creators
+
+  // ACTION CREATORS
   receivePlaces: places => (
     { type: RECEIVE_PLACE,
       places
@@ -22,7 +23,7 @@ export const actions = {
       place
     }),
 
-  // Thunk Creators
+  // THUNK CREATORS
   createPlaceAndGoToPage: (googleId, name, address, router) => () => {
     post('/api/places', { googleId, name, address })
       .then(({ data: { created, id } }) => {

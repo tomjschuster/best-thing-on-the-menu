@@ -12,7 +12,8 @@ const ADD_ITEM = 'ADD_ITEM'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
-  // Action Creators
+
+  // ACTION CREATORS
   receiveItems: items => (
     { type: RECEIVE_ITEMS,
       items
@@ -22,17 +23,6 @@ export const actions = {
       item
     }),
 
-  // Thunk Creators
-  addToItemsAndCurrentPlace: (name, placeId) => dispatch => {
-    const id = Math.random().toString(36).substring(7) // temporary
-    const item = { id, placeId, name }
-    const currentPlaceItem = { ...item, reviews: [] }
-
-    dispatch(actions.addItem(item))
-    dispatch(currentPlaceActions.addItemToCurrentPlace(currentPlaceItem))
-
-    return id
-  }
 }
 
 

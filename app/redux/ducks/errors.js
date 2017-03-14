@@ -9,10 +9,14 @@ const CLEAR_NO_GOOGLE = 'CLEAR_NO_GOOGLE'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
-  // Action Creators
+
+  // ACTION CREATORS
+
+  // GOOGLE
   setNoGoogle: () => (
     { type: SET_NO_GOOGLE
     }),
+
   clearNoGoogle: () => (
     { type: CLEAR_NO_GOOGLE
     }),
@@ -22,6 +26,8 @@ export const actions = {
 
 /*----------  REDUCER  ----------*/
 const reducer =  {
+
+  // GOOGLE
   [SET_NO_GOOGLE]: state => ({ ...state,
     noGoogle: true
   }),
