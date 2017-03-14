@@ -1,8 +1,8 @@
-import { actions as currentRestaurantActions } from './currentRestaurant'
+import { actions as currentPlaceActions } from './currentPlace'
 
 /*----------  INITIAL STATE  ----------*/
-// export const initialState = []
-export const initialState = require('../seed/items').default
+export const initialState = []
+// export const initialState = require('../seed/items').default
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -12,7 +12,8 @@ const ADD_ITEM = 'ADD_ITEM'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
-  // Action Creators
+
+  // ACTION CREATORS
   receiveItems: items => (
     { type: RECEIVE_ITEMS,
       items
@@ -22,17 +23,6 @@ export const actions = {
       item
     }),
 
-  // Thunk Creators
-  addToItemsAndCurrentRestaurant: (name, restaurantId) => dispatch => {
-    const id = Math.random().toString(36).substring(7) // temporary
-    const item = { id, restaurantId, name }
-    const currentRestaurantItem = { ...item, reviews: [] }
-
-    dispatch(actions.addItem(item))
-    dispatch(currentRestaurantActions.addItemToCurrentRestaurant(currentRestaurantItem))
-
-    return id
-  }
 }
 
 

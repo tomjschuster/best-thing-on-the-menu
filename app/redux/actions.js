@@ -1,19 +1,21 @@
 import { actions as auth } from './ducks/auth'
 import { actions as users } from './ducks/users'
-import { actions as restaurants } from './ducks/restaurants'
-import { actions as currentRestaurant } from './ducks/currentRestaurant'
+import { actions as places } from './ducks/places'
+import { actions as currentPlace } from './ducks/currentPlace'
 import { actions as reviews } from './ducks/reviews'
 import { actions as items } from './ducks/items'
 import { actions as ux } from './ducks/ux'
 import { actions as forms } from './ducks/forms'
+import { actions as errors } from './ducks/errors'
 
 export default {
   ...auth,
   ...users,
-  ...restaurants,
-  ...currentRestaurant,
+  ...places,
+  ...currentPlace,
   ...reviews,
   ...items,
   ...ux,
-  ...forms
+  ...forms,
+  ...errors
 }

@@ -1,9 +1,9 @@
-import { main, singleRestaurant, home } from './features'
+import { main, singlePlace, home } from './features'
 
 export default {
   component: main,
   childRoutes: [
-    singleRestaurant,
+    singlePlace,
     home
   ]
 }

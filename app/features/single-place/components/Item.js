@@ -13,9 +13,7 @@ const Item = ({ item }) => (
           showExpandableButton={true}
       />
       <CardText expandable={true}>
-          { item.reviews.map(review =>
-              <Review key={ review.id } review={ review } />
-          )}
+          { item.reviews.map(review => <Review key={ review.id } review={ review } /> )}
       </CardText>
     </Card>
   </Paper>

@@ -15,84 +15,52 @@ import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
 
-import { denormalizeSingleRestaurant } from '../../../utils'
+import { denormalizeSinglePlace} from '../../../utils'
 
 
-export default class SingleRestaurant extends Component {
+export default class SinglePlace extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
-  componentDidUpdate(prevProps) {
-    const { restaurants,
-            items,
-            reviews,
-            users,
-            currentRestaurant,
-            receiveCurrentRestaurant,
+  componentWillMount() {
+    const { params: { id },
+            getPlaceItemsReviews,
+            router
           } = this.props
-
-    if (reviews !== prevProps.reviews) {
-      const updatedCurrentRestaurant = denormalizeSingleRestaurant(
-        currentRestaurant.id,
-        restaurants,
-        items,
-        reviews,
-        users
-      )
-      receiveCurrentRestaurant(updatedCurrentRestaurant)
-    }
-
-}
+    getPlaceItemsReviews(id, router)
+  }
 
   componentWillUnmount() {
-    const { clearCurrentRestaurant, clearAddReview } = this.props
-    clearCurrentRestaurant()
+    const { clearCurrentPlace, clearAddReview } = this.props
+    clearCurrentPlace()
     clearAddReview()
   }
 
 
   /*----------  INSTANCE METHODS  ----------*/
   onReviewSubmit = () => {
-    const { addReview,
-            addToItemsAndCurrentRestaurant,
+    const { checkItemAndCreateReview,
             closeAndClearAddReview,
             auth: { id: userId },
             forms: { addReview: addReviewForm },
-            currentRestaurant: { id: restaurantId, items },
-            reviews
+            currentPlace: { id: placeId }
           } = this.props
-    const { item, stars, comment } = addReviewForm
-
-    let itemId = item.id
-    if (item.isSet) {
-      if (item.isNew) {
-        itemId = addToItemsAndCurrentRestaurant(item.name, restaurantId)
-      }
-    } else {
-      const foundItem = items.find(currentItem => currentItem.name === item.name)
-      itemId = foundItem ? foundItem.id : addToItemsAndCurrentRestaurant(item.name, restaurantId)
+    const { itemName, stars, comment } = addReviewForm
+    const trimmedName = itemName.trim()
+    if (trimmedName && stars) {
+      checkItemAndCreateReview(placeId, trimmedName, stars, comment, userId)
+      closeAndClearAddReview()
     }
-
-    addReview({
-        id: reviews.length,
-        userId,
-        itemId,
-        comment,
-        stars
-      })
-
-    closeAndClearAddReview()
   }
 
 
 /*----------  RENDER  ----------*/
   render() {
     const { onReviewSubmit } = this
-    const { currentRestaurant: { name, address, items },
+    const { currentPlace: { name, address, items },
             ux: { isShowAddReview },
             forms: { addReview: addReviewForm },
             showAddReview,
             closeAndClearAddReview,
-            updateItemNewOrOld,
             updateItemName,
             updateStars,
             updateComment
@@ -107,7 +75,6 @@ export default class SingleRestaurant extends Component {
                 items={items}
                 addReviewForm={addReviewForm}
                 closeAndClearAddReview={closeAndClearAddReview}
-                updateItemNewOrOld={updateItemNewOrOld}
                 updateItemName={updateItemName}
                 updateStars={updateStars}
                 updateComment={updateComment}

@@ -10,14 +10,19 @@ const ADD_REVIEW = 'ADD_REVIEW'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
+
+  // ACTION CREATORS
   receiveReviews: reviews => (
     { type: RECEIVE_REVIEWS,
       reviews
     }),
+
   addReview: review => (
     { type: ADD_REVIEW,
       review
-    })
+    }),
+
+  // THUNK CREATORS
 }
 
 
