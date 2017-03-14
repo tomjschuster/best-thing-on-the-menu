@@ -29,28 +29,6 @@ export default class SinglePlace extends Component {
     getPlaceItemsReviews(id, router)
   }
 
-  componentDidUpdate(prevProps) {
-    const { places,
-            items,
-            reviews,
-            users,
-            currentPlace,
-            receiveCurrentPlace,
-          } = this.props
-
-    if (reviews !== prevProps.reviews) {
-      const updatedCurrentPlace = denormalizeSinglePlace(
-        currentPlace.id,
-        places,
-        items,
-        reviews,
-        users
-      )
-      receiveCurrentPlace(updatedCurrentPlace)
-    }
-
-}
-
   componentWillUnmount() {
     const { clearCurrentPlace, clearAddReview } = this.props
     clearCurrentPlace()
@@ -66,11 +44,10 @@ export default class SinglePlace extends Component {
             forms: { addReview: addReviewForm },
             currentPlace: { id: placeId }
           } = this.props
-    const { item, stars, comment } = addReviewForm
-
-    if (item.name) {
-      // NEED TO IMPLEMENT checkItemAndCreateReview
-      checkItemAndCreateReview(placeId, item.name, stars, comment, userId)
+    const { itemName, stars, comment } = addReviewForm
+    const trimmedName = itemName.trim()
+    if (trimmedName && stars) {
+      checkItemAndCreateReview(placeId, trimmedName, stars, comment, userId)
       closeAndClearAddReview()
     }
   }
@@ -84,7 +61,6 @@ export default class SinglePlace extends Component {
             forms: { addReview: addReviewForm },
             showAddReview,
             closeAndClearAddReview,
-            updateItemNewOrOld,
             updateItemName,
             updateStars,
             updateComment
@@ -99,7 +75,6 @@ export default class SinglePlace extends Component {
                 items={items}
                 addReviewForm={addReviewForm}
                 closeAndClearAddReview={closeAndClearAddReview}
-                updateItemNewOrOld={updateItemNewOrOld}
                 updateItemName={updateItemName}
                 updateStars={updateStars}
                 updateComment={updateComment}

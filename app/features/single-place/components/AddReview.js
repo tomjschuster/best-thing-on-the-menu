@@ -12,7 +12,6 @@ import { itemAutoCompleteDataConfig } from '../../../config'
 const AddReview = ({ items,
                      addReviewForm,
                      closeAndClearAddReview,
-                     updateItemNewOrOld,
                      updateItemName,
                      updateStars,
                      updateComment,
@@ -29,8 +28,7 @@ const AddReview = ({ items,
               filter={AutoComplete.caseInsensitiveFilter}
               dataSource={items || []}
               dataSourceConfig={itemAutoCompleteDataConfig}
-              searchText={addReviewForm.item.name}
-              onNewRequest={updateItemNewOrOld}
+              searchText={addReviewForm.itemName}
               onUpdateInput={updateItemName}
               style={{paddingLeft: '12px'}}
             />

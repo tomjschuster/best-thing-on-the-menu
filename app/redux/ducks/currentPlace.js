@@ -83,9 +83,7 @@ const reducer =  {
   [ADD_REVIEW_TO_CURRENT_PLACE]: (state, action) => ({ ...state,
     items: state.items.map(item => {
       if (item.id === action.review.itemId) {
-        const itemWithNewReviews = { ...item, reviews: [ ...item.reviews, action.review ]}
-        console.log(itemWithNewReviews)
-        return itemWithNewReviews
+        return { ...item, reviews: [ ...item.reviews, action.review ] }
       } else {
         return item
       }
