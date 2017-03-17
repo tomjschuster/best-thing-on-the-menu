@@ -1,8 +1,5 @@
-import { actions as currentPlaceActions } from './currentPlace'
-
 /*----------  INITIAL STATE  ----------*/
 export const initialState = []
-// export const initialState = require('../seed/items').default
 
 
 /*----------  ACTION TYPES  ----------*/

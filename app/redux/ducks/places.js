@@ -2,7 +2,6 @@ import { get, post } from 'axios'
 
 /*----------  INITIAL STATE  ----------*/
 export const initialState = []
-// export const initialState = require('../seed/places').default
 
 
 /*----------  ACTION TYPES  ----------*/

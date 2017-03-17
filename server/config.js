@@ -32,5 +32,8 @@ const procs = {
   }
 }
 
+const auth = {
+  GOOGLE_CALLBACK_URL: '/auth/google/callback'
+}
 
-module.exports = { db, procs }
+module.exports = { db, procs, auth }
