@@ -8,6 +8,9 @@ import { Router, browserHistory } from 'react-router'
 import store from './redux'
 import routes from './routes'
 
+
+require('./auth').setupInterceptors()
+
 render(
   <MuiThemeProvider muiTheme={getMuiTheme(indigoTealTheme)}>
     <Provider store={store}>
