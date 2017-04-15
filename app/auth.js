@@ -4,9 +4,9 @@ import { browserHistory } from 'react-router'
 
 export const setupInterceptors = () => {
   axios.interceptors.response.use(res => res, err => {
-    if (err.status === 401) {
+    if (err.response.status === 401) {
       store.dispatch(actions.signOut())
-      browserHistory.push('/login')
+      browserHistory.replace({ pathname: '/login', state: { loggedOut: true } })
     }
     return err
   })

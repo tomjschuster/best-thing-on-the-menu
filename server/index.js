@@ -45,6 +45,14 @@ app.post('/auth/local', passport.authenticate('local'), (req, res, next) => res.
 
 app.get('/check/req', (req, res) => res.send(req.session))
 
+
+app.post('/auth/logout', (req, res) => {
+  console.log('where am i')
+  req.session.destroy(() => {
+    res.send(401)
+  })
+})
+
 app.get('*', (req, res, next) => res.sendFile(indexHtmlPath))
 
 app.use((err, req, res, next) => {

@@ -1,4 +1,4 @@
-import { get } from 'axios'
+import axios from 'axios'
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = { isAuthenticated: false }
@@ -24,7 +24,8 @@ export const actions = {
 
   //  THUNK CREATORS
   checkAuth: () => dispatch => (
-    get('/auth/check')
+    axios
+      .get('/auth/check')
       .then(({ data: { id, isAuthenticated} }) => {
         if (isAuthenticated) {
           dispatch(actions.signIn(id))
@@ -37,6 +38,17 @@ export const actions = {
       .catch(err => {
         dispatch(actions.signOut())
         return { isAuthenticated: false, err }
+      })
+  ),
+
+  endSession: () => dispatch => (
+    axios
+      .post('/auth/logout')
+      .then(res => {
+        console.log('then', res)
+      })
+      .catch(err => {
+        console.log('catch', err)
       })
   )
 

@@ -16,3 +16,4 @@ router.post('/local', passport.authenticate('local'), (req, res, next) => res.se
 
 
 router.get('/check/req', (req, res) => res.send(req.session))
+

@@ -9,11 +9,12 @@ export default class Main extends Component {
   }
 
   render() {
-    const { auth, router, children } = this.props
+    const { auth, endSession, router, children } = this.props
     return (
       <Paper>
         <NavBar
           isAuthenticated={auth.isAuthenticated}
+          endSession={endSession}
           router={router}
         />
         <div id='content' className='container'>

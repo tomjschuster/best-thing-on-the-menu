@@ -9,7 +9,7 @@ import Exit from 'material-ui/svg-icons/action/exit-to-app'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
-const NavBar = ({ router, isAuthenticated }) => (
+const NavBar = ({ isAuthenticated, endSession, router }) => (
       <div>
         <AppBar
           title='Best Thing On The Menu'
@@ -19,7 +19,7 @@ const NavBar = ({ router, isAuthenticated }) => (
             </IconButton>
           }
           iconElementRight={ isAuthenticated ?
-            <IconButton onClick={() => router.push('/explore')}>
+            <IconButton onClick={() => endSession()}>
               <Exit />
             </IconButton> :
             null

@@ -42,8 +42,7 @@ passport.use(new GoogleStrategy({
       // console.log(chalk.yellow(JSON.stringify(profile.json(), null, 4)))
       if (isTaskstreamEmail(user.email)) {
         call.updateOrCreateUser(user)
-          .then((res) => {
-            console.log('da ressss!', JSON.stringify(res))
+          .then(() => {
             done(null, user.email)
           })
       } else {
