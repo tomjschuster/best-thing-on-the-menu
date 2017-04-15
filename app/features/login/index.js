@@ -8,8 +8,10 @@ const mapState = state => state
 const mapDispatch = { ...actions }
 const component = connect(mapState, mapDispatch)(Login)
 
-const onEnter = (_, replace, callback) => {
-  store.dispatch(actions.checkAuth())
+const onEnter = ({ location: { state = {} } }, replace, callback) => {
+  // If not logged out redirect, check for auth
+  if (!state.loggedOut) {
+    store.dispatch(actions.checkAuth())
     .then(({ isAuthenticated }) => {
       if (isAuthenticated) {
         replace('/explore')
@@ -17,6 +19,9 @@ const onEnter = (_, replace, callback) => {
       callback()
     })
     .catch(() => callback())
+  } else {
+    callback()
+  }
 }
 
 export default { path, component, onEnter }

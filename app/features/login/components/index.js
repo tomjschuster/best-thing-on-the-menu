@@ -10,8 +10,9 @@ export default class Login extends Component {
     return (
       <div>
         <div className='tagline'>
-        <h4>Taskstreamer's Lunch Menu Review</h4></div>
-          <GoogleSignIn router={router} />
+          <h4>Taskstreamer's Lunch Menu Review</h4>
+        </div>
+        <GoogleSignIn router={router} />
       </div>
     )
   }

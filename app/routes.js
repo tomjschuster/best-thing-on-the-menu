@@ -1,5 +1,5 @@
 import { main, login, singlePlace, explore } from './features'
-import { onEnterAuth } from './auth'
+import { requireAuth } from './auth'
 
 
 export default {
@@ -7,11 +7,11 @@ export default {
   childRoutes: [
     login,
     {
-      onEnter: onEnterAuth,
+      onEnter: requireAuth,
       childRoutes: [
         explore,
         singlePlace,
-        { path: '*', onEnter: (_, replace) => replace('/explore')}
+        { path: '*', onEnter: (_, replace) => replace('/explore') }
       ]
     }
   ]

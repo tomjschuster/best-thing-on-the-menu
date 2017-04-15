@@ -1,8 +1,7 @@
 import { get } from 'axios'
-import { browserHistory } from 'react-router'
 
 /*----------  INITIAL STATE  ----------*/
-export const initialState = { isAuthenticated: false }
+const initialState = { isAuthenticated: false }
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -41,12 +40,11 @@ export const actions = {
       })
   )
 
-
 }
 
 
 /*----------  REDUCER  ----------*/
-const reducer =  {
+const actionHandler =  {
 
   [SIGN_IN]: (state, { id }) => ({ ...state,
     id, isAuthenticated: true
@@ -59,5 +57,4 @@ const reducer =  {
 }
 
 
-import { createReducer } from '../../utils'
-export default createReducer(initialState, reducer)
+export default { initialState, actionHandler }

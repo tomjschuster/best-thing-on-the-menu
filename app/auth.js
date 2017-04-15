@@ -12,18 +12,21 @@ export const setupInterceptors = () => {
   })
 }
 
-export const onEnterAuth = (nextState, replace, callback) => {
+export const requireAuth = (nextState, replace, callback) => {
   const { auth } = store.getState()
-
-    if (!auth.isAuthenticated) {
-    store.dispatch(actions.checkAuth())
-      .then(({ isAuthenticated }) => {
-        if (!isAuthenticated) {
-          replace('/login')
-        }
-        callback()
-      })
-    } else {
+  // When entering app, check store for authorization
+  if (!auth.isAuthenticated) {
+  // If no auth in store, check w/ session and update store.
+  store.dispatch(actions.checkAuth())
+    .then(({ isAuthenticated }) => {
+      if (!isAuthenticated) {
+        // If not authorized, redirect to login page
+        replace({ pathname: '/login', state: { loggedOut: true } })
+      }
       callback()
-    }
+    })
+  } else {
+    // If authorized, continue
+    callback()
+  }
 }

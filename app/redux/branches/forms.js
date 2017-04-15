@@ -1,7 +1,7 @@
 import { actions as uxActions } from './ux'
 
 /*----------  INITIAL STATE  ----------*/
-export const initialState = {
+const initialState = {
   addReview: {
     itemName: '',
     stars: null,
@@ -21,30 +21,27 @@ const CLEAR_ADD_REVIEW = 'CLEAR_ADD_REVIEW'
 export const actions = {
 
   // ACTION CREATORS
-
   // ADD REVIEW
-  updateItemName: name => (
-    { type: UPDATE_ITEM_NAME,
-      name
-    }),
+  updateItemName: name => ({
+    type: UPDATE_ITEM_NAME,
+    name
+  }),
 
-  updateStars: stars => (
-    { type: UPDATE_STARS,
-      stars
-    }),
+  updateStars: stars => ({
+    type: UPDATE_STARS,
+    stars
+  }),
 
-  updateComment: comment => (
-    { type: UPDATE_COMMENT,
-      comment
-    }),
+  updateComment: comment => ({
+    type: UPDATE_COMMENT,
+    comment
+  }),
 
-  clearAddReview: () => (
-    { type: CLEAR_ADD_REVIEW,
-    }),
-
+  clearAddReview: () => ({
+    type: CLEAR_ADD_REVIEW,
+  }),
 
   // THUNK CREATORS
-
   // ADD REVIEW
   closeAndClearAddReview: () => dispatch => {
     dispatch(uxActions.hideAddReview())
@@ -55,7 +52,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const reducer =  {
+const actionHandler =  {
 
   // ADD REVIEW
   [UPDATE_ITEM_NAME]: (state, { name }) => ({ ...state,
@@ -80,6 +77,4 @@ const reducer =  {
 
 }
 
-
-import { createReducer } from '../../utils'
-export default createReducer(initialState, reducer)
+export default { initialState, actionHandler }
