@@ -7,3 +7,5 @@ npm-debug.log
 .ssh
 .ssh/*
 .env
+.DS_Store
+*/DS_Store

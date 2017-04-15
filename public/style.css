@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.google-sign-in {
+  display: inline-block;
+  margin: 0 auto;
+}
+
 #content {
   padding: 2%;
 }

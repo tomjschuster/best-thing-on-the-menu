@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import Places from './Places'
 import SearchBar from './SearchBar'
 import { autocompleteOptions } from '../../../config'
-
-export default class Home extends Component {
+import { get } from 'axios'
+export default class Explore extends Component {
   componentWillMount() {
     this.props.getPlaces()
   }

@@ -1,9 +1,18 @@
-import { main, singlePlace, home } from './features'
+import { main, login, singlePlace, explore } from './features'
+import { onEnterAuth } from './auth'
+
 
 export default {
   component: main,
   childRoutes: [
-    singlePlace,
-    home
+    login,
+    {
+      onEnter: onEnterAuth,
+      childRoutes: [
+        explore,
+        singlePlace,
+        { path: '*', onEnter: (_, replace) => replace('/explore')}
+      ]
+    }
   ]
 }

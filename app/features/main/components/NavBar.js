@@ -12,7 +12,11 @@ const NavBar = props => (
       <div>
         <AppBar
           title='Best Thing On The Menu'
-          iconElementLeft={<IconButton onClick={() => props.router.push('/')}><RoomService /></IconButton>}
+          iconElementLeft={
+            <IconButton onClick={() => props.router.push('/explore')}>
+              <RoomService />\
+            </IconButton>
+          }
         />
       </div>
     )

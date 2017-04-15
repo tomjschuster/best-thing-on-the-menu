@@ -49,12 +49,12 @@ const getOutParams = (params, results) => {
   }
 }
 
-class Output {
+class Output extends Array {
   constructor(resultsArray) {
     return resultsArray
   }
   get first() {
-    return this[0][0]
+    return this[0]
   }
 }
 
@@ -81,7 +81,7 @@ const callMysql = (db, config) => {
 
                   const camelResults = camelProps(results.slice(0, splitIdx))
                   const output = new Output(camelResults)
-
+                  console.log(output.first)
                   const outParamsResults = results.slice(splitIdx)
                   const outParams = getOutParams(configParams.outParams, outParamsResults)
 

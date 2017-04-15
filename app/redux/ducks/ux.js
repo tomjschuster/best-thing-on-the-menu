@@ -32,7 +32,7 @@ const reducer =  {
   }),
 
   [HIDE_ADD_REVIEW]: (state) => ({ ...state, isShowAddReview: false
-  })
+  }),
 
 }
 
