@@ -6,6 +6,7 @@ export { actions as reviews } from './branches/reviews'
 export { actions as items } from './branches/items'
 export { actions as ux } from './branches/ux'
 export { actions as forms } from './branches/forms'
+export { actions as google } from './branches/google'
 export { actions as errors } from './branches/errors'
 
 export default {
@@ -17,5 +18,6 @@ export default {
   ...require('./branches/items').actions,
   ...require('./branches/ux').actions,
   ...require('./branches/forms').actions,
+  ...require('./branches/google').actions,
   ...require('./branches/errors').actions
 }
