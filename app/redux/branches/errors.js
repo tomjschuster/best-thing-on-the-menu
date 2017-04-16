@@ -1,5 +1,5 @@
 /*----------  INITIAL STATE  ----------*/
-export const initialState = { noGoogle: false }
+const initialState = { noGoogle: false }
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -11,21 +11,22 @@ const CLEAR_NO_GOOGLE = 'CLEAR_NO_GOOGLE'
 export const actions = {
 
   // ACTION CREATORS
-
   // GOOGLE
-  setNoGoogle: () => (
-    { type: SET_NO_GOOGLE
-    }),
+  setNoGoogle: () => ({
+    type: SET_NO_GOOGLE
+  }),
 
-  clearNoGoogle: () => (
-    { type: CLEAR_NO_GOOGLE
-    }),
+  clearNoGoogle: () => ({
+    type: CLEAR_NO_GOOGLE
+  }),
+
+  // THUNK CREATORS
 
 }
 
 
 /*----------  REDUCER  ----------*/
-const reducer =  {
+const actionHandler =  {
 
   // GOOGLE
   [SET_NO_GOOGLE]: state => ({ ...state,
@@ -38,6 +39,4 @@ const reducer =  {
 
 }
 
-
-import { createReducer } from '../../utils'
-export default createReducer(initialState, reducer)
+export default { initialState, actionHandler }

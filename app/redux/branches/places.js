@@ -1,8 +1,7 @@
 import { get, post } from 'axios'
 
 /*----------  INITIAL STATE  ----------*/
-export const initialState = []
-// export const initialState = require('../seed/places').default
+const initialState = []
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -14,14 +13,14 @@ const ADD_PLACE = 'ADD_PLACE'
 export const actions = {
 
   // ACTION CREATORS
-  receivePlaces: places => (
-    { type: RECEIVE_PLACE,
-      places
-    }),
-  addPlace: place => (
-    { type: ADD_PLACE,
-      place
-    }),
+  receivePlaces: places => ({
+    type: RECEIVE_PLACE,
+    places
+  }),
+  addPlace: place => ({
+    type: ADD_PLACE,
+    place
+  }),
 
   // THUNK CREATORS
   createPlaceAndGoToPage: (googleId, name, address, router) => () => {
@@ -42,11 +41,10 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const reducer =  {
+const actionHandler =  {
   [RECEIVE_PLACE]: (state, action) => ([ ...action.places ]),
   [ADD_PLACE]: (state, action) => ([ ...state, action.place ])
 }
 
 
-import { createReducer } from '../../utils'
-export default createReducer(initialState, reducer)
+export default { initialState, actionHandler }

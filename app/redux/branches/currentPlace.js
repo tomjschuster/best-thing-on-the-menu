@@ -1,7 +1,7 @@
 import { get, post } from 'axios'
 
 /*----------  INITIAL STATE  ----------*/
-export const initialState = {}
+const initialState = {}
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -14,26 +14,26 @@ const ADD_REVIEW_TO_CURRENT_PLACE = 'ADD_REVIEW_TO_CURRENT_PLACE'
 export const actions = {
 
   // ACTION CREATORS
-  receiveCurrentPlace: currentPlace => (
-    { type: RECEIVE_CURRENT_PLACE,
-      currentPlace
-    }),
+  receiveCurrentPlace: currentPlace => ({
+    type: RECEIVE_CURRENT_PLACE,
+    currentPlace
+  }),
 
-  clearCurrentPlace: () => (
-    { type: RECEIVE_CURRENT_PLACE
-    }),
+  clearCurrentPlace: () => ({
+    type: RECEIVE_CURRENT_PLACE
+  }),
 
-  addItemToCurrentPlace: item => (
-    { type: ADD_ITEM_TO_CURRENT_PLACE,
-      item
-    }),
+  addItemToCurrentPlace: item => ({
+    type: ADD_ITEM_TO_CURRENT_PLACE,
+    item
+  }),
 
-  addReviewToCurrentPlace: review => (
-    { type: ADD_REVIEW_TO_CURRENT_PLACE,
-      review
-    }),
+  addReviewToCurrentPlace: review => ({
+    type: ADD_REVIEW_TO_CURRENT_PLACE,
+    review
+  }),
 
-  //  THUNK CREATORS
+  // THUNK CREATORS
   checkItemAndCreateReview: (placeId, itemName, stars, comment, userId) => dispatch => {
     post(`/api/reviews/check/item`, { placeId, itemName, stars, comment, userId })
       .then(() => {
@@ -69,7 +69,8 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const reducer =  {
+const actionHandler =  {
+
   [RECEIVE_CURRENT_PLACE]: (state, action) => ({
     ...action.currentPlace
   }),
@@ -81,16 +82,13 @@ const reducer =  {
   }),
 
   [ADD_REVIEW_TO_CURRENT_PLACE]: (state, action) => ({ ...state,
-    items: state.items.map(item => {
-      if (item.id === action.review.itemId) {
-        return { ...item, reviews: [ ...item.reviews, action.review ] }
-      } else {
-        return item
-      }
-    })
+    items: state.items.map(item => (
+      (item.id === action.review.itemId) ?
+        { ...item, reviews: [ ...item.reviews, action.review ] } : item
+    ))
   })
+
 }
 
 
-import { createReducer } from '../../utils'
-export default createReducer(initialState, reducer)
+export default { initialState, actionHandler }

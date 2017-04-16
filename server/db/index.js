@@ -4,9 +4,9 @@ const { procs } = require('../config')
 const { callMysql } = require('../utilities')
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  database: 'btotm',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  database: process.env.DB_NAME || 'btotm',
   connectionLimit: 10,
   multipleStatements: true
 })

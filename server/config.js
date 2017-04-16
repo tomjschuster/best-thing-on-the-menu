@@ -6,6 +6,22 @@ const db = {
 }
 
 const procs = {
+  getHash: {
+    inParams: ['email'],
+    outParams: []
+  },
+  updateOrCreateUser: {
+    inParams: ['firstName', 'lastName', 'email', 'photoUrl'],
+    outParams: ['newUser']
+  },
+  updateUserIfExists: {
+    inParams: ['firstName', 'lastName', 'email', 'photoUrl'],
+    outParams: ['newUser']
+  },
+  getUserByEmail: {
+    inParams: ['email'],
+    outParams: []
+  },
   getPlaces: {
     inParams: [],
     outParams: []
@@ -32,5 +48,8 @@ const procs = {
   }
 }
 
+const auth = {
+  GOOGLE_CALLBACK_URL: '/api/auth/google/callback'
+}
 
-module.exports = { db, procs }
+module.exports = { db, procs, auth }
