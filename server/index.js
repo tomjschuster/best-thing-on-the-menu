@@ -11,7 +11,6 @@ const passport = require('./passport')
 const PORT = process.env.PORT || 3001
 
 
-
 app.use(bodyParser.json())
    .use(bodyParser.urlencoded({ extended: false }))
    .use(morgan('dev'))
@@ -27,31 +26,6 @@ app.use(bodyParser.json())
    .use('/api', router)
 
 const indexHtmlPath = path.join(__dirname, '..', 'public', 'index.html')
-
-app.get('/auth/check', (req, res) => {
-  const isAuthenticated = req.isAuthenticated()
-  const id = req.user !== undefined ? req.user.id : null
-  res.send({ isAuthenticated, id })
-})
-
-app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }))
-
-app.get('/auth/google/callback', passport.authenticate('google',
-    { successRedirect: '/explore', failureRedirect: '/' }
-))
-
-app.post('/auth/local', passport.authenticate('local'), (req, res, next) => res.send(req.session))
-
-
-app.get('/check/req', (req, res) => res.send(req.session))
-
-
-app.post('/auth/logout', (req, res) => {
-  console.log('where am i')
-  req.session.destroy(() => {
-    res.send(401)
-  })
-})
 
 app.get('*', (req, res, next) => res.sendFile(indexHtmlPath))
 

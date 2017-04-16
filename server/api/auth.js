@@ -1,18 +1,25 @@
 const router = require('express').Router()
 const passport = require('../passport')
 module.exports = router
-// const { call } = require('../db')
 
 
-router.get('/whoami', (req, res) => res.send(req.user))
+router.get('/check', (req, res) => {
+  const isAuthenticated = req.isAuthenticated()
+  const id = req.user !== undefined ? req.user.id : null
+  res.send({ isAuthenticated, id })
+})
+
+router.get('/google/callback', passport.authenticate('google',
+    { successRedirect: '/explore', failureRedirect: '/login' }
+))
 
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }))
 
-router.get('/google/callback', passport.authenticate('google',
-    { successRedirect: '/', failureRedirect: '/places/1' }
-))
 
-router.post('/local', passport.authenticate('local'), (req, res, next) => res.send(req.session))
+router.post('/local', passport.authenticate('local'), (req, res, next) => res.redirect('/explore'))
 
-router.get('/check/req', (req, res) => res.send(req.session))
-
+router.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.send(401)
+  })
+})

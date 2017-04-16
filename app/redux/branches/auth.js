@@ -25,7 +25,7 @@ export const actions = {
   //  THUNK CREATORS
   checkAuth: () => dispatch => (
     axios
-      .get('/auth/check')
+      .get('/api/auth/check')
       .then(({ data: { id, isAuthenticated} }) => {
         if (isAuthenticated) {
           dispatch(actions.signIn(id))
@@ -43,7 +43,7 @@ export const actions = {
 
   endSession: () => dispatch => (
     axios
-      .post('/auth/logout')
+      .post('/api/auth/logout')
       .then(res => {
         console.log('then', res)
       })
