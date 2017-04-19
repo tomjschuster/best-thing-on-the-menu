@@ -48,7 +48,7 @@ const procs = {
   },
   checkItemAndCreateReview: {
     inParams: ['placeId', 'itemName', 'stars', 'comment', 'userId'],
-    outParams: ['newItem']
+    outParams: ['newItem', 'id']
   }
 }
 

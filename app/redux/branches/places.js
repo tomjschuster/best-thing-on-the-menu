@@ -32,15 +32,7 @@ export const actions = {
       })
       .catch(console.error)
   },
-  // createPlaceAndGoToPage: (googleId, name, address, router) => () => {
-  //   post('/api/places', { googleId, name, address })
-  //     .then(({ data: { created, id } }) => {
-  //         if (created) {
-  //           router.push(`/places/${id}`)
-  //         }
-  //     })
-  //     .catch(console.error)
-  // },
+
   getPlaces: () => dispatch => {
     axios.get('/api/places')
       .then(({ data }) => dispatch(actions.receivePlaces(data)))

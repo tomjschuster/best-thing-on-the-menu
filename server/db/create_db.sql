@@ -194,7 +194,7 @@ CREATE PROCEDURE checkPlace (
       LIMIT 1
     INTO id;
 
-    SELECT if(id IS NULL, true, false) INTO new_place;
+    SET new_place = if(id IS NULL, true, false);
 
     IF id IS NULL THEN
       CALL createPlace(id, google_id, name, address);
@@ -209,6 +209,28 @@ CREATE PROCEDURE createItem (OUT id INT, IN name VARCHAR(255), IN place_id INT)
     SET id = LAST_INSERT_ID();
   END//
 
+
+CREATE PROCEDURE checkItem (
+  OUT new_item BOOLEAN,
+  OUT id INT,
+  IN place_id INT,
+  IN name VARCHAR(255)
+)
+BEGIN
+  SELECT i.id
+    FROM item i
+    WHERE i.place_id = place_id AND i.name = name
+    LIMIT 1
+  INTO id;
+
+  SET new_item = if(id IS NULL, true, false);
+
+  IF new_item THEN
+    CALL createItem (id, name, place_id);
+  END IF;
+END//
+
+
 CREATE PROCEDURE createReview (
   OUT id INT,
   IN stars TINYINT,
@@ -222,35 +244,9 @@ CREATE PROCEDURE createReview (
     SET id = LAST_INSERT_ID();
   END//
 
-
-CREATE PROCEDURE checkItem (
-  OUT new_item BOOLEAN,
-  OUT item_id INT,
-  IN place_id INT,
-  IN name VARCHAR(255)
-)
-BEGIN
-  SELECT if(COUNT(*) > 0, false, true)
-    FROM item i
-    WHERE i.place_id = place_id AND i.name = name
-    LIMIT 1
-  INTO new_item;
-
-  IF new_item THEN
-    INSERT INTO item (place_id, name) VALUES (place_id, name);
-    SET item_id = LAST_INSERT_ID();
-  ELSE
-    SELECT id
-      FROM item i
-      WHERE i.place_id = place_id AND i.name = name
-      LIMIT 1
-    INTO item_id;
-  END IF;
-END//
-
-
 CREATE PROCEDURE checkItemAndCreateReview (
   OUT new_item BOOLEAN,
+  OUT id INT,
   IN place_id INT,
   IN item_name VARCHAR(255),
   IN stars TINYINT,
@@ -264,5 +260,7 @@ CREATE PROCEDURE checkItemAndCreateReview (
 
     INSERT INTO review (stars, comment, item_id, user_id)
       VALUES (stars, comment, item_id, user_id);
+
+    SET id = LAST_INSERT_ID();
   END//
 delimiter ;
