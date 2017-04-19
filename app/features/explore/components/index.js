@@ -2,75 +2,55 @@ import React, { Component } from 'react'
 import Places from './Places'
 import SearchBar from './SearchBar'
 import { autocompleteOptions } from '../../../config'
-import { get } from 'axios'
+
 export default class Explore extends Component {
-  componentWillMount() {
+
+  /*----------  LIFE-CYCLE EVENTS  ----------*/
+  componentDidMount() {
     this.props.getPlaces()
   }
 
-  componentDidMount() {
-    const { setNoGoogle, clearNoGoogle } = this.props
+  /*----------  INSTANCE METHODS  ----------*/
+  bindGoogleMapsAutocomplete = () => {
+    const input = this.autocompleteInput
 
-    // get input field
-    if (window.google) {
-      /*global google: true*/
+      // Bind autocomplete functionality to input field
+      const autocomplete = new window.google.maps.places.Autocomplete(input, autocompleteOptions)
 
-      clearNoGoogle()
-      const input = this.autocompleteInput
-      console.log(google, input)
-      // bind autocomplete functionality to input field
-      const autocomplete = new google.maps.places.Autocomplete(input, autocompleteOptions)
-
-      // on select, get google place and go to page
+      // On select, get google place and go to page
       autocomplete.addListener('place_changed', () => {
-        const { places, createPlaceAndGoToPage, router } = this.props
+        const { checkPlaceAndGoToPage, router } = this.props
+        const { id: googleId, name, formatted_address: address } = autocomplete.getPlace()
 
-        const googlePlace = autocomplete.getPlace()
-        const { id: googleId, name, formatted_address: address } = googlePlace
-        const currentPlace = places.find((place) => place.googleId === googleId)
-        // if we have don'te entry for google place add database
-        if (!currentPlace) {
-          createPlaceAndGoToPage(googleId, name, address, router)
-        } else {
-          router.push(`/places/${currentPlace.id}`)
-        }
-
-        // Navigate to place page
+        // Get place id from db, creating if not exists
+        checkPlaceAndGoToPage(googleId, name, address, router)
       })
-    } else {
-      setNoGoogle()
-    }
   }
 
-  componentDidUpdate(prevProps) {
-    const { errors: {  noGoogle }, clearNoGoogle, setNoGoogle } = this.props
-    if (prevProps.noGoogle && window.google) {
-      clearNoGoogle()
-    }
-    if (!noGoogle && !window.google) {
-      setNoGoogle()
-    }
-  }
-
+  /*----------  NODE REFERENCES  ----------*/
   getAutocompleteInput = node => {
     if (node) {
       this.autocompleteInput = node.input
     }
   }
 
+  /*----------  RENDER  ----------*/
   render() {
-    const { getAutocompleteInput } = this
-    const { places, router, errors: { noGoogle } } = this.props
+    const { getAutocompleteInput, bindGoogleMapsAutocomplete } = this
+    const { places,
+            router,
+            google: { googleMapsLoaded },
+            checkGoogleMapsLoaded
+          } = this.props
     return (
       <div>
         <div className='tagline'><h4>Taskstreamer's Lunch Menu Review</h4></div>
-        { !noGoogle ?
-            <SearchBar getAutocompleteInput={getAutocompleteInput} /> :
-            <p>
-               Unable to connect to Google Places Service. Feel free to browse
-               and review existing restaurants.
-            </p>
-        }
+        <SearchBar
+          getAutocompleteInput={getAutocompleteInput}
+          checkGoogleMapsLoaded={checkGoogleMapsLoaded}
+          googleMapsLoaded={googleMapsLoaded}
+          bindGoogleMapsAutocomplete={bindGoogleMapsAutocomplete}
+        />
         <Places
           places={places}
           router={router}

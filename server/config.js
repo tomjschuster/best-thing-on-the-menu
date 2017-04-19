@@ -34,6 +34,10 @@ const procs = {
     inParams: ['googleId', 'name', 'address'],
     outParams: ['id']
   },
+  checkPlace: {
+    inParams: ['googleId', 'name', 'address'],
+    outParams: ['id', 'newPlace']
+  },
   createItem: {
     inParams: ['name', 'placeId'],
     outParams: ['id']
@@ -44,7 +48,7 @@ const procs = {
   },
   checkItemAndCreateReview: {
     inParams: ['placeId', 'itemName', 'stars', 'comment', 'userId'],
-    outParams: ['newItem']
+    outParams: ['newItem', 'id']
   }
 }
 

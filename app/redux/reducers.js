@@ -7,6 +7,7 @@ const branches = {
   items: require('./branches/items').default,
   ux: require('./branches/ux').default,
   forms: require('./branches/forms').default,
+  google: require('./branches/google').default,
   errors: require('./branches/errors').default
 }
 

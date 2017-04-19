@@ -2,7 +2,6 @@
     CURRENTLY NOT IN USE. WILL USE LATER WITH ADMIN PAGES
 */
 
-
 /*----------  INITIAL STATE  ----------*/
 const initialState = []
 

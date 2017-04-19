@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 /*----------  INITIAL STATE  ----------*/
 const initialState = { isAuthenticated: false }
 
@@ -41,7 +42,7 @@ export const actions = {
       })
   ),
 
-  endSession: () => dispatch => (
+  endSession: () => () => (
     axios
       .post('/api/auth/logout')
       .then(res => {

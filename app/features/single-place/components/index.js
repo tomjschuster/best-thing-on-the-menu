@@ -1,11 +1,3 @@
-/*=============================================
-=            TODO           =
-=============================================
-1. Fix AutoComplete Data
-2. Styling
-=====  END TODO  ======*/
-
-
 import React, { Component } from 'react'
 
 import Item from './Item'
@@ -13,9 +5,6 @@ import AddReview from './AddReview'
 
 import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
-
-
-import { denormalizeSinglePlace} from '../../../utils'
 
 
 export default class SinglePlace extends Component {
