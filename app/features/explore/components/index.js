@@ -9,25 +9,21 @@ export default class Explore extends Component {
   componentDidMount() {
     this.props.getPlaces()
   }
+
   /*----------  INSTANCE METHODS  ----------*/
   bindGoogleMapsAutocomplete = () => {
     const input = this.autocompleteInput
-      // bind autocomplete functionality to input field
+
+      // Bind autocomplete functionality to input field
       const autocomplete = new window.google.maps.places.Autocomplete(input, autocompleteOptions)
 
-      // on select, get google place and go to page
+      // On select, get google place and go to page
       autocomplete.addListener('place_changed', () => {
-        const { places, createPlaceAndGoToPage, router } = this.props
+        const { checkPlaceAndGoToPage, router } = this.props
+        const { id: googleId, name, formatted_address: address } = autocomplete.getPlace()
 
-        const googlePlace = autocomplete.getPlace()
-        const { id: googleId, name, formatted_address: address } = googlePlace
-        const currentPlace = places.find((place) => place.googleId === googleId)
-        // if we have don'te entry for google place add database
-        if (!currentPlace) {
-          createPlaceAndGoToPage(googleId, name, address, router)
-        } else {
-          router.push(`/places/${currentPlace.id}`)
-        }
+        // Get place id from db, creating if not exists
+        checkPlaceAndGoToPage(googleId, name, address, router)
       })
   }
 

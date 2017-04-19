@@ -34,6 +34,10 @@ const procs = {
     inParams: ['googleId', 'name', 'address'],
     outParams: ['id']
   },
+  checkPlace: {
+    inParams: ['googleId', 'name', 'address'],
+    outParams: ['id', 'newPlace']
+  },
   createItem: {
     inParams: ['name', 'placeId'],
     outParams: ['id']

@@ -166,6 +166,7 @@ CREATE PROCEDURE getPlaceItemsReviews (OUT found BOOLEAN, IN place_id INT)
     WHERE p.id = place_id;
   END//
 
+
 CREATE PROCEDURE createPlace (
   OUT id INT,
   IN google_id VARCHAR(255),
@@ -177,6 +178,30 @@ CREATE PROCEDURE createPlace (
       VALUES (google_id, name, address);
     SET id = LAST_INSERT_ID();
   END//
+
+
+CREATE PROCEDURE checkPlace (
+  OUT id INT,
+  OUT new_place BOOLEAN,
+  IN google_id VARCHAR(255),
+  IN name VARCHAR(255),
+  IN address VARCHAR(255)
+)
+  BEGIN
+    SELECT p.id
+      FROM place p
+      WHERE p.google_id = google_id
+      LIMIT 1
+    INTO id;
+
+    SELECT if(id IS NULL, true, false) INTO new_place;
+
+    IF id IS NULL THEN
+      CALL createPlace(id, google_id, name, address);
+    END IF;
+
+  END//
+
 
 CREATE PROCEDURE createItem (OUT id INT, IN name VARCHAR(255), IN place_id INT)
   BEGIN

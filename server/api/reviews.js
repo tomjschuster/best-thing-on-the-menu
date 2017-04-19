@@ -3,6 +3,7 @@ module.exports = router
 const { call } = require('../db')
 
 
+/*----------  CREATE  ----------*/
 router.post('/check/item', (req, res, next) => {
   call.checkItemAndCreateReview(req.body)
     .then(({ newItem }) => {

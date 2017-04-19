@@ -2,6 +2,15 @@ const router = require('express').Router()
 module.exports = router
 const { call } = require('../db')
 
+/*----------  CREATE  ----------*/
+router.post('/check', (req, res, next) => {
+  const { googleId, name, address } = req.body
+  call.checkPlace({ googleId, name, address })
+    .then(({ id, newPlace }) => {
+      res.send({ id, newPlace: !!newPlace, created: true })
+    })
+    .catch(next)
+})
 
 router.post('/', (req, res, next) => {
   const { googleId, name, address } = req.body
@@ -12,6 +21,8 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+
+/*----------  READ  ----------*/
 router.get('/:placeId/reviews', (req, res, next) => {
   const { placeId } = req.params
 

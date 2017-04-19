@@ -1,4 +1,4 @@
-import { get, post } from 'axios'
+import axios from 'axios'
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = []
@@ -23,8 +23,8 @@ export const actions = {
   }),
 
   // THUNK CREATORS
-  createPlaceAndGoToPage: (googleId, name, address, router) => () => {
-    post('/api/places', { googleId, name, address })
+  checkPlaceAndGoToPage: (googleId, name, address, router) => () => {
+   axios.post('/api/places/check', { googleId, name, address })
       .then(({ data: { created, id } }) => {
           if (created) {
             router.push(`/places/${id}`)
@@ -32,8 +32,17 @@ export const actions = {
       })
       .catch(console.error)
   },
+  // createPlaceAndGoToPage: (googleId, name, address, router) => () => {
+  //   post('/api/places', { googleId, name, address })
+  //     .then(({ data: { created, id } }) => {
+  //         if (created) {
+  //           router.push(`/places/${id}`)
+  //         }
+  //     })
+  //     .catch(console.error)
+  // },
   getPlaces: () => dispatch => {
-    get('/api/places')
+    axios.get('/api/places')
       .then(({ data }) => dispatch(actions.receivePlaces(data)))
       .catch(console.error)
     }
