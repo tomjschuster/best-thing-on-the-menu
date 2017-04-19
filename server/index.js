@@ -4,18 +4,22 @@ const morgan = require('morgan')
 const path = require('path')
 const chalk = require('chalk')
 const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+const redisOptions = require('./config').redisOptions
 
 const app = express()
 const router = require('./api')
 const passport = require('./passport')
 const PORT = process.env.PORT || 3001
 
-
 app.use(bodyParser.json())
    .use(bodyParser.urlencoded({ extended: false }))
    .use(morgan('dev'))
    .use(express.static(path.join(__dirname, '..', 'public')))
-   .use(session({ secret: 'supersecret' }))
+   .use(session({
+      store: new RedisStore(redisOptions),
+      secret: 'supersecret'
+    }))
    .use(passport.initialize())
    .use(passport.session())
    .use((req, res, next) => {

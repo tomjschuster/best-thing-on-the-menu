@@ -52,8 +52,13 @@ const procs = {
   }
 }
 
+const redisOptions = {
+  host: '127.0.0.1',
+  port: 6379
+}
+
 const auth = {
   GOOGLE_CALLBACK_URL: '/api/auth/google/callback'
 }
 
-module.exports = { db, procs, auth }
+module.exports = { db, procs, redisOptions, auth }
