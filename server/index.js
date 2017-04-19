@@ -4,8 +4,7 @@ const morgan = require('morgan')
 const path = require('path')
 const chalk = require('chalk')
 const session = require('express-session')
-const RedisStore = require('connect-redis')(session)
-const redisOptions = require('./config').redisOptions
+const sessionConfig = require('./config').sessionConfig
 
 const app = express()
 const router = require('./api')
@@ -16,10 +15,7 @@ app.use(bodyParser.json())
    .use(bodyParser.urlencoded({ extended: false }))
    .use(morgan('dev'))
    .use(express.static(path.join(__dirname, '..', 'public')))
-   .use(session({
-      store: new RedisStore(redisOptions),
-      secret: 'supersecret'
-    }))
+   .use(session(sessionConfig))
    .use(passport.initialize())
    .use(passport.session())
    .use((req, res, next) => {
