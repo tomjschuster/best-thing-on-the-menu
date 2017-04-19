@@ -2,29 +2,13 @@ import React, { Component } from 'react'
 import Places from './Places'
 import SearchBar from './SearchBar'
 import { autocompleteOptions } from '../../../config'
-import RaisedButton from 'material-ui/RaisedButton'
 
 export default class Explore extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
-  componentWillMount() {
-    const { getPlaces,
-            google: { googleMapsLoaded },
-            checkGoogleMapsLoaded
-          } = this.props
-    getPlaces()
-    if (!googleMapsLoaded) {
-      // checkGoogleMapsLoaded()
-    }
-  }
-
   componentDidMount() {
-    const { google: { googleMapsLoaded }, checkGoogleMapsLoaded } = this.props
-    if (!googleMapsLoaded) {
-      // checkGoogleMapsLoaded()
-    }
+    this.props.getPlaces()
   }
-
   /*----------  INSTANCE METHODS  ----------*/
   bindGoogleMapsAutocomplete = () => {
     const input = this.autocompleteInput
@@ -65,20 +49,12 @@ export default class Explore extends Component {
     return (
       <div>
         <div className='tagline'><h4>Taskstreamer's Lunch Menu Review</h4></div>
-        { googleMapsLoaded ?
-            <SearchBar
-              getAutocompleteInput={getAutocompleteInput}
-              bindGoogleMapsAutocomplete={bindGoogleMapsAutocomplete}
-            /> :
-            <label>
-               Unable to connect to Google Places Service.
-              <RaisedButton
-                label='Retry'
-                primary={true}
-                onClick={checkGoogleMapsLoaded}
-              />
-            </label>
-        }
+        <SearchBar
+          getAutocompleteInput={getAutocompleteInput}
+          checkGoogleMapsLoaded={checkGoogleMapsLoaded}
+          googleMapsLoaded={googleMapsLoaded}
+          bindGoogleMapsAutocomplete={bindGoogleMapsAutocomplete}
+        />
         <Places
           places={places}
           router={router}
