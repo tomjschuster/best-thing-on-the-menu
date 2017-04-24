@@ -1,15 +1,12 @@
 import React from 'react'
+import { Autocomplete } from 'react-toolbox/lib/autocomplete'
+import { Card, CardText, CardActions } from 'react-toolbox/lib/card'
+import { Button } from 'react-toolbox/lib/button'
+import Input from 'react-toolbox/lib/input'
+import { AddReviewStars } from './RatingStars'
 
-import RatingStars from './RatingStars'
 
-import AutoComplete from 'material-ui/AutoComplete'
-import { Card, CardActions, CardText } from 'material-ui/Card'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-
-import { itemAutoCompleteDataConfig } from '../../../config'
-
-const AddReview = ({ items,
+const AddReview = ({ itemsSource,
                      addReviewForm,
                      closeAndClearAddReview,
                      updateItemName,
@@ -22,45 +19,49 @@ const AddReview = ({ items,
         <h4>Write a Review</h4>
         <ul style={{listStyle: 'none'}}>
           <li>
-            <AutoComplete
-              floatingLabelText='Select or enter a menu item.'
-              openOnFocus
-              filter={AutoComplete.caseInsensitiveFilter}
-              dataSource={items || []}
-              dataSourceConfig={itemAutoCompleteDataConfig}
-              searchText={addReviewForm.itemName}
-              onUpdateInput={updateItemName}
-              style={{paddingLeft: '12px'}}
+            <Autocomplete
+              label='Select or enter a menu item.'
+              source={itemsSource}
+              suggestionMatch='anywhere'
+              multiple={false}
+              allowCreate
+              value={addReviewForm.itemName}
+              onQueryChange={updateItemName}
+              onChange={updateItemName}
             />
           </li>
           <li>
-            <RatingStars
+            <AddReviewStars
               starCount={addReviewForm.stars}
               onClick={updateStars}
             />
           </li>
           <li>
-            <TextField
+            <Input
               name='comment-field'
-              multiLine
+              multiline
               rows={3}
-              floatingLabelText='Comment'
+              floating
+              label='Comment'
               style={ {paddingLeft: '12px'} }
               value={addReviewForm.comment}
-              onChange={ (_, comment) => updateComment(comment) }
+              onChange={updateComment}
+              // onChange={console.log}
             />
           </li>
         </ul>
       </CardText>
       <CardActions>
-        <RaisedButton
+        <Button
           label='Submit'
-          primary={true}
+          raised
+          primary
           onClick={onReviewSubmit}
         />
-        <RaisedButton
+        <Button
           label='Cancel'
-          primary={true}
+          raised
+          primary
           onClick={closeAndClearAddReview}
         />
       </CardActions>

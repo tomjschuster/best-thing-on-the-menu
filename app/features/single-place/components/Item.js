@@ -1,22 +1,17 @@
 import React from 'react'
-import {Card, CardHeader, CardText} from 'material-ui/Card'
-import Paper from 'material-ui/Paper'
+import { Card, CardTitle, CardText } from 'react-toolbox/lib/card'
 import Review from './Review'
 
+
 const Item = ({ item }) => (
-  <Paper>
     <Card key={item.name}>
-      <CardHeader
+      <CardTitle
           title={item.name}
-          subtitle = '⭐'
-          actAsExpander={true}
-          showExpandableButton={true}
       />
-      <CardText expandable={true}>
+      <CardText>
           { item.reviews.map(review => <Review key={ review.id } review={ review } /> )}
       </CardText>
     </Card>
-  </Paper>
   )
 
 export default Item

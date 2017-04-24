@@ -8,9 +8,3 @@ export const autocompleteOptions = {
     },
     strictBounds: true
   }
-
-export const itemAutoCompleteDataConfig = {
-    value: 'id',
-    text: 'name',
-  }
-

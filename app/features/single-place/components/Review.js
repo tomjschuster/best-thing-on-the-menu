@@ -1,28 +1,18 @@
 import React from 'react'
-import Paper from 'material-ui/Paper'
-import {Card, CardHeader, CardText} from 'material-ui/Card'
-const reviewStyle = {
-    height: 100,
-    width: '90%',
-    margin: 20,
-    textAlign: 'left',
-    display: 'inline-block',
-  }
-
+import { Card, CardTitle, CardText } from 'react-toolbox/lib/card'
+import { ReviewStars } from './RatingStars'
 
 const Review = ({ review }) => (
-    <Paper style={reviewStyle} zDepth={1}>
       <Card>
-        <CardHeader
-          title={ `${review.firstName} ${review.lastName}` }
-          subtitle={ '⭐'.repeat(review.stars) }
+        <CardTitle
+          title={ `${review.firstName} ${review.lastName}`}
+          subtitle={<ReviewStars starCount={review.stars} />}
           avatar={ review.photoUrl }
         />
         <CardText>
           <span>{ review.comment }</span>
         </CardText>
       </Card>
-    </Paper>
   )
 
 export default Review

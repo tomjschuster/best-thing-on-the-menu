@@ -1,20 +1,29 @@
 import React from 'react'
-import IconButton from 'material-ui/IconButton'
-import Star from 'material-ui/svg-icons/toggle/star'
-import StarBorder from 'material-ui/svg-icons/toggle/star-border'
+import { Button } from 'react-toolbox/lib/button'
+import FontIcon from 'react-toolbox/lib/font_icon'
 
-const RatingStars = ({ starCount, onClick }) => (
+
+export const ReviewStars = ({ starCount }) => (
+    <span>
+      { Array(starCount).fill(0).map((_, idx) => (
+            <FontIcon
+              key={`star-${idx + 1}`}
+              value='star'
+            />
+          ))
+      }
+    </span>
+  )
+
+export const AddReviewStars = ({ starCount, onClick }) => (
     <div>
       { Array(5).fill(0).map((_, idx) => (
-            <IconButton
+            <Button
               key={`star-${idx + 1}`}
-              onClick={ () => onClick(idx + 1) }>
-              { starCount <= idx ? <StarBorder /> : <Star /> }
-            </IconButton>
-          )
-        )
+              onClick={ () => onClick(idx + 1) }
+              icon={ starCount <= idx ? 'star_border' : 'star' }
+            />
+          ))
       }
     </div>
   )
-
-export default RatingStars

@@ -1,22 +1,26 @@
 import React, { Component } from 'react'
-import NavBar from './Navbar'
-import Paper from 'material-ui/Paper'
+import { Layout, Panel } from 'react-toolbox'
+import AppBar from 'react-toolbox/lib/app_bar'
+import FontIcon from 'react-toolbox/lib/font_icon'
 
 
 export default class Main extends Component {
   render() {
     const { auth, endSession, router, children } = this.props
     return (
-      <Paper>
-        <NavBar
-          isAuthenticated={auth.isAuthenticated}
-          endSession={endSession}
-          router={router}
+      <Layout>
+        <Panel>
+        <AppBar
+          title='The Best Thing On The Menu'
+          leftIcon={<FontIcon value='room_service' />}
+          onLeftIconClick={() => auth.isAuthenticated && router.push('/explore')}
+          rightIcon={<FontIcon value='exit_to_app' />}
+          onRightIconClick={() => endSession()}
         />
-        <div id='content' className='container'>
+        <div className='tagline'><h4>Taskstreame's Lunch Menu Review</h4></div>
           {children}
-        </div>
-      </Paper>
+        </Panel>
+      </Layout>
     )
   }
 }

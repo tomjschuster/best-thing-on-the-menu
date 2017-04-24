@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
-import TextField from 'material-ui/TextField'
-import RefreshIcon from 'material-ui/svg-icons/navigation/refresh'
+import Input from 'react-toolbox/lib/input'
+import { Button } from 'react-toolbox/lib/button'
+
 
 export default class SearchBar extends Component {
 
@@ -33,6 +32,7 @@ export default class SearchBar extends Component {
             checkGoogleMapsLoaded,
             bindGoogleMapsAutocomplete
           } = this.props
+
     if (!prevProps.googleMapsLoaded && googleMapsLoaded) {
       bindGoogleMapsAutocomplete()
     }
@@ -48,31 +48,31 @@ export default class SearchBar extends Component {
           } = this.props
 
     return (
-      <Paper style={{ marginBottom: '1em' }}>
+      <div>
         <div className='input-field' style={{ display: 'inline-block', padding: '2% 10% 0%', width: '60%' }}>
-          <TextField
+          <Input
             id='autocomplete-search'
             placeholder={ googleMapsLoaded ?
               'Find a restaurant near Taskstream...' :
               'Failed to load Google Maps'
             }
             ref={getAutocompleteInput}
-            style={{ margin: '1em', width: '100%' }}
+            // style={{ margin: '1em', width: '100%' }}
             disabled={!googleMapsLoaded}
           />
         </div>
         { googleMapsLoaded ?
               null :
-              <RaisedButton
+              <Button
                 label='Retry'
-                labelPosition='before'
-                primary={true}
-                icon={<RefreshIcon />}
-                style={{ margin: '1em', width: '15%' }}
-                onTouchTap={checkGoogleMapsLoaded}
+                primary
+                raised
+                icon='refresh'
+                // style={{ margin: '1em', width: '15%' }}
+                onClick={checkGoogleMapsLoaded}
               />
             }
-      </Paper>
+      </div>
     )
   }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import GoogleSignIn from './GoogleSignIn'
 
 
 export default class Login extends Component {
@@ -9,10 +8,9 @@ export default class Login extends Component {
 
     return (
       <div>
-        <div className='tagline'>
-          <h4>Taskstreamer's Lunch Menu Review</h4>
-        </div>
-        <GoogleSignIn router={router} />
+        <a href='/api/auth/google'>
+          <img src='/assets/btn_google_signin_dark_normal_web@2x.png' />
+        </a>
       </div>
     )
   }

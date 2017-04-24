@@ -30,7 +30,7 @@ export default class Explore extends Component {
   /*----------  NODE REFERENCES  ----------*/
   getAutocompleteInput = node => {
     if (node) {
-      this.autocompleteInput = node.input
+      this.autocompleteInput = node.refs.wrappedInstance.inputNode
     }
   }
 
@@ -44,7 +44,6 @@ export default class Explore extends Component {
           } = this.props
     return (
       <div>
-        <div className='tagline'><h4>Taskstreamer's Lunch Menu Review</h4></div>
         <SearchBar
           getAutocompleteInput={getAutocompleteInput}
           checkGoogleMapsLoaded={checkGoogleMapsLoaded}

@@ -1,32 +1,28 @@
 import React from 'react'
-import {List, ListItem} from 'material-ui/List'
-import Divider from 'material-ui/Divider'
-import Subheader from 'material-ui/Subheader'
-import Paper from 'material-ui/Paper'
-import ActionInfo from 'material-ui/svg-icons/action/info'
+import { List, ListItem, ListSubHeader, ListDivider } from 'react-toolbox/lib/list'
+import FontIcon from 'react-toolbox/lib/font_icon'
 
 
 const Places =  ({ places, router }) => (
-  <Paper>
+  <div>
     <List>
-    <Subheader>Featured Places</Subheader>
-      { places.map(({ id, name, address, numItems }) => {
-          return (
-            <div key={ id }>
-              <Divider />
-              <ListItem
-                rightIcon={<ActionInfo />}
-                primaryText={ `${name} (${numItems})` }
-                secondaryText={ address }
-                secondaryTextLines={1}
-                onClick={() => router.push(`/places/${id}`)}
-              />
-            </div>
-          )
-        })
-      }
+      <ListSubHeader>Featured Places</ListSubHeader>
+        { places.map(({ id, name, address, numItems }) => {
+            return (
+              <div key={ id }>
+                <ListDivider />
+                <ListItem
+                  rightIcon={<FontIcon value='info' />}
+                  caption={ `${name} (${numItems})` }
+                  legend={ address }
+                  onClick={() => router.push(`/places/${id}`)}
+                />
+              </div>
+            )
+          })
+        }
     </List>
-  </Paper>
+  </div>
 )
 
 export default Places

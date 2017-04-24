@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-
+import { Panel } from 'react-toolbox'
+import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card'
+import { Button } from 'react-toolbox/lib/button'
 import Item from './Item'
 import AddReview from './AddReview'
-
-import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
 
 
 export default class SinglePlace extends Component {
@@ -45,7 +44,7 @@ export default class SinglePlace extends Component {
 /*----------  RENDER  ----------*/
   render() {
     const { onReviewSubmit } = this
-    const { currentPlace: { name, address, items },
+    const { currentPlace: { name, address, items = [] },
             ux: { isShowAddReview },
             forms: { addReview: addReviewForm },
             showAddReview,
@@ -56,30 +55,33 @@ export default class SinglePlace extends Component {
           } = this.props
 
     return (
-      <Card>
-        <CardTitle title={name} subtitle={address} />
-        <CardActions>
-          { isShowAddReview ?
-              <AddReview
-                items={items}
-                addReviewForm={addReviewForm}
-                closeAndClearAddReview={closeAndClearAddReview}
-                updateItemName={updateItemName}
-                updateStars={updateStars}
-                updateComment={updateComment}
-                onReviewSubmit={onReviewSubmit}
-              /> :
-              <RaisedButton
-                label='Add a Review'
-                primary={true}
-                onClick={showAddReview}
-              />
-          }
-        </CardActions>
-        <CardText>
-          { items && items.map(item => <Item key={item.id} item={item} />) }
-        </CardText>
-      </Card>
+      <div>
+        <Card>
+          <CardTitle title={name} subtitle={address} />
+          <CardActions>
+            { isShowAddReview ?
+                <AddReview
+                  itemsSource={items.map(({ name }) => name)}
+                  addReviewForm={addReviewForm}
+                  closeAndClearAddReview={closeAndClearAddReview}
+                  updateItemName={updateItemName}
+                  updateStars={updateStars}
+                  updateComment={updateComment}
+                  onReviewSubmit={onReviewSubmit}
+                /> :
+                <Button
+                  label='Add a Review'
+                  onClick={showAddReview}
+                  raised
+                  primary
+                />
+            }
+          </CardActions>
+          <CardText>
+            { items && items.map(item => <Item key={item.id} item={item} />) }
+          </CardText>
+        </Card>
+      </div>
     )
   }
 }
