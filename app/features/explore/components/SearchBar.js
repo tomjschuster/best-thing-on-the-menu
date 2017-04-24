@@ -10,7 +10,7 @@ export default class SearchBar extends Component {
     const { checkGoogleMapsLoaded, googleMapsLoaded } = this.props
 
     if (!googleMapsLoaded) {
-      checkGoogleMapsLoaded()
+      // checkGoogleMapsLoaded()
     }
   }
 
@@ -23,7 +23,7 @@ export default class SearchBar extends Component {
     if (googleMapsLoaded) {
       bindGoogleMapsAutocomplete()
     } else {
-      checkGoogleMapsLoaded()
+      // checkGoogleMapsLoaded()
     }
   }
 
@@ -37,7 +37,7 @@ export default class SearchBar extends Component {
       bindGoogleMapsAutocomplete()
     }
     if (!googleMapsLoaded) {
-      checkGoogleMapsLoaded()
+      // checkGoogleMapsLoaded()
     }
   }
 
@@ -49,16 +49,19 @@ export default class SearchBar extends Component {
 
     return (
       <div>
-        <div className='input-field' style={{ display: 'inline-block', padding: '2% 10% 0%', width: '60%' }}>
+        <div className='input-field'>
           <Input
             id='autocomplete-search'
-            placeholder={ googleMapsLoaded ?
+            floating
+            label={ googleMapsLoaded ?
               'Find a restaurant near Taskstream...' :
               'Failed to load Google Maps'
             }
+            hint=''
+            placeholder=''
             ref={getAutocompleteInput}
-            // style={{ margin: '1em', width: '100%' }}
             disabled={!googleMapsLoaded}
+            error={!googleMapsLoaded}
           />
         </div>
         { googleMapsLoaded ?
@@ -68,7 +71,6 @@ export default class SearchBar extends Component {
                 primary
                 raised
                 icon='refresh'
-                // style={{ margin: '1em', width: '15%' }}
                 onClick={checkGoogleMapsLoaded}
               />
             }

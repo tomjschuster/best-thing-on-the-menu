@@ -17,8 +17,12 @@ export default class Main extends Component {
           rightIcon={<FontIcon value='exit_to_app' />}
           onRightIconClick={() => endSession()}
         />
-        <div className='tagline'><h4>Taskstreame's Lunch Menu Review</h4></div>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem' }}>
+          <div className='tagline'>
+            <h4>Taskstream's Lunch Menu Review</h4>
+          </div>
           {children}
+        </div>
         </Panel>
       </Layout>
     )

@@ -17,8 +17,6 @@ const AddReview = ({ itemsSource,
     <Card>
       <CardText>
         <h4>Write a Review</h4>
-        <ul style={{listStyle: 'none'}}>
-          <li>
             <Autocomplete
               label='Select or enter a menu item.'
               source={itemsSource}
@@ -29,14 +27,10 @@ const AddReview = ({ itemsSource,
               onQueryChange={updateItemName}
               onChange={updateItemName}
             />
-          </li>
-          <li>
             <AddReviewStars
               starCount={addReviewForm.stars}
               onClick={updateStars}
             />
-          </li>
-          <li>
             <Input
               name='comment-field'
               multiline
@@ -48,8 +42,6 @@ const AddReview = ({ itemsSource,
               onChange={updateComment}
               // onChange={console.log}
             />
-          </li>
-        </ul>
       </CardText>
       <CardActions>
         <Button
