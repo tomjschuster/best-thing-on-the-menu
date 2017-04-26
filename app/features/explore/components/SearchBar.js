@@ -10,7 +10,7 @@ export default class SearchBar extends Component {
     const { checkGoogleMapsLoaded, googleMapsLoaded } = this.props
 
     if (!googleMapsLoaded) {
-      // checkGoogleMapsLoaded()
+      checkGoogleMapsLoaded()
     }
   }
 
@@ -23,7 +23,7 @@ export default class SearchBar extends Component {
     if (googleMapsLoaded) {
       bindGoogleMapsAutocomplete()
     } else {
-      // checkGoogleMapsLoaded()
+      checkGoogleMapsLoaded()
     }
   }
 
@@ -37,7 +37,7 @@ export default class SearchBar extends Component {
       bindGoogleMapsAutocomplete()
     }
     if (!googleMapsLoaded) {
-      // checkGoogleMapsLoaded()
+      checkGoogleMapsLoaded()
     }
   }
 
