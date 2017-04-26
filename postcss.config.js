@@ -4,15 +4,15 @@ const extractValues = require('modules-values-extract')
 
 
 const config = (variables) => ({
-    plugins: {
-      'postcss-cssnext': {
-        features: {
-            customProperties: { variables }
-          }
-      },
-      'postcss-modules-values': {}
-    }
-  })
+  plugins: {
+    'postcss-cssnext': {
+      features: {
+        customProperties: { variables }
+      }
+    },
+    'postcss-modules-values': {}
+  }
+})
 
 const cssPath = path.join(__dirname, 'client', 'theme', 'css')
 const cssFiles = fs

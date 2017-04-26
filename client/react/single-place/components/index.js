@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-toolbox/lib/button'
 import Item from './Item'
 import AddReview from './AddReview'
-
-
+import style from '../style.css'
 export default class SinglePlace extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
@@ -54,8 +53,21 @@ export default class SinglePlace extends Component {
 
     return (
       <div>
+        <div className={style.nameBox}>
         <h2>{name}</h2>
-        <p>{address}</p>
+          { isShowAddReview ?
+              null :
+              <div className={style.addReviewButton}>
+                <Button
+                  label='Add a Review'
+                  onClick={showAddReview}
+                  raised
+                  primary
+                />
+              </div>
+          }
+        </div>
+          <p>{address}</p>
           { isShowAddReview ?
               <div>
                 <AddReview
@@ -67,22 +79,13 @@ export default class SinglePlace extends Component {
                   updateComment={updateComment}
                   onReviewSubmit={onReviewSubmit}
                 />
-              </div>
-              :
-              <div>
-                <Button
-                  label='Add a Review'
-                  onClick={showAddReview}
-                  raised
-                  primary
-                />
-              </div>
+              </div> :
+              null
           }
           { items ?
               <div>
                 { items.map(item => <Item key={item.id} item={item} />) }
-              </div>
-              :
+              </div> :
               null
           }
       </div>

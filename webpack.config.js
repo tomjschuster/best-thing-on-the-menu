@@ -29,9 +29,7 @@ module.exports = {
               localIdentName: '[name]--[local]--[hash:base64:8]'
             }
           },
-          {
-            loader: 'postcss-loader' // postcss.config.js
-          }
+          'postcss-loader' // postcss.config.js
         ]
       }
     ]
