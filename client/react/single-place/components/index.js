@@ -69,7 +69,7 @@ export default class SinglePlace extends Component {
         </div>
           <p>{address}</p>
           { isShowAddReview ?
-              <div>
+              <div className={style.addReview}>
                 <AddReview
                   itemsSource={items.map(({ name }) => name)}
                   addReviewForm={addReviewForm}
