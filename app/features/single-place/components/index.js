@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Panel } from 'react-toolbox'
-import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card'
 import { Button } from 'react-toolbox/lib/button'
 import Item from './Item'
 import AddReview from './AddReview'
