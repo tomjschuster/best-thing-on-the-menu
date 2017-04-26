@@ -1,5 +1,5 @@
 import axios from 'axios'
-import store, { actions } from './redux'
+import store, { actions } from '../redux'
 import { browserHistory } from 'react-router'
 
 export const setupInterceptors = () => {

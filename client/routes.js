@@ -1,5 +1,5 @@
-import { main, login, singlePlace, explore } from './features'
-import { requireAuth } from './auth'
+import { main, login, singlePlace, explore } from './react'
+import { requireAuth } from './utilities/auth'
 
 
 export default {

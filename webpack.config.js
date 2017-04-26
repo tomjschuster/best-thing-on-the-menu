@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './app/index.js',
+  entry: './client/index.js',
   output: {
     path: __dirname,
     filename: './public/app.js'
@@ -29,7 +29,9 @@ module.exports = {
               localIdentName: '[name]--[local]--[hash:base64:8]'
             }
           },
-          'postcss-loader' // has separate config, see postcss.config.js nearby
+          {
+            loader: 'postcss-loader' // postcss.config.js
+          }
         ]
       }
     ]
