@@ -56,10 +56,10 @@ export default class SinglePlace extends Component {
 
     return (
       <div>
-        <Card>
-          <CardTitle title={name} subtitle={address} />
-          <CardActions>
-            { isShowAddReview ?
+        <h2>{name}</h2>
+        <p>{address}</p>
+          { isShowAddReview ?
+              <div>
                 <AddReview
                   itemsSource={items.map(({ name }) => name)}
                   addReviewForm={addReviewForm}
@@ -68,19 +68,25 @@ export default class SinglePlace extends Component {
                   updateStars={updateStars}
                   updateComment={updateComment}
                   onReviewSubmit={onReviewSubmit}
-                /> :
+                />
+              </div>
+              :
+              <div>
                 <Button
                   label='Add a Review'
                   onClick={showAddReview}
                   raised
                   primary
                 />
-            }
-          </CardActions>
-          <CardText>
-            { items && items.map(item => <Item key={item.id} item={item} />) }
-          </CardText>
-        </Card>
+              </div>
+          }
+          { items ?
+              <div>
+                { items.map(item => <Item key={item.id} item={item} />) }
+              </div>
+              :
+              null
+          }
       </div>
     )
   }
