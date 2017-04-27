@@ -9,3 +9,5 @@ npm-debug.log
 .env
 .DS_Store
 */DS_Store
+public/material-design-icons
+public/fonts

@@ -1,0 +1,18 @@
+.cardTitle {
+  & > div {
+    width: 100%;
+    display: inline-block;
+  }
+}
+
+.title {
+  display: inline-block;
+  & :hover {
+    cursor: pointer;
+  }
+}
+
+.subtitle {
+  display: inline-block;
+  float: right;
+}
