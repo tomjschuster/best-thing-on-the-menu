@@ -9,6 +9,7 @@ const RECEIVE_CURRENT_PLACE = 'RECEIVE_CURRENT_PLACE'
 const CLEAR_CURRENT_PLACE = 'CLEAR_CURRENT_PLACE'
 const ADD_ITEM_TO_CURRENT_PLACE = 'ADD_ITEM_TO_CURRENT_PLACE'
 const ADD_REVIEW_TO_CURRENT_PLACE = 'ADD_REVIEW_TO_CURRENT_PLACE'
+const TOGGLE_ITEM_EXPANDED = 'TOGGLE_ITEM_EXPANDED'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
@@ -31,6 +32,11 @@ export const actions = {
   addReviewToCurrentPlace: review => ({
     type: ADD_REVIEW_TO_CURRENT_PLACE,
     review
+  }),
+
+  toggleItemExpanded: id => ({
+    type: TOGGLE_ITEM_EXPANDED,
+    id
   }),
 
   // THUNK CREATORS
@@ -77,14 +83,21 @@ const actionHandler =  {
 
   [CLEAR_CURRENT_PLACE]: () => ({}),
 
-  [ADD_ITEM_TO_CURRENT_PLACE]: (state, action) => ({ ...state,
-    items: [ ...state.items, action.item ]
+  [ADD_ITEM_TO_CURRENT_PLACE]: (state, { item }) => ({ ...state,
+    items: [ ...state.items, item ]
   }),
 
-  [ADD_REVIEW_TO_CURRENT_PLACE]: (state, action) => ({ ...state,
+  [ADD_REVIEW_TO_CURRENT_PLACE]: (state, { review }) => ({ ...state,
     items: state.items.map(item => (
-      (item.id === action.review.itemId) ?
-        { ...item, reviews: [ ...item.reviews, action.review ] } : item
+      (item.id === review.itemId) ?
+        { ...item, reviews: [ ...item.reviews, review ] } : item
+    ))
+  }),
+
+  [TOGGLE_ITEM_EXPANDED]: (state, { id }) => ({ ...state,
+    items: state.items.map((item, idx) => (
+      (item.id === id) ?
+        { ...item, expanded: !state.items[idx].expanded } : item
     ))
   })
 

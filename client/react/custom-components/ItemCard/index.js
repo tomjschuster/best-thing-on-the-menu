@@ -1,0 +1,1 @@
+export ItemCardTitle from './ItemCardTitle'

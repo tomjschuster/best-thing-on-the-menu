@@ -3,6 +3,8 @@ import { Button } from 'react-toolbox/lib/button'
 import Item from './Item'
 import AddReview from './AddReview'
 import style from '../style.css'
+
+
 export default class SinglePlace extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
@@ -48,11 +50,12 @@ export default class SinglePlace extends Component {
             closeAndClearAddReview,
             updateItemName,
             updateStars,
-            updateComment
+            updateComment,
+            toggleItemExpanded
           } = this.props
 
     return (
-      <div>
+      <div className={style.singlePlace}>
         <div className={style.nameBox}>
         <h2>{name}</h2>
           { isShowAddReview ?
@@ -67,7 +70,9 @@ export default class SinglePlace extends Component {
               </div>
           }
         </div>
+        <div className={style.address}>
           <p>{address}</p>
+        </div>
           { isShowAddReview ?
               <div className={style.addReview}>
                 <AddReview
@@ -84,7 +89,12 @@ export default class SinglePlace extends Component {
           }
           { items ?
               <div>
-                { items.map(item => <Item key={item.id} item={item} />) }
+                { items.map(item => (
+                    <div key={item.id}>
+                      <Item item={item} toggleItemExpanded={toggleItemExpanded} />
+                    </div>
+                  ))
+                }
               </div> :
               null
           }

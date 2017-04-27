@@ -1,15 +1,47 @@
 .nameBox {
   display: flex;
+  & h2 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
 }
 
 .addReviewButton {
   display: flex;
   flex-direction: column;
   justify-content: center;
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .addReview {
-  margin-top: 1rem;
-  margin-bottom: 1rem
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.address {
+  & p {
+    color: #464646;
+  }
+}
+
+.review {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.itemTitle {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  & h5 {
+    display: inline-block;
+    font-weight: normal;
+    margin: 0;
+  }
+}
+
+.itemTitleStars {
+  margin-right: 0.5em;
+  display: flex;
+  align-items: center;
 }

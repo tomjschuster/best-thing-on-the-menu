@@ -5,8 +5,8 @@
 /*@value button-squared-min-width: 12em;*/
 
 .primary {
-  color: buttonPrimaryColor !important;
-  background-color: buttonPrimaryBackgroundColor !important;
+  /*color: buttonPrimaryColor !important;*/
+  /*background-color: buttonPrimaryBackgroundColor !important;*/
 
   &.flat {
    /*background-color: buttonPrimaryDisabledBackgroundColor !important;*/

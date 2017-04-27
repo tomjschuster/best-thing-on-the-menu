@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardTitle, CardText } from 'react-toolbox/lib/card'
 import { ReviewStars } from './RatingStars'
 
+
 const Review = ({ review }) => (
       <Card>
         <CardTitle
