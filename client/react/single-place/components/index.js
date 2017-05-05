@@ -3,17 +3,19 @@ import { Button } from 'react-toolbox/lib/button'
 import Item from './Item'
 import AddReview from './AddReview'
 import style from '../style.css'
+import { logOut } from '../../../utilities/auth'
 
 
 export default class SinglePlace extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
-  componentWillMount() {
-    const { params: { id },
-            getPlaceItemsReviews,
-            router
-          } = this.props
-    getPlaceItemsReviews(id, router)
+  componentDidMount() {
+    const { auth, checkAuth, params: { id }, getPlaceItemsReviews, router } = this.props
+    if (!auth.isAuthenticated) {
+      checkAuth(() => getPlaceItemsReviews(id, router), logOut)
+    } else {
+      getPlaceItemsReviews(id, router)
+    }
   }
 
   componentWillUnmount() {

@@ -2,10 +2,17 @@ import React, { Component } from 'react'
 
 
 export default class Login extends Component {
+  componentDidMount() {
+    console.log(this.props)
+    const { auth, checkAuth, router } = this.props
+    if (!auth.isAuthenticated) {
+      checkAuth(() => router.replace('/explore'))
+    } else {
+      router.replace('/explore')
+    }
+  }
 
   render() {
-    const { router } = this.props
-
     return (
       <div>
         <a href='/api/auth/google'>

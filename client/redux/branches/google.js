@@ -1,9 +1,11 @@
 /*----------  INITIAL STATE  ----------*/
-const initialState = { googleMapsLoaded: false }
+const initialState = { googleMapsLoaded: false, loadAttempts: 0 }
 
 
 /*----------  ACTION TYPES  ----------*/
 const SET_GOOGLE_MAPS_LOADED = 'SET_GOOGLE_MAPS_LOADED'
+const ATTEMPT_GOOGLE_MAPS_LOAD = 'ATTEMPT_GOOGLE_MAPS_LOAD'
+const RESET_GOOGLE_MAPS_LOAD_ATTEMPTS = 'RESET_GOOGLE_MAPS_LOAD_ATTEMPTS'
 
 
 /*----------  ACTIONS  ----------*/
@@ -15,9 +17,22 @@ export const actions = {
     googleMapsLoaded
   }),
 
+  attemptGoogleMapsLoad: () => ({
+    type: ATTEMPT_GOOGLE_MAPS_LOAD
+  }),
+
+  resetGoogleMapsLoadAttempts: () => ({
+    type: RESET_GOOGLE_MAPS_LOAD_ATTEMPTS
+  }),
+
   // THUNK CREATORS
   checkGoogleMapsLoaded: () => dispatch => {
-    dispatch(actions.setGoogleMapsLoaded(!!window.google))
+    if (window.google) {
+      dispatch(actions.setGoogleMapsLoaded(true))
+      dispatch(actions.resetGoogleMapsLoadAttempts())
+    } else {
+      dispatch(actions.attemptGoogleMapsLoad())
+    }
   }
 
 }
@@ -26,11 +41,17 @@ export const actions = {
 /*----------  REDUCER  ----------*/
 const actionHandler =  {
 
-  // GOOGLE
   [SET_GOOGLE_MAPS_LOADED]: (state, { googleMapsLoaded }) => ({ ...state,
     googleMapsLoaded
   }),
 
+  [ATTEMPT_GOOGLE_MAPS_LOAD]: (state, _) => ({ ...state,
+    loadAttempts: ++state.loadAttempts
+  }),
+
+  [RESET_GOOGLE_MAPS_LOAD_ATTEMPTS]: (state, _) => ({ ...state,
+    loadAttempts: 0
+  })
 }
 
 export default { initialState, actionHandler }

@@ -7,7 +7,9 @@ export default class SearchBar extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentWillMount() {
-    const { checkGoogleMapsLoaded, googleMapsLoaded } = this.props
+    const { checkGoogleMapsLoaded,
+            google: { googleMapsLoaded }
+          } = this.props
 
     if (!googleMapsLoaded) {
       checkGoogleMapsLoaded()
@@ -15,7 +17,7 @@ export default class SearchBar extends Component {
   }
 
   componentDidMount() {
-    const { googleMapsLoaded,
+    const { google: { googleMapsLoaded },
             checkGoogleMapsLoaded,
             bindGoogleMapsAutocomplete
           } = this.props
@@ -28,7 +30,7 @@ export default class SearchBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { googleMapsLoaded,
+    const { google: { googleMapsLoaded, loadAttempts },
             checkGoogleMapsLoaded,
             bindGoogleMapsAutocomplete
           } = this.props
@@ -36,13 +38,13 @@ export default class SearchBar extends Component {
     if (!prevProps.googleMapsLoaded && googleMapsLoaded) {
       bindGoogleMapsAutocomplete()
     }
-    if (!googleMapsLoaded) {
-      checkGoogleMapsLoaded()
+    if (!googleMapsLoaded && loadAttempts < 10) {
+      setTimeout(checkGoogleMapsLoaded, 500)
     }
   }
 
   render() {
-    const { googleMapsLoaded,
+    const { google: { googleMapsLoaded },
             getAutocompleteInput,
             checkGoogleMapsLoaded
           } = this.props

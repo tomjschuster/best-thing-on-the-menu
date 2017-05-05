@@ -43,14 +43,14 @@ const Item = ({ item: { id, name, reviews, expanded }, toggleItemExpanded }) => 
           />
         }
 
-        subtitle={
+        subtitle={ reviews.length > 0 ?
           <Button
             icon={`keyboard_arrow_${expanded ? 'up' : 'down'}`}
             onClick={reviews.length > 0 ? () => toggleItemExpanded(id) : null}
             disabled={!reviews.length}
             floating
             mini
-          />
+          /> : null
         }
       />
       { expanded ?

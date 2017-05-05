@@ -20,7 +20,7 @@ export default class Main extends Component {
             <div className='tagline'>
               <h4>Taskstream's Lunch Menu Review</h4>
             </div>
-            {children}
+            { children }
           </div>
         </Panel>
       </Layout>

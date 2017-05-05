@@ -24,21 +24,24 @@ export const actions = {
   }),
 
   //  THUNK CREATORS
-  checkAuth: () => dispatch => (
+  checkAuth: (onSuccess, onFailure, onError) => dispatch => (
     axios
       .get('/api/auth/check')
       .then(({ data: { id, isAuthenticated} }) => {
         if (isAuthenticated) {
           dispatch(actions.signIn(id))
-          return { isAuthenticated }
+          return onSuccess && onSuccess()
         } else {
           dispatch(actions.signOut())
-          return { isAuthenticated: false }
+          return onFailure && onFailure()
         }
       })
       .catch(err => {
         dispatch(actions.signOut())
-        return { isAuthenticated: false, err }
+        if (onError) {
+          return onError(err)
+        }
+        return onFailure && onFailure()
       })
   ),
 
