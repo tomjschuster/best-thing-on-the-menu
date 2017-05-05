@@ -13,7 +13,7 @@ export default class Main extends Component {
             title='The Best Thing On The Menu'
             leftIcon={<FontIcon value='room_service' />}
             onLeftIconClick={() => auth.isAuthenticated && router.push('/explore')}
-            rightIcon={<FontIcon value='exit_to_app' />}
+            rightIcon={auth.isAuthenticated && <FontIcon value='exit_to_app' />}
             onRightIconClick={() => endSession()}
           />
           <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem' }}>
