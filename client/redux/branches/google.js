@@ -9,7 +9,7 @@ const RESET_GOOGLE_MAPS_LOAD_ATTEMPTS = 'RESET_GOOGLE_MAPS_LOAD_ATTEMPTS'
 
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   setGoogleMapsLoaded: googleMapsLoaded => ({
@@ -54,4 +54,4 @@ const actionHandler =  {
   })
 }
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

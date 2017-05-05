@@ -18,7 +18,7 @@ const CLEAR_ADD_REVIEW = 'CLEAR_ADD_REVIEW'
 
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   // ADD REVIEW
@@ -77,4 +77,4 @@ const actionHandler =  {
 
 }
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

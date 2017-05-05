@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Button } from 'react-toolbox/lib/button'
 import Item from './Item'
 import AddReview from './AddReview'
-import style from '../style.css'
-import { logOut } from '../../../utilities/auth'
+import style from './style.css'
+import { logOut } from '../../utilities/auth'
 
 
 export default class SinglePlace extends Component {

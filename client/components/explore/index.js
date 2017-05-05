@@ -1,11 +1,66 @@
-import { connect } from 'react-redux'
-import { actions } from '../../redux'
-import Explore from './components'
+import React, { Component } from 'react'
+import Places from './Places'
+import SearchBar from './SearchBar'
+import { autocompleteOptions } from '../../config'
+import { logOut } from '../../utilities/auth'
 
-const path = '/explore'
+export default class Explore extends Component {
 
-const mapState = state => state
-const mapDispatch = { ...actions }
-const component = connect(mapState, mapDispatch)(Explore)
+  /*----------  LIFE-CYCLE EVENTS  ----------*/
+  componentDidMount() {
+    const { auth, checkAuth, getPlaces } = this.props
+    if (!auth.isAuthenticated) {
+      checkAuth(() => getPlaces(), logOut)
+    } else {
+      getPlaces()
+    }
+  }
 
-export default { path, component }
+  /*----------  INSTANCE METHODS  ----------*/
+  bindGoogleMapsAutocomplete = () => {
+    const input = this.autocompleteInput
+
+      // Bind autocomplete functionality to input field
+      const autocomplete = new window.google.maps.places.Autocomplete(input, autocompleteOptions)
+
+      // On select, get google place and go to page
+      autocomplete.addListener('place_changed', () => {
+        const { checkPlaceAndGoToPage } = this.props
+        const { id: googleId, name, formatted_address: address } = autocomplete.getPlace()
+
+        // Get place id from db, creating if not exists
+        checkPlaceAndGoToPage(googleId, name, address)
+      })
+  }
+
+  /*----------  NODE REFERENCES  ----------*/
+  getAutocompleteInput = node => {
+    if (node) {
+      this.autocompleteInput = node.refs.wrappedInstance.inputNode
+    }
+  }
+
+  /*----------  RENDER  ----------*/
+  render() {
+    const { getAutocompleteInput, bindGoogleMapsAutocomplete } = this
+    const { places,
+            router,
+            google,
+            checkGoogleMapsLoaded
+          } = this.props
+    return (
+      <div>
+        <SearchBar
+          getAutocompleteInput={getAutocompleteInput}
+          checkGoogleMapsLoaded={checkGoogleMapsLoaded}
+          google={google}
+          bindGoogleMapsAutocomplete={bindGoogleMapsAutocomplete}
+        />
+        <Places
+          places={places}
+          router={router}
+        />
+      </div>
+    )
+  }
+}

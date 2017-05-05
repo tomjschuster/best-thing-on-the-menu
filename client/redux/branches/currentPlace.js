@@ -12,7 +12,7 @@ const ADD_REVIEW_TO_CURRENT_PLACE = 'ADD_REVIEW_TO_CURRENT_PLACE'
 const TOGGLE_ITEM_EXPANDED = 'TOGGLE_ITEM_EXPANDED'
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   receiveCurrentPlace: currentPlace => ({
@@ -104,4 +104,4 @@ const actionHandler =  {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

@@ -12,7 +12,7 @@ const ADD_ITEM = 'ADD_ITEM'
 
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   receiveItems: items => ({
@@ -35,4 +35,4 @@ const actionHandler =  {
   [ADD_ITEM]: (state, action) => ([ ...state, action.item ])
 }
 
-export default { initialState, actionHandler }
+export default { initialState, actionHandler, actions }

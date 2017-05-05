@@ -11,7 +11,7 @@ const RECEIVE_REVIEWS = 'RECEIVE_REVIEWS'
 
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   receiveReviews: reviews => ({
@@ -30,4 +30,4 @@ const actionHandler =  {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

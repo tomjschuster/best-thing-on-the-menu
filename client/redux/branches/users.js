@@ -11,7 +11,7 @@ const RECEIVE_USERS = 'RECEIVE_USERS'
 
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   receiveUsers: users => ({
@@ -30,4 +30,4 @@ const actionHandler = {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

@@ -11,7 +11,7 @@ const SIGN_OUT = 'SIGN_OUT'
 
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   signIn: id => ({
@@ -73,4 +73,4 @@ const actionHandler =  {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

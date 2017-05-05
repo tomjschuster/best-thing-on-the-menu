@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { history } from '../../router'
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = []
@@ -10,7 +11,7 @@ const ADD_PLACE = 'ADD_PLACE'
 
 
 /*----------  ACTIONS  ----------*/
-export const actions = {
+const actions = {
 
   // ACTION CREATORS
   receivePlaces: places => ({
@@ -23,11 +24,11 @@ export const actions = {
   }),
 
   // THUNK CREATORS
-  checkPlaceAndGoToPage: (googleId, name, address, router) => () => {
+  checkPlaceAndGoToPage: (googleId, name, address) => () => {
    axios.post('/api/places/check', { googleId, name, address })
       .then(({ data: { created, id } }) => {
           if (created) {
-            router.push(`/places/${id}`)
+            history.push(`/places/${id}`)
           }
       })
       .catch(console.error)
@@ -48,4 +49,4 @@ const actionHandler =  {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }
