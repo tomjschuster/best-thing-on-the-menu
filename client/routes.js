@@ -1,4 +1,4 @@
-import { main, login, singlePlace, explore } from './react'
+import { main, login, singlePlace, explore } from './components'
 
 
 export default {
