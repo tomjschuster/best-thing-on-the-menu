@@ -2,12 +2,18 @@ import React, { Component } from 'react'
 import Places from './Places'
 import SearchBar from './SearchBar'
 import { autocompleteOptions } from '../../../config'
+import { logOut } from '../../../utilities/auth'
 
 export default class Explore extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentDidMount() {
-    this.props.getPlaces()
+    const { auth, checkAuth, getPlaces } = this.props
+    if (!auth.isAuthenticated) {
+      checkAuth(() => getPlaces(), logOut)
+    } else {
+      getPlaces()
+    }
   }
 
   /*----------  INSTANCE METHODS  ----------*/
@@ -39,7 +45,7 @@ export default class Explore extends Component {
     const { getAutocompleteInput, bindGoogleMapsAutocomplete } = this
     const { places,
             router,
-            google: { googleMapsLoaded },
+            google,
             checkGoogleMapsLoaded
           } = this.props
     return (
@@ -47,7 +53,7 @@ export default class Explore extends Component {
         <SearchBar
           getAutocompleteInput={getAutocompleteInput}
           checkGoogleMapsLoaded={checkGoogleMapsLoaded}
-          googleMapsLoaded={googleMapsLoaded}
+          google={google}
           bindGoogleMapsAutocomplete={bindGoogleMapsAutocomplete}
         />
         <Places

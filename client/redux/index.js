@@ -5,7 +5,8 @@ import reducers from './reducers'
 
 export default createStore(
     combineReducers(reducers),
-    applyMiddleware(logger(), thunk)
+    // applyMiddleware(logger(), thunk)
+    applyMiddleware(thunk)
   )
 
 export actions from './actions'
