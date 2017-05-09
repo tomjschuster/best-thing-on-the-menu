@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-
+import { history } from '../../router'
 
 export default class Login extends Component {
   componentDidMount() {
-    console.log(this.props)
-    const { auth, checkAuth, router } = this.props
+    const { auth, checkAuth } = this.props
     if (!auth.isAuthenticated) {
-      checkAuth(() => router.replace('/explore'))
+      checkAuth(() => history.replace('/explore'))
     } else {
-      router.replace('/explore')
+      history.replace('/explore')
     }
   }
 

@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { history } from '../router'
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = []
+export const initialState = []
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -23,11 +24,11 @@ export const actions = {
   }),
 
   // THUNK CREATORS
-  checkPlaceAndGoToPage: (googleId, name, address, router) => () => {
+  checkPlaceAndGoToPage: (googleId, name, address) => () => {
    axios.post('/api/places/check', { googleId, name, address })
       .then(({ data: { created, id } }) => {
           if (created) {
-            router.push(`/places/${id}`)
+            history.push(`/places/${id}`)
           }
       })
       .catch(console.error)
@@ -42,10 +43,10 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
   [RECEIVE_PLACE]: (state, action) => ([ ...action.places ]),
   [ADD_PLACE]: (state, action) => ([ ...state, action.place ])
 }
 
-
-export default { initialState, actionHandler }
+console.log('exporting from places')
+export default { initialState, actions, actionHandler }

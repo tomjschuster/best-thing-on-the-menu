@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import Places from './Places'
 import SearchBar from './SearchBar'
-import { autocompleteOptions } from '../../../config'
-import { logOut } from '../../../utilities/auth'
+import { autocompleteOptions } from '../../config'
+import { logOut } from '../../utilities/auth'
 
 export default class Explore extends Component {
 
@@ -25,11 +25,11 @@ export default class Explore extends Component {
 
       // On select, get google place and go to page
       autocomplete.addListener('place_changed', () => {
-        const { checkPlaceAndGoToPage, router } = this.props
+        const { checkPlaceAndGoToPage } = this.props
         const { id: googleId, name, formatted_address: address } = autocomplete.getPlace()
 
         // Get place id from db, creating if not exists
-        checkPlaceAndGoToPage(googleId, name, address, router)
+        checkPlaceAndGoToPage(googleId, name, address)
       })
   }
 

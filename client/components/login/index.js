@@ -1,11 +1,23 @@
-import { connect } from 'react-redux'
-import actions from '../../redux'
-import Login from './components'
+import React, { Component } from 'react'
+import {
+  auth as authActions,
+} from '../../redux/actions'
+import Login from './Login'
 
-const path = '/login'
+export default class LoginWrapper extends Component {
+  _ = () => {}
 
-const mapState = state => state
-const mapDispatch = { ...actions }
-const component = connect(mapState, mapDispatch)(Login)
+  /*----------  DISPATCH EVENTS  ----------*/
+  checkAuth = (onSuccess, onFailure) => this.props.dispatch(
+    authActions.checkAuth(onSuccess, onFailure)
+  )
 
-export default { path, component }
+  render() {
+    const { auth } = this.props
+    const { checkAuth } = this
+    const props = { auth, checkAuth }
+    return (
+      <Login { ...props } />
+    )
+  }
+}

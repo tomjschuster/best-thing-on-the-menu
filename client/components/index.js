@@ -1,4 +1,18 @@
-export main from './main'
-export login from './login'
-export explore from './explore'
-export singlePlace from './single-place'
+import { connect } from 'react-redux'
+
+
+const components = {
+  Main: require('./Main').default,
+  Login: require('./Login').default,
+  Explore: require('./Explore').default,
+  SinglePlace: require('./SinglePlace').default,
+  ErrorPage: require('./ErrorPage').default
+}
+
+export default
+  Object
+    .keys(components)
+    .reduce((connectedComponents, key) => ({
+      ...connectedComponents,
+      [key]: connect(state => state)(components[key])
+    }), {})

@@ -3,7 +3,7 @@
 */
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = []
+export const initialState = []
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -30,4 +30,4 @@ const actionHandler = {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

@@ -3,7 +3,7 @@
 */
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = []
+export const initialState = []
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -30,9 +30,9 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
   [RECEIVE_ITEMS]: (state, action) => ([ ...action.items ]),
   [ADD_ITEM]: (state, action) => ([ ...state, action.item ])
 }
 
-export default { initialState, actionHandler }
+export default { initialState, actionHandler, actions }

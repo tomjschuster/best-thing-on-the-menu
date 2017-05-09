@@ -1,7 +1,7 @@
 import { actions as uxActions } from './ux'
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = {
+export const initialState = {
   addReview: {
     itemName: '',
     stars: null,
@@ -52,7 +52,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   // ADD REVIEW
   [UPDATE_ITEM_NAME]: (state, { name }) => ({ ...state,
@@ -77,4 +77,4 @@ const actionHandler =  {
 
 }
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

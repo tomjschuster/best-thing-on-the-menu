@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card, CardTitle, CardText } from 'react-toolbox/lib/card'
+import { Card, CardText } from 'react-toolbox/lib/card'
 import { Button } from 'react-toolbox/lib/button'
-import { ItemCardTitle } from '../../custom-components/ItemCard'
+import { ItemCardTitle } from '../custom-components/ItemCard'
 import { ReviewStars } from './RatingStars'
 import Review from './Review'
-import style from '../style.css'
+import style from './style.css'
 
 
 const Title = ({ name, avgStars, numReviews, onClick }) => (

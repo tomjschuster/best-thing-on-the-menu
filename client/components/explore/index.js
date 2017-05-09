@@ -1,11 +1,54 @@
-import { connect } from 'react-redux'
-import { actions } from '../../redux'
-import Explore from './components'
+import React, { Component } from 'react'
+import Explore from './Explore'
+import {
+  auth as authActions,
+  places as placesActions,
+  google as googleActions
+} from '../../redux/actions'
 
-const path = '/explore'
 
-const mapState = state => state
-const mapDispatch = { ...actions }
-const component = connect(mapState, mapDispatch)(Explore)
+export default class ExploreWrapper extends Component {
+  _ = () => {}
 
-export default { path, component }
+  /*----------  DISPATCH EVENTS  ----------*/
+  checkAuth = (onSuccess, onFailure) => this.props.dispatch(
+    authActions.checkAuth(onSuccess, onFailure)
+  )
+
+  getPlaces = () => this.props.dispatch(
+    placesActions.getPlaces()
+  )
+
+  checkPlaceAndGoToPage = (googleId, name, address) => this.props.dispatch(
+    placesActions.checkPlaceAndGoToPage(googleId, name, address)
+  )
+
+  checkGoogleMapsLoaded = () => this.props.dispatch(
+    googleActions.checkGoogleMapsLoaded()
+  )
+
+
+  /*----------  RENDER  ----------*/
+  render() {
+    const { auth, places, google } = this.props
+    const {
+      checkAuth,
+      getPlaces,
+      checkPlaceAndGoToPage,
+      checkGoogleMapsLoaded
+    } = this
+    const props = {
+      auth,
+      places,
+      google,
+      checkAuth,
+      getPlaces,
+      checkPlaceAndGoToPage,
+      checkGoogleMapsLoaded
+    }
+
+    return (
+      <Explore {...props} />
+    )
+  }
+}

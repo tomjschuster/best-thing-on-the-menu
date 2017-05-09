@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = { isAuthenticated: false }
+export const initialState = { isAuthenticated: false }
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -28,6 +28,7 @@ export const actions = {
     axios
       .get('/api/auth/check')
       .then(({ data: { id, isAuthenticated} }) => {
+        console.log('we been authed', onSuccess)
         if (isAuthenticated) {
           dispatch(actions.signIn(id))
           return onSuccess && onSuccess()
@@ -37,6 +38,7 @@ export const actions = {
         }
       })
       .catch(err => {
+        console.log('duh error', err)
         dispatch(actions.signOut())
         if (onError) {
           return onError(err)
@@ -60,7 +62,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   [SIGN_IN]: (state, { id }) => ({ ...state,
     id, isAuthenticated: true
@@ -73,4 +75,4 @@ const actionHandler =  {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

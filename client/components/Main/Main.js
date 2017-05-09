@@ -2,18 +2,19 @@ import React, { Component } from 'react'
 import { Layout, Panel } from 'react-toolbox'
 import AppBar from 'react-toolbox/lib/app_bar'
 import FontIcon from 'react-toolbox/lib/font_icon'
+import { history } from '../../router'
 
 export default class Main extends Component {
   render() {
-    const { auth, endSession, router, children } = this.props
+    const { auth, endSession, children } = this.props
     return (
       <Layout>
         <Panel>
           <AppBar
             title='The Best Thing On The Menu'
             leftIcon={<FontIcon value='room_service' />}
-            onLeftIconClick={() => auth.isAuthenticated && router.push('/explore')}
-            rightIcon={<FontIcon value='exit_to_app' />}
+            onLeftIconClick={() => auth.isAuthenticated && history.push('/explore')}
+            rightIcon={auth.isAuthenticated ? <FontIcon value='exit_to_app' /> : null}
             onRightIconClick={() => endSession()}
           />
           <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem' }}>

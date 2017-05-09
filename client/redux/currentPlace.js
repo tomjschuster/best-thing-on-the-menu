@@ -1,7 +1,8 @@
 import { get, post } from 'axios'
+import { history } from '../router'
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = {}
+export const initialState = {}
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -48,7 +49,7 @@ export const actions = {
       .catch(console.error)
   },
 
-  getPlaceItemsReviews: (placeId, router) => dispatch => {
+  getPlaceItemsReviews: (placeId) => dispatch => {
     get(`/api/places/${placeId}/reviews`)
       .then(({ data }) => {
         const { found, place, items, reviews } = data
@@ -62,12 +63,13 @@ export const actions = {
           }
           dispatch(actions.receiveCurrentPlace(currentPlace))
         } else {
-          router.push('/')
+          console.log(data)
+          history.push('/explore')
         }
       })
       .catch(err => {
         console.error(err)
-        router.push('/')
+        history.push('/explore')
       })
   },
 
@@ -75,7 +77,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   [RECEIVE_CURRENT_PLACE]: (state, action) => ({
     ...action.currentPlace
@@ -104,4 +106,4 @@ const actionHandler =  {
 }
 
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

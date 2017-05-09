@@ -1,5 +1,5 @@
 /*----------  INITIAL STATE  ----------*/
-const initialState = { googleMapsLoaded: false, loadAttempts: 0 }
+export const initialState = { googleMapsLoaded: false, loadAttempts: 0 }
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -39,7 +39,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   [SET_GOOGLE_MAPS_LOADED]: (state, { googleMapsLoaded }) => ({ ...state,
     googleMapsLoaded
@@ -54,4 +54,4 @@ const actionHandler =  {
   })
 }
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }

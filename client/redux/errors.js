@@ -1,5 +1,5 @@
 /*----------  INITIAL STATE  ----------*/
-const initialState = { noGoogleMaps: true }
+export const initialState = { noGoogleMaps: true }
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -32,7 +32,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   // GOOGLE
   [SET_NO_GOOGLE_MAPS]: state => ({ ...state,
@@ -45,4 +45,4 @@ const actionHandler =  {
 
 }
 
-export default { initialState, actionHandler }
+export default { initialState, actions, actionHandler }
