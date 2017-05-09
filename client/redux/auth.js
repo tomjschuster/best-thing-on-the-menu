@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = { isAuthenticated: false }
+export const initialState = { isAuthenticated: false }
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -62,7 +62,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   [SIGN_IN]: (state, { id }) => ({ ...state,
     id, isAuthenticated: true

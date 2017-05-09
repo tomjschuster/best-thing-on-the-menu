@@ -3,7 +3,7 @@
 */
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = []
+export const initialState = []
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -25,7 +25,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
   [RECEIVE_REVIEWS]: (state, action) => ([ ...action.reviews ]),
 }
 

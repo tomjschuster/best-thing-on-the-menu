@@ -1,5 +1,5 @@
 /*----------  INITIAL STATE  ----------*/
-const initialState = { isShowAddReview: false }
+export const initialState = { isShowAddReview: false }
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -26,7 +26,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   // ADD REVIEW
   [SHOW_ADD_REVIEW]: (state) => ({ ...state,

@@ -2,7 +2,7 @@ import { get, post } from 'axios'
 import { history } from '../router'
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = {}
+export const initialState = {}
 
 
 /*----------  ACTION TYPES  ----------*/
@@ -77,7 +77,7 @@ export const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
+export const actionHandler =  {
 
   [RECEIVE_CURRENT_PLACE]: (state, action) => ({
     ...action.currentPlace
