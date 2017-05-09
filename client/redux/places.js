@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { history } from '../../router'
+import { history } from '../router'
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = []
@@ -11,7 +11,7 @@ const ADD_PLACE = 'ADD_PLACE'
 
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
   receivePlaces: places => ({
@@ -48,5 +48,5 @@ const actionHandler =  {
   [ADD_PLACE]: (state, action) => ([ ...state, action.place ])
 }
 
-
+console.log('exporting from places')
 export default { initialState, actions, actionHandler }

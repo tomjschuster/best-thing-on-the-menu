@@ -1,25 +1,23 @@
 import React, { Component } from 'react'
+import {
+  auth as authActions,
+} from '../../redux/actions'
+import Login from './Login'
 
+export default class LoginWrapper extends Component {
+  _ = () => {}
 
-export default class Login extends Component {
-  componentDidMount() {
-    const { auth, checkAuth, router } = this.props
-    console.log('da props', this.props)
-    console.log('da context', this.context)
-    if (!auth.isAuthenticated) {
-      checkAuth(() => router.replace('/explore'))
-    } else {
-      router.replace('/explore')
-    }
-  }
+  /*----------  DISPATCH EVENTS  ----------*/
+  checkAuth = (onSuccess, onFailure) => this.props.dispatch(
+    authActions.checkAuth(onSuccess, onFailure)
+  )
 
   render() {
+    const { auth } = this.props
+    const { checkAuth } = this
+    const props = { auth, checkAuth }
     return (
-      <div>
-        <a href='/api/auth/google'>
-          <img src='/assets/btn_google_signin_dark_normal_web@2x.png' />
-        </a>
-      </div>
+      <Login { ...props } />
     )
   }
 }

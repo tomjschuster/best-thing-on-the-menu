@@ -1,7 +1,20 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import branches from './branches'
+
+export const branches = {
+  auth: require('./auth').default,
+  currentPlace: require('./currentPlace').default,
+  errors: require('./errors').default,
+  forms: require('./forms').default,
+  google: require('./google').default,
+  items: require('./items').default,
+  places: require('./places').default,
+  reviews: require('./reviews').default,
+  users: require('./users').default,
+  ux: require('./ux').default
+}
+
 
 export const actions =
   Object

@@ -8,7 +8,7 @@ const CLEAR_NO_GOOGLE_MAPS = 'CLEAR_NO_GOOGLE_MAPS'
 
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
   // GOOGLE

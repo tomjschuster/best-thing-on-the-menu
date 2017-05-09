@@ -1,7 +1,6 @@
 import React from 'react'
 import components from '../components'
-
-const { Main, Login, Explore, SinglePlace, Error } = components
+const { Main, Login, Explore, SinglePlace, ErrorPage } = components
 
 export default [
   {
@@ -14,10 +13,10 @@ export default [
   },
   {
     path: '/places/:id',
-    action: () => <Main><SinglePlace /></Main>
+    action: ({ params }) => <Main><SinglePlace params={params} /></Main>
   },
   {
     path: '/error',
-    action: () => <Main><Error /></Main>
+    action: ({ error }) => <Main><ErrorPage error={error} /></Main>
   }
 ]

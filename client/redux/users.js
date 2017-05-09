@@ -7,17 +7,17 @@ const initialState = []
 
 
 /*----------  ACTION TYPES  ----------*/
-const RECEIVE_REVIEWS = 'RECEIVE_REVIEWS'
+const RECEIVE_USERS = 'RECEIVE_USERS'
 
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
-  receiveReviews: reviews => ({
-    type: RECEIVE_REVIEWS,
-    reviews
-  })
+  receiveUsers: users => ({
+    type: RECEIVE_USERS,
+    users
+  }),
 
   // THUNK CREATORS
 
@@ -25,8 +25,8 @@ const actions = {
 
 
 /*----------  REDUCER  ----------*/
-const actionHandler =  {
-  [RECEIVE_REVIEWS]: (state, action) => ([ ...action.reviews ]),
+const actionHandler = {
+  [RECEIVE_USERS]: (state, action) => ([ ...action.users ])
 }
 
 

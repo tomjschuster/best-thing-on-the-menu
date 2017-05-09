@@ -13,5 +13,6 @@ export const setupInterceptors = () => {
 }
 
 export const logOut = () => {
+  console.log('loggin out', history)
   history.replace({ pathname: '/login', state: { loggedOut: true } })
 }

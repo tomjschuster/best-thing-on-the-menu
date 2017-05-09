@@ -12,7 +12,7 @@ const ADD_ITEM = 'ADD_ITEM'
 
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
   receiveItems: items => ({

@@ -11,7 +11,7 @@ const SIGN_OUT = 'SIGN_OUT'
 
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
   signIn: id => ({
@@ -28,6 +28,7 @@ const actions = {
     axios
       .get('/api/auth/check')
       .then(({ data: { id, isAuthenticated} }) => {
+        console.log('we been authed', onSuccess)
         if (isAuthenticated) {
           dispatch(actions.signIn(id))
           return onSuccess && onSuccess()
@@ -37,6 +38,7 @@ const actions = {
         }
       })
       .catch(err => {
+        console.log('duh error', err)
         dispatch(actions.signOut())
         if (onError) {
           return onError(err)

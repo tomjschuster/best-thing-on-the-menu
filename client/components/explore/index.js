@@ -1,66 +1,54 @@
 import React, { Component } from 'react'
-import Places from './Places'
-import SearchBar from './SearchBar'
-import { autocompleteOptions } from '../../config'
-import { logOut } from '../../utilities/auth'
+import Explore from './Explore'
+import {
+  auth as authActions,
+  places as placesActions,
+  google as googleActions
+} from '../../redux/actions'
 
-export default class Explore extends Component {
 
-  /*----------  LIFE-CYCLE EVENTS  ----------*/
-  componentDidMount() {
-    const { auth, checkAuth, getPlaces } = this.props
-    if (!auth.isAuthenticated) {
-      checkAuth(() => getPlaces(), logOut)
-    } else {
-      getPlaces()
-    }
-  }
+export default class ExploreWrapper extends Component {
+  _ = () => {}
 
-  /*----------  INSTANCE METHODS  ----------*/
-  bindGoogleMapsAutocomplete = () => {
-    const input = this.autocompleteInput
+  /*----------  DISPATCH EVENTS  ----------*/
+  checkAuth = (onSuccess, onFailure) => this.props.dispatch(
+    authActions.checkAuth(onSuccess, onFailure)
+  )
 
-      // Bind autocomplete functionality to input field
-      const autocomplete = new window.google.maps.places.Autocomplete(input, autocompleteOptions)
+  getPlaces = () => this.props.dispatch(
+    placesActions.getPlaces()
+  )
 
-      // On select, get google place and go to page
-      autocomplete.addListener('place_changed', () => {
-        const { checkPlaceAndGoToPage } = this.props
-        const { id: googleId, name, formatted_address: address } = autocomplete.getPlace()
+  checkPlaceAndGoToPage = (googleId, name, address) => this.props.dispatch(
+    placesActions.checkPlaceAndGoToPage(googleId, name, address)
+  )
 
-        // Get place id from db, creating if not exists
-        checkPlaceAndGoToPage(googleId, name, address)
-      })
-  }
+  checkGoogleMapsLoaded = () => this.props.dispatch(
+    googleActions.checkGoogleMapsLoaded()
+  )
 
-  /*----------  NODE REFERENCES  ----------*/
-  getAutocompleteInput = node => {
-    if (node) {
-      this.autocompleteInput = node.refs.wrappedInstance.inputNode
-    }
-  }
 
   /*----------  RENDER  ----------*/
   render() {
-    const { getAutocompleteInput, bindGoogleMapsAutocomplete } = this
-    const { places,
-            router,
-            google,
-            checkGoogleMapsLoaded
-          } = this.props
+    const { auth, places, google } = this.props
+    const {
+      checkAuth,
+      getPlaces,
+      checkPlaceAndGoToPage,
+      checkGoogleMapsLoaded
+    } = this
+    const props = {
+      auth,
+      places,
+      google,
+      checkAuth,
+      getPlaces,
+      checkPlaceAndGoToPage,
+      checkGoogleMapsLoaded
+    }
+
     return (
-      <div>
-        <SearchBar
-          getAutocompleteInput={getAutocompleteInput}
-          checkGoogleMapsLoaded={checkGoogleMapsLoaded}
-          google={google}
-          bindGoogleMapsAutocomplete={bindGoogleMapsAutocomplete}
-        />
-        <Places
-          places={places}
-          router={router}
-        />
-      </div>
+      <Explore {...props} />
     )
   }
 }

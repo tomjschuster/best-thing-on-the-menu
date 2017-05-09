@@ -1,4 +1,5 @@
 import { get, post } from 'axios'
+import { history } from '../router'
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = {}
@@ -12,7 +13,7 @@ const ADD_REVIEW_TO_CURRENT_PLACE = 'ADD_REVIEW_TO_CURRENT_PLACE'
 const TOGGLE_ITEM_EXPANDED = 'TOGGLE_ITEM_EXPANDED'
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
   receiveCurrentPlace: currentPlace => ({
@@ -48,7 +49,7 @@ const actions = {
       .catch(console.error)
   },
 
-  getPlaceItemsReviews: (placeId, router) => dispatch => {
+  getPlaceItemsReviews: (placeId) => dispatch => {
     get(`/api/places/${placeId}/reviews`)
       .then(({ data }) => {
         const { found, place, items, reviews } = data
@@ -62,12 +63,13 @@ const actions = {
           }
           dispatch(actions.receiveCurrentPlace(currentPlace))
         } else {
-          router.push('/')
+          console.log(data)
+          history.push('/explore')
         }
       })
       .catch(err => {
         console.error(err)
-        router.push('/')
+        history.push('/explore')
       })
   },
 

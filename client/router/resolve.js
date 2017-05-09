@@ -5,10 +5,9 @@ function matchURI(path, uri) {
   const keys = []
   const pattern = toRegex(path, keys)
   const match = pattern.exec(uri)
-
   return match === null ? null :
     match.slice(1).reduce((params, param, idx) => ({
-      ...params, [params[keys[idx - 1].name]]: param
+      ...params, [keys[idx].name]: param
     }), {})
 }
 
@@ -28,7 +27,8 @@ export const resolve = (routes, context) => {
   if (route) {
     return route
   }
-  throw Object.assign(new Error('Not found', { status: 404 }))
+  const error = Object.assign(new Error('Not found', { status: 404 }))
+  return Promise.reject(error)
 }
 
 // async function resolve(routes, context) {

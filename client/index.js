@@ -25,14 +25,12 @@ const render = (location) => {
   router.resolve(routes, location)
     .then(renderComponent)
     .catch(error => {
-      console.log(error)
+      console.error(error)
       router.resolve(routes, { ...location, error })
         .then(renderComponent)
     })
 
 }
 
-console.log(history)
-console.log(history.location)
-render(history.location)
 history.listen(render)
+render(history.location)

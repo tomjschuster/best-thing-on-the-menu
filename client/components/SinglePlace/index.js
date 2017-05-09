@@ -1,106 +1,99 @@
 import React, { Component } from 'react'
-import { Button } from 'react-toolbox/lib/button'
-import Item from './Item'
-import AddReview from './AddReview'
-import style from './style.css'
-import { logOut } from '../../utilities/auth'
+import SinglePlace from './SinglePlace'
+import {
+  auth as authActions,
+  currentPlace as currentPlaceActions,
+  forms as formsActions,
+  ux as uxActions
+} from '../../redux/actions'
 
+export default class SinglePlaceWrapper extends Component {
+  _ = () => {}
 
-export default class SinglePlace extends Component {
+  /*----------  DISPATCH EVENTS  ----------*/
+  checkAuth = (onSuccess, onFailure) => this.props.dispatch(
+    authActions.checkAuth(onSuccess, onFailure)
+  )
 
-  /*----------  LIFE-CYCLE EVENTS  ----------*/
-  componentDidMount() {
-    const { auth, checkAuth, params: { id }, getPlaceItemsReviews, router } = this.props
-    if (!auth.isAuthenticated) {
-      checkAuth(() => getPlaceItemsReviews(id, router), logOut)
-    } else {
-      getPlaceItemsReviews(id, router)
-    }
-  }
+  getPlaceItemsReviews = (id) => this.props.dispatch(
+    currentPlaceActions.getPlaceItemsReviews(id)
+  )
 
-  componentWillUnmount() {
-    const { clearCurrentPlace, clearAddReview } = this.props
-    clearCurrentPlace()
-    clearAddReview()
-  }
+  clearCurrentPlace = () => this.props.dispatch(
+    currentPlaceActions.clearCurrentPlace()
+  )
 
+  checkItemAndCreateReview = (placeId, name, stars, comment, userId) =>
+    this.props.dispatch(
+      currentPlaceActions.checkItemAndCreateReview(placeId, name, stars, comment, userId)
+  )
 
-  /*----------  INSTANCE METHODS  ----------*/
-  onReviewSubmit = () => {
-    const { checkItemAndCreateReview,
-            closeAndClearAddReview,
-            auth: { id: userId },
-            forms: { addReview: addReviewForm },
-            currentPlace: { id: placeId }
-          } = this.props
-    const { itemName, stars, comment } = addReviewForm
-    const trimmedName = itemName.trim()
-    if (trimmedName && stars) {
-      checkItemAndCreateReview(placeId, trimmedName, stars, comment, userId)
-      closeAndClearAddReview()
-    }
-  }
+  toggleItemExpanded = (id) => this.props.dispatch(
+    currentPlaceActions.toggleItemExpanded(id)
+  )
+
+  showAddReview = () => this.props.dispatch(
+    uxActions.showAddReview()
+  )
+
+  updateItemName = (name) => this.props.dispatch(
+    formsActions.updateItemName(name)
+  )
+
+  updateStars = (stars) => this.props.dispatch(
+    formsActions.updateStars(stars)
+  )
+
+  updateComment = (comment) => this.props.dispatch(
+    formsActions.updateComment(comment)
+  )
+
+  clearAddReview = () => this.props.dispatch(
+    formsActions.clearAddReview()
+  )
+
+  closeAndClearAddReview = () => this.props.dispatch(
+    formsActions.closeAndClearAddReview()
+  )
 
 
 /*----------  RENDER  ----------*/
   render() {
-    const { onReviewSubmit } = this
-    const { currentPlace: { name, address, items = [] },
-            ux: { isShowAddReview },
-            forms: { addReview: addReviewForm },
-            showAddReview,
-            closeAndClearAddReview,
-            updateItemName,
-            updateStars,
-            updateComment,
-            toggleItemExpanded
-          } = this.props
+    const { params, auth, forms, currentPlace, ux } = this.props
+    const {
+      checkAuth,
+      getPlaceItemsReviews,
+      clearCurrentPlace,
+      checkItemAndCreateReview,
+      toggleItemExpanded,
+      showAddReview,
+      updateItemName,
+      updateStars,
+      updateComment,
+      clearAddReview,
+      closeAndClearAddReview
+    } = this
+    const props = {
+      params,
+      auth,
+      forms,
+      currentPlace,
+      ux,
+      checkAuth,
+      getPlaceItemsReviews,
+      clearCurrentPlace,
+      checkItemAndCreateReview,
+      toggleItemExpanded,
+      showAddReview,
+      updateItemName,
+      updateStars,
+      updateComment,
+      clearAddReview,
+      closeAndClearAddReview
+    }
 
     return (
-      <div className={style.singlePlace}>
-        <div className={style.nameBox}>
-        <h2>{name}</h2>
-          { isShowAddReview ?
-              null :
-              <div className={style.addReviewButton}>
-                <Button
-                  label='Add a Review'
-                  onClick={showAddReview}
-                  raised
-                  primary
-                />
-              </div>
-          }
-        </div>
-        <div className={style.address}>
-          <p>{address}</p>
-        </div>
-          { isShowAddReview ?
-              <div className={style.addReview}>
-                <AddReview
-                  itemsSource={items.map(({ name }) => name)}
-                  addReviewForm={addReviewForm}
-                  closeAndClearAddReview={closeAndClearAddReview}
-                  updateItemName={updateItemName}
-                  updateStars={updateStars}
-                  updateComment={updateComment}
-                  onReviewSubmit={onReviewSubmit}
-                />
-              </div> :
-              null
-          }
-          { items ?
-              <div>
-                { items.map(item => (
-                    <div key={item.id}>
-                      <Item item={item} toggleItemExpanded={toggleItemExpanded} />
-                    </div>
-                  ))
-                }
-              </div> :
-              null
-          }
-      </div>
+     <SinglePlace { ...props } />
     )
   }
 }

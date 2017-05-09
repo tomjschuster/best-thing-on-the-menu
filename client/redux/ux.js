@@ -8,7 +8,7 @@ const HIDE_ADD_REVIEW = 'HIDE_ADD_REVIEW'
 
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
   // ADD REVIEW

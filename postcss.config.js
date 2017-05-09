@@ -21,9 +21,11 @@ const cssFiles = fs
                   .map(file => path.resolve(path.join(cssPath, file)))
 
 
-module.exports = extractValues({ files: cssFiles }).then((cssVars) => config(
-  Object
-    .keys(cssVars)
-    .filter(key => key.match(/-/))
-    .reduce((acc, key) => Object.assign({}, acc, {[key]: cssVars[key]}), {})
-))
+module.exports =
+  extractValues({ files: cssFiles })
+    .then((cssVars) => config(
+        Object
+          .keys(cssVars)
+          .filter(key => key.match(/-/))
+          .reduce((acc, key) => Object.assign({}, acc, {[key]: cssVars[key]}), {})
+    ))

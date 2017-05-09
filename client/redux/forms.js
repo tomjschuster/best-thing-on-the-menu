@@ -18,7 +18,7 @@ const CLEAR_ADD_REVIEW = 'CLEAR_ADD_REVIEW'
 
 
 /*----------  ACTIONS  ----------*/
-const actions = {
+export const actions = {
 
   // ACTION CREATORS
   // ADD REVIEW

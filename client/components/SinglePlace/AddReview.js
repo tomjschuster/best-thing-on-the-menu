@@ -40,7 +40,6 @@ const AddReview = ({ itemsSource,
               style={ {paddingLeft: '12px'} }
               value={addReviewForm.comment}
               onChange={updateComment}
-              // onChange={console.log}
             />
       </CardText>
       <CardActions>
