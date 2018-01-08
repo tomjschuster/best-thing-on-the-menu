@@ -4,6 +4,10 @@ const { Main, Login, Explore, SinglePlace, ErrorPage } = components
 
 export default [
   {
+    path: '/',
+    action: () => <Main><Login /></Main>
+  },
+  {
     path: '/login',
     action: () => <Main><Login /></Main>
   },

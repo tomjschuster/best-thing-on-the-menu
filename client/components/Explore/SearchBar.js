@@ -19,8 +19,10 @@ export default class SearchBar extends Component {
   componentDidMount() {
     const { google: { googleMapsLoaded },
             checkGoogleMapsLoaded,
-            bindGoogleMapsAutocomplete
+            bindGoogleMapsAutocomplete,
+            getAutocompleteInput
           } = this.props
+    getAutocompleteInput()
 
     if (googleMapsLoaded) {
       bindGoogleMapsAutocomplete()
@@ -55,15 +57,11 @@ export default class SearchBar extends Component {
           <Input
             id='autocomplete-search'
             floating
-            label={ googleMapsLoaded ?
-              'Find a restaurant near Taskstream...' :
-              'Failed to load Google Maps'
-            }
+            label={'Find a restaurant near Taskstream...'}
             hint=''
             placeholder=''
-            ref={getAutocompleteInput}
             disabled={!googleMapsLoaded}
-            error={!googleMapsLoaded}
+            error={googleMapsLoaded ? null : 'Failed to load Google Maps'}
           />
         </div>
         { googleMapsLoaded ?

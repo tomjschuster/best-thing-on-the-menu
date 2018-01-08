@@ -34,10 +34,8 @@ export default class Explore extends Component {
   }
 
   /*----------  NODE REFERENCES  ----------*/
-  getAutocompleteInput = node => {
-    if (node) {
-      this.autocompleteInput = node.refs.wrappedInstance.inputNode
-    }
+  getAutocompleteInput = () => {
+    this.autocompleteInput = document.getElementById('autocomplete-search')
   }
 
   /*----------  RENDER  ----------*/
