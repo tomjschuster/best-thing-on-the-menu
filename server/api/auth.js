@@ -15,9 +15,12 @@ router.post('/logout', (req, res) => {
 /*----------  READ  ----------*/
 router.get('/check', (req, res) => {
   const isAuthenticated = req.isAuthenticated()
-  const id = req.user !== undefined ? req.user.id : null
+
   const isAdmin = req.user !== undefined ? req.user.isAdmin : false
-  res.send({ isAuthenticated, id, isAdmin })
+  const email = req.user !== undefined ? req.user.email : false
+  const firstName = req.user !== undefined ? req.user.firstName : false
+  const lastName = req.user !== undefined ? req.user.lastName : false
+  res.send({ isAuthenticated, isAdmin, email, firstName, lastName })
 })
 
 router.get('/google/callback', passport.authenticate('google',

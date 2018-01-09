@@ -45,7 +45,7 @@ passport.use(
           if (emailHasValidDomain(user.email, output[0])) {
             call.updateOrCreateUser(user)
               .then(() => {
-                done(null, user.email)
+                done(null, user)
               })
           } else {
             console.log('here')
@@ -53,7 +53,7 @@ passport.use(
               .then((x) => {
                 console.log('exists', x)
                 if (x.userExists) {
-                  done(null, user.email)
+                  done(null, user)
                 } else {
                   done(null, false, { message: 'invalid email'})
                 }
@@ -68,7 +68,7 @@ passport.use(
     } else {
       call.updateOrCreateUser(user)
         .then(() => {
-          done(null, user.email)
+          done(null, user)
         })
     }
   }

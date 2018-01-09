@@ -14,9 +14,12 @@ const SIGN_OUT = 'SIGN_OUT'
 export const actions = {
 
   // ACTION CREATORS
-  signIn: id => ({
+  signIn: ({ isAdmin, email, firstName, lastName }) => ({
       type: SIGN_IN,
-      id
+      isAdmin,
+      email,
+      firstName,
+      lastName
     }),
 
   signOut: () => ({
@@ -27,9 +30,9 @@ export const actions = {
   checkAuth: (onSuccess, onFailure, onError) => dispatch => (
     axios
       .get('/api/auth/check')
-      .then(({ data: { id, isAuthenticated} }) => {
+      .then(({ data: { isAdmin, email, firstName, lastName, isAuthenticated} }) => {
         if (isAuthenticated) {
-          dispatch(actions.signIn(id))
+          dispatch(actions.signIn({ isAdmin, email, firstName, lastName }))
           return onSuccess && onSuccess()
         } else {
           dispatch(actions.signOut())
@@ -58,8 +61,8 @@ export const actions = {
 /*----------  REDUCER  ----------*/
 export const actionHandler =  {
 
-  [SIGN_IN]: (state, { id }) => ({
-    ...state, id, isAuthenticated: true
+  [SIGN_IN]: (state, { isAdmin, firstName, lastName, email }) => ({
+    ...state, isAdmin, firstName, lastName, email, isAuthenticated: true
   }),
 
   [SIGN_OUT]: (state) => ({

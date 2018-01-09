@@ -42,7 +42,7 @@ module.exports = {
         NODE_ENV:
           process.env.NODE_ENV ?
             JSON.stringify(process.env.NODE_ENV) :
-            'production',
+            JSON.stringify('production'),
         SOUTH: process.env.SOUTH || 40.734634,
         NORTH: process.env.NORTH || 40.752200,
         WEST: process.env.WEST || -74.002601,
