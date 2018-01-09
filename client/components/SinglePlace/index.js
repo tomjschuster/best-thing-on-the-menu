@@ -8,92 +8,66 @@ import {
 } from '../../redux/actions'
 
 export default class SinglePlaceWrapper extends Component {
-  _ = () => {}
-
   /*----------  DISPATCH EVENTS  ----------*/
-  checkAuth = (onSuccess, onFailure) => this.props.dispatch(
-    authActions.checkAuth(onSuccess, onFailure)
-  )
+  checkAuth = (onSuccess, onFailure) =>
+    this.props.dispatch(authActions.checkAuth(onSuccess, onFailure))
 
-  getPlaceItemsReviews = (id) => this.props.dispatch(
-    currentPlaceActions.getPlaceItemsReviews(id)
-  )
+  getPlaceItemsReviews = (id) =>
+    this.props.dispatch(currentPlaceActions.getPlaceItemsReviews(id))
 
-  clearCurrentPlace = () => this.props.dispatch(
-    currentPlaceActions.clearCurrentPlace()
-  )
+  clearCurrentPlace = () =>
+    this.props.dispatch(currentPlaceActions.clearCurrentPlace())
 
-  checkItemAndCreateReview = (placeId, name, stars, comment, userId) =>
+  checkItemAndCreateReview = ({ placeId, itemName, stars, comment, userId }) =>
     this.props.dispatch(
-      currentPlaceActions.checkItemAndCreateReview(placeId, name, stars, comment, userId)
-  )
+      currentPlaceActions.checkItemAndCreateReview({
+        placeId, itemName, stars, comment, userId
+      })
+    )
 
-  toggleItemExpanded = (id) => this.props.dispatch(
-    currentPlaceActions.toggleItemExpanded(id)
-  )
+  toggleItemExpanded = (id) =>
+    this.props.dispatch(currentPlaceActions.toggleItemExpanded(id))
 
-  showAddReview = () => this.props.dispatch(
-    uxActions.showAddReview()
-  )
+  showAddReview = () =>
+    this.props.dispatch(uxActions.showAddReview())
 
-  updateItemName = (name) => this.props.dispatch(
-    formsActions.updateItemName(name)
-  )
+  updateItemName = (name) =>
+    this.props.dispatch(formsActions.updateItemName(name))
 
-  updateStars = (stars) => this.props.dispatch(
-    formsActions.updateStars(stars)
-  )
+  updateStars = (stars) =>
+    this.props.dispatch(formsActions.updateStars(stars))
 
-  updateComment = (comment) => this.props.dispatch(
-    formsActions.updateComment(comment)
-  )
+  updateComment = (comment) =>
+    this.props.dispatch(formsActions.updateComment(comment))
 
-  clearAddReview = () => this.props.dispatch(
-    formsActions.clearAddReview()
-  )
+  clearAddReview = () =>
+    this.props.dispatch(formsActions.clearAddReview())
 
-  closeAndClearAddReview = () => this.props.dispatch(
-    formsActions.closeAndClearAddReview()
-  )
+  closeAndClearAddReview = () =>
+    this.props.dispatch(formsActions.closeAndClearAddReview())
 
 
 /*----------  RENDER  ----------*/
   render() {
-    const { params, auth, forms, currentPlace, ux } = this.props
-    const {
-      checkAuth,
-      getPlaceItemsReviews,
-      clearCurrentPlace,
-      checkItemAndCreateReview,
-      toggleItemExpanded,
-      showAddReview,
-      updateItemName,
-      updateStars,
-      updateComment,
-      clearAddReview,
-      closeAndClearAddReview
-    } = this
-    const props = {
-      params,
-      auth,
-      forms,
-      currentPlace,
-      ux,
-      checkAuth,
-      getPlaceItemsReviews,
-      clearCurrentPlace,
-      checkItemAndCreateReview,
-      toggleItemExpanded,
-      showAddReview,
-      updateItemName,
-      updateStars,
-      updateComment,
-      clearAddReview,
-      closeAndClearAddReview
-    }
-
     return (
-     <SinglePlace { ...props } />
+      <SinglePlace
+        params={this.props.params}
+        auth={this.props.auth}
+        forms={this.props.forms}
+        currentPlace={this.props.currentPlace}
+        ux={this.props.ux}
+        checkAuth={this.checkAuth}
+        getPlaceItemsReviews={this.getPlaceItemsReviews}
+        clearCurrentPlace={this.clearCurrentPlace}
+        checkItemAndCreateReview={this.checkItemAndCreateReview}
+        toggleItemExpanded={this.toggleItemExpanded}
+        showAddReview={this.showAddReview}
+        updateItemName={this.updateItemName}
+        updateStars={this.updateStars}
+        updateComment={this.updateComment}
+        clearAddReview={this.clearAddReview}
+        closeAndClearAddReview={this.closeAndClearAddReview}
+      />
     )
   }
 }

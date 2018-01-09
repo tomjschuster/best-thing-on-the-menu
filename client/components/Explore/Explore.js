@@ -8,11 +8,10 @@ export default class Explore extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentDidMount() {
-    const { auth, checkAuth, getPlaces } = this.props
-    if (!auth.isAuthenticated) {
-      checkAuth(() => getPlaces(), logOut)
+    if (!this.props.auth.isAuthenticated) {
+      this.props.checkAuth(() => this.props.getPlaces(), logOut)
     } else {
-      getPlaces()
+      this.props.getPlaces()
     }
   }
 
@@ -21,15 +20,17 @@ export default class Explore extends Component {
     const input = this.autocompleteInput
 
       // Bind autocomplete functionality to input field
-      const autocomplete = new window.google.maps.places.Autocomplete(input, autocompleteOptions)
+      const autocomplete =
+        new window.google.maps.places.Autocomplete(input, autocompleteOptions)
 
       // On select, get google place and go to page
       autocomplete.addListener('place_changed', () => {
-        const { checkPlaceAndGoToPage } = this.props
-        const { id: googleId, name, formatted_address: address } = autocomplete.getPlace()
+        const {
+          id: googleId, name, formatted_address: address
+        } = autocomplete.getPlace()
 
         // Get place id from db, creating if not exists
-        checkPlaceAndGoToPage(googleId, name, address)
+        this.props.checkPlaceAndGoToPage({ googleId, name, address })
       })
   }
 
@@ -40,23 +41,17 @@ export default class Explore extends Component {
 
   /*----------  RENDER  ----------*/
   render() {
-    const { getAutocompleteInput, bindGoogleMapsAutocomplete } = this
-    const { places,
-            router,
-            google,
-            checkGoogleMapsLoaded
-          } = this.props
     return (
       <div>
         <SearchBar
-          getAutocompleteInput={getAutocompleteInput}
-          checkGoogleMapsLoaded={checkGoogleMapsLoaded}
-          google={google}
-          bindGoogleMapsAutocomplete={bindGoogleMapsAutocomplete}
+          getAutocompleteInput={this.getAutocompleteInput}
+          checkGoogleMapsLoaded={this.props.checkGoogleMapsLoaded}
+          google={this.props.google}
+          bindGoogleMapsAutocomplete={this.bindGoogleMapsAutocomplete}
         />
         <Places
-          places={places}
-          router={router}
+          places={this.props.places}
+          router={this.props.router}
         />
       </div>
     )

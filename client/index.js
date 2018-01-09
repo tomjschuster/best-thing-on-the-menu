@@ -29,7 +29,6 @@ const render = (location) => {
       router.resolve(routes, { ...location, error })
         .then(renderComponent)
     })
-
 }
 
 history.listen(render)

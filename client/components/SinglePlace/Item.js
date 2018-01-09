@@ -13,59 +13,64 @@ const Title = ({ name, avgStars, numReviews, onClick }) => (
     onClick={onClick}
   >
     <h5>{name}</h5>&nbsp;&nbsp;
-    { numReviews ?
-        <ReviewStars
-          className={style.itemTitleStars}
-          starCount={Math.round(avgStars)}
-        /> :
-        null
+    {numReviews ?
+      <ReviewStars
+        className={style.itemTitleStars}
+        starCount={Math.round(avgStars)}
+      /> :
+      null
     }
-    <h5>{ `(${numReviews})` }</h5>
+    <h5>{`(${numReviews})`}</h5>
   </div>
 )
 
+const calculateAverageStars = (reviews) => (
+  reviews.length > 0 ?
+    reviews
+      .map(({stars}) => stars)
+      .reduce((sum, curr) => sum + curr, 0) / reviews.length :
+    0
+)
 
-const Item = ({ item: { id, name, reviews, expanded }, toggleItemExpanded }) => {
-  const avgStars = reviews.length ?
-                    reviews
-                      .map(({stars}) => stars)
-                      .reduce((sum, curr) => sum + curr, 0) / reviews.length : 0
+const Item = ({ item, toggleItemExpanded }) => (
+  <Card key={item.id}>
+    <ItemCardTitle
+      title={
+        <Title
+          name={item.name}
+          avgStars={Math.round(calculateAverageStars(item.reviews))}
+          numReviews={item.reviews.length}
+          onClick={
+            item.reviews.length > 0 ? () => toggleItemExpanded(item.id) : null
+          }
+        />
+      }
 
-  return (
-    <Card key={id}>
-      <ItemCardTitle
-        title={
-          <Title
-            name={name}
-            avgStars={Math.round(avgStars)}
-            numReviews={reviews.length}
-            onClick={reviews.length > 0 ? () => toggleItemExpanded(id) : null}
-          />
-        }
-
-        subtitle={ reviews.length > 0 ?
+      subtitle={
+        item.reviews.length > 0 ?
           <Button
-            icon={`keyboard_arrow_${expanded ? 'up' : 'down'}`}
-            onClick={reviews.length > 0 ? () => toggleItemExpanded(id) : null}
-            disabled={!reviews.length}
+            icon={`keyboard_arrow_${item.expanded ? 'up' : 'down'}`}
+            onClick={
+              item.reviews.length > 0 ? () => toggleItemExpanded(item.id) : null
+            }
             floating
             mini
-          /> : null
-        }
-      />
-      { expanded ?
-          <CardText>
-          { reviews.map(review => (
-              <div key={review.id} className={style.review}>
-                <Review review={ review } />
-              </div>
-            ))
-          }
-      </CardText> :
-      null
+          /> :
+          null
       }
-    </Card>
-  )
-}
+    />
+    {item.expanded ?
+      <CardText>
+        {item.reviews.map(review => (
+          <div key={review.id} className={style.review}>
+            <Review review={ review } />
+          </div>
+        ))}
+      </CardText> :
+    null
+    }
+  </Card>
+)
+
 
 export default Item

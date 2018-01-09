@@ -9,95 +9,88 @@ export default class SinglePlace extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentDidMount() {
-    const { auth, checkAuth, params: { id }, getPlaceItemsReviews } = this.props
-    if (!auth.isAuthenticated) {
-      checkAuth(() => getPlaceItemsReviews(id), logOut)
+    if (!this.props.auth.isAuthenticated) {
+      this.props.checkAuth(() =>
+        this.props.getPlaceItemsReviews(this.props.params.id), logOut
+      )
     } else {
-      getPlaceItemsReviews(id)
+      this.props.getPlaceItemsReviews(this.props.params.id)
     }
   }
 
   componentWillUnmount() {
-    const { clearCurrentPlace, clearAddReview } = this.props
-    clearCurrentPlace()
-    clearAddReview()
+    this.props.clearCurrentPlace()
+    this.props.clearAddReview()
   }
 
 
   /*----------  INSTANCE METHODS  ----------*/
   onReviewSubmit = () => {
-    const { checkItemAndCreateReview,
-            closeAndClearAddReview,
-            auth: { id: userId },
-            forms: { addReview: addReviewForm },
-            currentPlace: { id: placeId }
-          } = this.props
-    const { itemName, stars, comment } = addReviewForm
-    const trimmedName = itemName.trim()
-    if (trimmedName && stars) {
-      checkItemAndCreateReview(placeId, trimmedName, stars, comment, userId)
-      closeAndClearAddReview()
+    const placeId = this.props.currentPlace.id
+    const { stars, comment } = this.props.forms.addReview
+    const userId = this.props.auth.id
+    const itemName = this.props.forms.addReview.itemName.trim()
+
+    const args = { placeId, itemName, stars, comment, userId }
+
+    if (itemName && stars) {
+      this.props.checkItemAndCreateReview(args)
+      this.props.closeAndClearAddReview()
     }
   }
 
 
 /*----------  RENDER  ----------*/
   render() {
-    const { onReviewSubmit } = this
-    const { currentPlace: { name, address, items = [] },
-            ux: { isShowAddReview },
-            forms: { addReview: addReviewForm },
-            showAddReview,
-            closeAndClearAddReview,
-            updateItemName,
-            updateStars,
-            updateComment,
-            toggleItemExpanded
-          } = this.props
-
     return (
       <div className={style.singlePlace}>
         <div className={style.nameBox}>
-        <h2>{name}</h2>
-          { isShowAddReview ?
-              null :
-              <div className={style.addReviewButton}>
-                <Button
-                  label='Add a Review'
-                  onClick={showAddReview}
-                  raised
-                  primary
-                />
-              </div>
+        <h2>{this.props.currentPlace.name}</h2>
+          {this.props.ux.isShowAddReview ?
+            null :
+            <div className={style.addReviewButton}>
+              <Button
+                label='Add a Review'
+                onClick={this.props.showAddReview}
+                raised
+                primary
+              />
+            </div>
           }
         </div>
         <div className={style.address}>
-          <p>{address}</p>
+          <p>{this.props.currentPlace.address}</p>
         </div>
-          { isShowAddReview ?
-              <div className={style.addReview}>
-                <AddReview
-                  itemsSource={items.map(({ name }) => name)}
-                  addReviewForm={addReviewForm}
-                  closeAndClearAddReview={closeAndClearAddReview}
-                  updateItemName={updateItemName}
-                  updateStars={updateStars}
-                  updateComment={updateComment}
-                  onReviewSubmit={onReviewSubmit}
-                />
-              </div> :
-              null
-          }
-          { items ?
-              <div>
-                { items.map(item => (
-                    <div key={item.id}>
-                      <Item item={item} toggleItemExpanded={toggleItemExpanded} />
-                    </div>
-                  ))
+          {this.props.ux.isShowAddReview ?
+            <div className={style.addReview}>
+              <AddReview
+                itemsSource={
+                  this.props.currentPlace.items ?
+                    this.props.currentPlace.items.map(({ name }) => name) :
+                    []
                 }
-              </div> :
-              null
+                addReviewForm={this.props.forms.addReview}
+                closeAndClearAddReview={this.props.closeAndClearAddReview}
+                updateItemName={this.props.updateItemName}
+                updateStars={this.props.updateStars}
+                updateComment={this.props.updateComment}
+                onReviewSubmit={this.onReviewSubmit}
+              />
+            </div> :
+            null
+          }
+          {this.props.currentPlace.items ?
+            <div>
+              {this.props.currentPlace.items.map(item => (
+                <div key={item.id}>
+                  <Item
+                    item={item}
+                    toggleItemExpanded={this.props.toggleItemExpanded}
+                  />
+                </div>
+              ))}
+            </div> :
+            null
           }
       </div>
     )

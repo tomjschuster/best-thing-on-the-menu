@@ -55,24 +55,20 @@ export const actions = {
 export const actionHandler =  {
 
   // ADD REVIEW
-  [UPDATE_ITEM_NAME]: (state, { name }) => ({ ...state,
-    addReview: { ...state.addReview, itemName: name }
+  [UPDATE_ITEM_NAME]: (state, { name }) => ({
+    ...state, addReview: { ...state.addReview, itemName: name }
   }),
 
-  [UPDATE_STARS]: (state, { stars }) => ({ ...state,
-    addReview: { ...state.addReview,
-      stars
-    }
+  [UPDATE_STARS]: (state, { stars }) => ({
+    ...state, addReview: { ...state.addReview, stars }
   }),
 
-  [UPDATE_COMMENT]: (state, { comment }) => ({ ...state,
-    addReview: { ...state.addReview,
-      comment
-    }
+  [UPDATE_COMMENT]: (state, { comment }) => ({
+    ...state, addReview: { ...state.addReview, comment }
   }),
 
-  [CLEAR_ADD_REVIEW]: (state) => ({ ...state,
-    addReview: { ...initialState.addReview }
+  [CLEAR_ADD_REVIEW]: (state) => ({
+    ...state, addReview: { ...initialState.addReview }
   })
 
 }

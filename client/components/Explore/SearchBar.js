@@ -7,50 +7,31 @@ export default class SearchBar extends Component {
 
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentWillMount() {
-    const { checkGoogleMapsLoaded,
-            google: { googleMapsLoaded }
-          } = this.props
-
-    if (!googleMapsLoaded) {
-      checkGoogleMapsLoaded()
+    if (!this.props.google.googleMapsLoaded) {
+      this.props.checkGoogleMapsLoaded()
     }
   }
 
   componentDidMount() {
-    const { google: { googleMapsLoaded },
-            checkGoogleMapsLoaded,
-            bindGoogleMapsAutocomplete,
-            getAutocompleteInput
-          } = this.props
-    getAutocompleteInput()
+    this.props.getAutocompleteInput()
 
-    if (googleMapsLoaded) {
-      bindGoogleMapsAutocomplete()
+    if (this.props.google.googleMapsLoaded) {
+      this.props.bindGoogleMapsAutocomplete()
     } else {
-      checkGoogleMapsLoaded()
+      this.props.checkGoogleMapsLoaded()
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { google: { googleMapsLoaded, loadAttempts },
-            checkGoogleMapsLoaded,
-            bindGoogleMapsAutocomplete
-          } = this.props
-
-    if (!prevProps.googleMapsLoaded && googleMapsLoaded) {
-      bindGoogleMapsAutocomplete()
+    if (!prevProps.googleMapsLoaded && this.props.google.googleMapsLoaded) {
+      this.props.bindGoogleMapsAutocomplete()
     }
-    if (!googleMapsLoaded && loadAttempts < 10) {
-      setTimeout(checkGoogleMapsLoaded, 500)
+    if (!this.props.google.googleMapsLoaded && this.props.google.loadAttempts < 10) {
+      setTimeout(this.props.checkGoogleMapsLoaded, 500)
     }
   }
 
   render() {
-    const { google: { googleMapsLoaded },
-            getAutocompleteInput,
-            checkGoogleMapsLoaded
-          } = this.props
-
     return (
       <div>
         <div className='input-field'>
@@ -60,18 +41,18 @@ export default class SearchBar extends Component {
             label={'Find a restaurant near Taskstream...'}
             hint=''
             placeholder=''
-            disabled={!googleMapsLoaded}
-            error={googleMapsLoaded ? null : 'Failed to load Google Maps'}
+            disabled={!this.props.google.googleMapsLoaded}
+            error={this.props.google.googleMapsLoaded ? null : 'Failed to load Google Maps'}
           />
         </div>
-        { googleMapsLoaded ?
+        { this.props.google.googleMapsLoaded ?
               null :
               <Button
                 label='Retry'
                 primary
                 raised
                 icon='refresh'
-                onClick={checkGoogleMapsLoaded}
+                onClick={this.props.checkGoogleMapsLoaded}
               />
             }
       </div>

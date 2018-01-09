@@ -8,8 +8,6 @@ import {
 
 
 export default class ExploreWrapper extends Component {
-  _ = () => {}
-
   /*----------  DISPATCH EVENTS  ----------*/
   checkAuth = (onSuccess, onFailure) => this.props.dispatch(
     authActions.checkAuth(onSuccess, onFailure)
@@ -19,8 +17,8 @@ export default class ExploreWrapper extends Component {
     placesActions.getPlaces()
   )
 
-  checkPlaceAndGoToPage = (googleId, name, address) => this.props.dispatch(
-    placesActions.checkPlaceAndGoToPage(googleId, name, address)
+  checkPlaceAndGoToPage = ({ googleId, name, address }) => this.props.dispatch(
+    placesActions.checkPlaceAndGoToPage({ googleId, name, address })
   )
 
   checkGoogleMapsLoaded = () => this.props.dispatch(
@@ -30,25 +28,16 @@ export default class ExploreWrapper extends Component {
 
   /*----------  RENDER  ----------*/
   render() {
-    const { auth, places, google } = this.props
-    const {
-      checkAuth,
-      getPlaces,
-      checkPlaceAndGoToPage,
-      checkGoogleMapsLoaded
-    } = this
-    const props = {
-      auth,
-      places,
-      google,
-      checkAuth,
-      getPlaces,
-      checkPlaceAndGoToPage,
-      checkGoogleMapsLoaded
-    }
-
     return (
-      <Explore {...props} />
+      <Explore
+        auth={this.props.auth}
+        places={this.props.places}
+        google={this.props.google}
+        checkAuth={this.checkAuth}
+        getPlaces={this.getPlaces}
+        checkPlaceAndGoToPage={this.checkPlaceAndGoToPage}
+        checkGoogleMapsLoaded={this.checkGoogleMapsLoaded}
+      />
     )
   }
 }

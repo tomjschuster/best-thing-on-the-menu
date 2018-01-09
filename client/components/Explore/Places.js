@@ -7,20 +7,17 @@ const Places =  ({ places }) => (
   <div>
     <List>
       <ListSubHeader>Featured Places</ListSubHeader>
-        { places.map(({ id, name, address, numItems }) => {
-            return (
-              <div key={ id }>
-                <ListDivider />
-                <ListItem
-                  rightIcon={<FontIcon value='info' />}
-                  caption={ `${name} (${numItems})` }
-                  legend={ address }
-                  onClick={() => history.push(`/places/${id}`)}
-                />
-              </div>
-            )
-          })
-        }
+        {places.map(({ id, name, address, numItems }) => (
+          <div key={ id }>
+            <ListDivider />
+            <ListItem
+              rightIcon={<FontIcon value='info' />}
+              caption={`${name} (${numItems})`}
+              legend={address}
+              onClick={() => history.push(`/places/${id}`)}
+            />
+          </div>
+        ))}
     </List>
   </div>
 )

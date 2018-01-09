@@ -41,16 +41,16 @@ export const actions = {
 /*----------  REDUCER  ----------*/
 export const actionHandler =  {
 
-  [SET_GOOGLE_MAPS_LOADED]: (state, { googleMapsLoaded }) => ({ ...state,
-    googleMapsLoaded
+  [SET_GOOGLE_MAPS_LOADED]: (state, { googleMapsLoaded }) => ({
+    ...state, googleMapsLoaded
   }),
 
-  [ATTEMPT_GOOGLE_MAPS_LOAD]: (state, _) => ({ ...state,
-    loadAttempts: ++state.loadAttempts
+  [ATTEMPT_GOOGLE_MAPS_LOAD]: (state, _) => ({
+    ...state, loadAttempts: ++state.loadAttempts
   }),
 
-  [RESET_GOOGLE_MAPS_LOAD_ATTEMPTS]: (state, _) => ({ ...state,
-    loadAttempts: 0
+  [RESET_GOOGLE_MAPS_LOAD_ATTEMPTS]: (state, _) => ({
+    ...state, loadAttempts: 0
   })
 }
 

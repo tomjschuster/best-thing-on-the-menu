@@ -22,9 +22,9 @@ export const actions = {
 
   // THUNK CREATORS
   checkGoogleMaps: () => dispatch => {
-    const action = window.google ?
-                    actions.clearNoGoogle() :
-                    actions.setNoGoogle()
+    const action =
+      window.google ? actions.clearNoGoogle() : actions.setNoGoogle()
+
     dispatch(action)
   }
 
@@ -35,12 +35,12 @@ export const actions = {
 export const actionHandler =  {
 
   // GOOGLE
-  [SET_NO_GOOGLE_MAPS]: state => ({ ...state,
-    noGoogleMaps: true
+  [SET_NO_GOOGLE_MAPS]: state => ({
+    ...state, noGoogleMaps: true
   }),
 
-  [CLEAR_NO_GOOGLE_MAPS]: state => ({ ...state,
-    noGoogleMaps: false
+  [CLEAR_NO_GOOGLE_MAPS]: state => ({
+    ...state, noGoogleMaps: false
   })
 
 }

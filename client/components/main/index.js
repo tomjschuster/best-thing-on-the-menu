@@ -6,21 +6,19 @@ import Main from './Main'
 
 
 export default class MainWrapper extends Component {
-  _ = () => {}
-
   /*----------  DISPATCH EVENTS  ----------*/
   endSession = () => this.props.dispatch(
     authActions.endSession()
   )
 
-
   render() {
-    const { auth, children } = this.props
-    const { endSession } = this
-    const props = { auth, children, endSession }
-
     return (
-      <Main { ...props } />
+      <Main
+        auth={this.props.auth}
+        endSession={this.endSession}
+      >
+        {this.props.children}
+      </Main>
     )
   }
 }

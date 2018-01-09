@@ -1,13 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 
+const ErrorPage = ({ error }) => (
+  <div>
+    <h1>Error</h1>
+    <p>{error && error.toString()}</p>
+  </div>
+)
 
-export default class ErrorPage extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Error</h1>
-        <p>{this.props.error && this.props.error.toString()}</p>
-      </div>
-    )
-  }
-}
+export default ErrorPage

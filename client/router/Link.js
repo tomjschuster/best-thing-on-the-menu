@@ -4,29 +4,39 @@ import { history } from './index'
 export class Link extends React.Component {
 
   handleClick = (evt) => {
-    const { onClick, replace, to, target } = this.props
-    onClick && onClick(evt)
+    this.props.onClick && this.props.onClick(evt)
 
     if (
       !evt.defaultPrevented &&
       evt.button === 0 &&
-      target &&
+      this.props.target &&
       !!(evt.metaKey || evt.altKey || evt.ctrlKey || evt.shiftKey)
     ) {
 
       event.preventDefault()
-      replace ? history.replace(to) : history.push(to)
+      this.props.replace ?
+        history.replace(this.props.to) :
+        history.push(this.props.to)
 
     }
 
   }
 
   render() {
-    const { replace, to, ...props } = this.props // eslint-disable-line no-unused-vars
+    const { _replace, ...props } = this.props // eslint-disable-line no-unused-vars
 
-    const href = history.createHref( typeof to === 'string' ? { pathname: to } : to )
+    const to =
+      typeof this.props.to === 'string' ?
+        { pathname: this.props.to } :
+        this.props.to
 
-    return <a {...props} onClick={this.handleClick} href={href} />
+    return (
+      <a
+        {...props}
+        onClick={this.handleClick}
+        href={history.createHref(to)}
+      />
+    )
   }
 }
 

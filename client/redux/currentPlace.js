@@ -41,13 +41,14 @@ export const actions = {
   }),
 
   // THUNK CREATORS
-  checkItemAndCreateReview: (placeId, itemName, stars, comment, userId) => dispatch => {
-    post(`/api/reviews/check/item`, { placeId, itemName, stars, comment, userId })
-      .then(() => {
-        dispatch(actions.getPlaceItemsReviews(placeId))
-      })
-      .catch(console.error)
-  },
+  checkItemAndCreateReview: ({ placeId, itemName, stars, comment, userId }) =>
+    dispatch => {
+      post(`/api/reviews/check/item`, { placeId, itemName, stars, comment, userId })
+        .then(() => {
+          dispatch(actions.getPlaceItemsReviews(placeId))
+        })
+        .catch(console.error)
+    },
 
   getPlaceItemsReviews: (placeId) => dispatch => {
     get(`/api/places/${placeId}/reviews`)
@@ -63,7 +64,6 @@ export const actions = {
           }
           dispatch(actions.receiveCurrentPlace(currentPlace))
         } else {
-          console.log(data)
           history.push('/explore')
         }
       })
@@ -85,21 +85,25 @@ export const actionHandler =  {
 
   [CLEAR_CURRENT_PLACE]: () => ({}),
 
-  [ADD_ITEM_TO_CURRENT_PLACE]: (state, { item }) => ({ ...state,
-    items: [ ...state.items, item ]
+  [ADD_ITEM_TO_CURRENT_PLACE]: (state, { item }) => ({
+    ...state, items: [ ...state.items, item ]
   }),
 
-  [ADD_REVIEW_TO_CURRENT_PLACE]: (state, { review }) => ({ ...state,
+  [ADD_REVIEW_TO_CURRENT_PLACE]: (state, { review }) => ({
+    ...state,
     items: state.items.map(item => (
       (item.id === review.itemId) ?
-        { ...item, reviews: [ ...item.reviews, review ] } : item
+        { ...item, reviews: [ ...item.reviews, review ] } :
+        item
     ))
   }),
 
-  [TOGGLE_ITEM_EXPANDED]: (state, { id }) => ({ ...state,
+  [TOGGLE_ITEM_EXPANDED]: (state, { id }) => ({
+    ...state,
     items: state.items.map((item, idx) => (
       (item.id === id) ?
-        { ...item, expanded: !state.items[idx].expanded } : item
+        { ...item, expanded: !state.items[idx].expanded } :
+        item
     ))
   })
 

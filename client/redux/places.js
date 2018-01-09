@@ -24,7 +24,7 @@ export const actions = {
   }),
 
   // THUNK CREATORS
-  checkPlaceAndGoToPage: (googleId, name, address) => () => {
+  checkPlaceAndGoToPage: ({ googleId, name, address }) => () => {
    axios.post('/api/places/check', { googleId, name, address })
       .then(({ data: { created, id } }) => {
           if (created) {
@@ -48,5 +48,4 @@ export const actionHandler =  {
   [ADD_PLACE]: (state, action) => ([ ...state, action.place ])
 }
 
-console.log('exporting from places')
 export default { initialState, actions, actionHandler }
