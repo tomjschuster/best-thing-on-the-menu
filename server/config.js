@@ -6,6 +6,10 @@ const db = {
 }
 
 const procs = {
+  getValidDomains: {
+    inParams: [],
+    outParams: []
+  },
   getHash: {
     inParams: ['email'],
     outParams: []
@@ -16,7 +20,7 @@ const procs = {
   },
   updateUserIfExists: {
     inParams: ['firstName', 'lastName', 'email', 'photoUrl'],
-    outParams: ['newUser']
+    outParams: ['userExists']
   },
   getUserByEmail: {
     inParams: ['email'],

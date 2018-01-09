@@ -1,7 +1,7 @@
 const callMysql = require('./call-mysql')
 
-const taskstreamEmailRegex = /^[A-Z0-9._%+-]+@taskstream.com$/i
-const isTaskstreamEmail = email => taskstreamEmailRegex.test(email)
+const emailRegex = domain => new RegExp('^[A-Z0-9._%+-]+@' + domain + '$', 'i')
+const emailHasValidDomain = (email, domains) =>
+  domains.reduce((acc, x) => acc ||  emailRegex(x.domain).test(email), false)
 
-
-module.exports = { callMysql, isTaskstreamEmail }
+module.exports = { callMysql, emailHasValidDomain }

@@ -30,6 +30,7 @@ const indexHtmlPath = path.join(__dirname, '..', 'public', 'index.html')
 app.get('*', (req, res, next) => res.sendFile(indexHtmlPath))
 
 app.use((err, req, res, next) => {
+  console.log(err)
   res.status(500).send(err.message)
 })
 
