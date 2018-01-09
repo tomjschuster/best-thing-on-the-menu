@@ -1,10 +1,10 @@
 export const autocompleteOptions = {
   types: ['establishment'],
   bounds: {
-    south: 40.734634,
-    north: 40.752200,
-    west: -74.002601,
-    east: -73.981465
+    south: process.env.SOUTH || 40.734634,
+    north: process.env.NORTH || 40.752200,
+    west: process.env.WEST || -74.002601,
+    east: process.env.EAST || -73.981465
   },
   strictBounds: true
 }

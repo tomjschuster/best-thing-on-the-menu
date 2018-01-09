@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
   entry: './client/index.js',
   output: {
@@ -33,5 +35,20 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV:
+          process.env.NODE_ENV ?
+            JSON.stringify(process.env.NODE_ENV) :
+            'production',
+        SOUTH: process.env.SOUTH || 40.734634,
+        NORTH: process.env.NORTH || 40.752200,
+        WEST: process.env.WEST || -74.002601,
+        EAST: process.env.EAST || -73.981465
+      }
+    })
+  ]
 }
+
