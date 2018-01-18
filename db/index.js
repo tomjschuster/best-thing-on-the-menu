@@ -1,7 +1,4 @@
-
 const mysql = require('promise-mysql')
-const { procs } = require('../config')
-const { callMysql } = require('../utilities')
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
@@ -11,6 +8,8 @@ const pool = mysql.createPool({
   multipleStatements: true
 })
 
-const call = callMysql(pool, procs)
+const procs = require('./procs')
+const call = require('./call')(pool, procs)
+
 module.exports = { pool, call }
 

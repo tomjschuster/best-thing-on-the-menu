@@ -58,7 +58,7 @@ class Output extends Array {
   }
 }
 
-const callMysql = (db, config) => {
+module.exports = (db, config) => {
   return new Proxy(config, {
     get: (target, name) => {
       if (!(name in target)) {
@@ -81,7 +81,6 @@ const callMysql = (db, config) => {
 
                   const camelResults = camelProps(results.slice(0, splitIdx))
                   const output = new Output(camelResults)
-                  console.log(output.first)
                   const outParamsResults = results.slice(splitIdx)
                   const outParams = getOutParams(configParams.outParams, outParamsResults)
 
@@ -92,5 +91,3 @@ const callMysql = (db, config) => {
     }
   })
 }
-
-module.exports = callMysql

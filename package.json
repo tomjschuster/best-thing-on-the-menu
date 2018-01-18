@@ -8,7 +8,15 @@
     "start": "node server/index.js",
     "start:dev": "NODE_ENV=development nodemon server/index.js",
     "build": "webpack",
-    "build-watch": "NODE_ENV=development webpack -w"
+    "build-watch": "NODE_ENV=development webpack -w",
+    "db-create": "db-migrate db:create btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
+    "db-drop": "db-migrate db:drop btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
+    "db-up": "db-migrate up  --config './db/database.json' --migrations-dir './db/migrations'",
+    "db-down": "db-migrate reset --config './db/database.json' --migrations-dir './db/migrations'",
+    "db-seed": "db-migrate up  --config './db/database.json' --migrations-dir './db/seeds' --table 'seeds'",
+    "db-reset": "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed",
+    "db-migration-check": "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed && npm run db-down && npm run db-up && npm run db-seed"
+
   },
   "repository": {
     "type": "git",

@@ -3,12 +3,12 @@ const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require( 'passport-google-oauth' ).OAuth2Strategy
 const config = require('./config')
 const { emailHasValidDomain } = require('./utilities')
-const { call } = require('./db')
+const db = require('../db')
 const bcrypt = require('bcrypt')
 
 passport.use(new LocalStrategy({ usernameField: 'email' },
   (email, password, done) => {
-      call.getHash({ email })
+      db.call.getHash({ email })
         .then(({ output }) =>  bcrypt.compare(password, output[0][0].hash))
         .then(authenticated => {
           if (authenticated) {
@@ -39,19 +39,18 @@ passport.use(
     }
 
     // TO DO: Refactor with async
-    if (process.env.VALIDATE_EMAIL) {
-      call.getValidDomains()
+    const validateEmail = JSON.parse(process.env.VALIDATE_EMAIL)
+    if (validateEmail) {
+      db.call.getValidDomains()
         .then(({ output }) => {
           if (emailHasValidDomain(user.email, output[0])) {
-            call.updateOrCreateUser(user)
+            db.call.updateOrCreateUser(user)
               .then(() => {
                 done(null, user)
               })
           } else {
-            console.log('here')
-            call.updateUserIfExists(user)
+            db.call.updateUserIfExists(user)
               .then((x) => {
-                console.log('exists', x)
                 if (x.userExists) {
                   done(null, user)
                 } else {
@@ -59,14 +58,13 @@ passport.use(
                 }
               })
               .catch(err => {
-                console.log('what happened?', err)
                 done(false, null, { message: 'error fetching user'})
               })
           }
         })
         .catch(() => { done(false, null, { message: 'error fetching domains'}) })
     } else {
-      call.updateOrCreateUser(user)
+      db.call.updateOrCreateUser(user)
         .then(() => {
           done(null, user)
         })
@@ -78,13 +76,13 @@ passport.serializeUser((email, done) => {
     done(null, email)
 })
 
-passport.deserializeUser((email, done) => {
+passport.deserializeUser(({ email }, done) => {
   if (email) {
-    call.getUserByEmail({ email })
+    db.call.getUserByEmail({ email })
       .then(({ output }) => {
         if (output[0][0]) {
           const { id, firstName, lastName, isAdmin } = output[0][0]
-          done(null, { id, email, firstName, lastName, isAdmin: !!isAdmin })
+          done(null, { id, email, isAdmin: !!isAdmin })
         } else {
           done(false, null, { message: 'user not found'})
         }
@@ -96,15 +94,3 @@ passport.deserializeUser((email, done) => {
 })
 
 module.exports = passport
-// passport.use(new GoogleStrategy({
-//     clientID:     process.env.GOOGLE_CLIENT_ID,
-//     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//     callbackURL: 'http://yourdormain:3000/auth/google/callback',
-//     passReqToCallback: true
-//   },
-//   (req, accessToken, refreshToken, profile, done) => {
-//     call.findOrCreateUser({ googleId: profile.id })
-//       .then(({ output }) => done(null, output[0][0]))
-//       .catch(done)
-//   })
-// )

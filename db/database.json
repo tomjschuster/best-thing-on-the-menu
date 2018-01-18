@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "driver": "mysql",
+    "host": "localhost",
+    "user": "root",
+    "password": "",
+    "database": "btotm",
+    "multiple-statements": true
+  },
+
+  "prod": {
+    "driver": "mysql",
+    "host": {"ENV": "DB_HOST"},
+    "user": {"ENV": "DB_USER"},
+    "password": {"ENV": "DB_PASSWORD"},
+    "database": {"ENV": "DB_DATABASE"},
+    "multiple-statements": true
+  },
+
+  "localhost": {
+    "driver": "mysql",
+    "host": "localhost",
+    "user": "root",
+    "password": ""
+  }
+}

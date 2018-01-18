@@ -1,11 +1,11 @@
 const router = require('express').Router()
 module.exports = router
-const { call } = require('../db')
+const db = require('../../db')
 
 
 /*----------  CREATE  ----------*/
 router.post('/check/item', (req, res, next) => {
-  call.checkItemAndCreateReview(req.body)
+  db.call.checkItemAndCreateReview({ ...req.body, userId: req.user.id })
     .then(({ newItem, id }) => {
       res.send({ newItem: !!newItem , id})
     })
@@ -13,7 +13,7 @@ router.post('/check/item', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  call.createReview(req.body)
+  db.call.createReview({ ...req.body, userId: req.user.id })
     .then(({ id }) => {
       res.send({ id, created: true })
     })
