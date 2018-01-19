@@ -8,14 +8,7 @@
     "multiple-statements": true
   },
 
-  "prod": {
-    "driver": "mysql",
-    "host": {"ENV": "DB_HOST"},
-    "user": {"ENV": "DB_USER"},
-    "password": {"ENV": "DB_PASSWORD"},
-    "database": {"ENV": "DB_DATABASE"},
-    "multiple-statements": true
-  },
+  "prod": {"ENV": "JAWSDB_MARIA_URL"},
 
   "localhost": {
     "driver": "mysql",
