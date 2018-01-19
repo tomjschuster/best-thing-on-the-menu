@@ -1,17 +1,12 @@
 import { connect } from 'react-redux'
 
-import Main from './Main'
-import Login from './Login'
-import Explore from './Explore'
-import SinglePlace from './SinglePlace'
-import ErrorPage from './ErrorPage'
 
 const components = {
-  Main,
-  Login,
-  Explore,
-  SinglePlace,
-  ErrorPage
+  Main: require('./Main').default,
+  Login: require('./Login').default,
+  Explore: require('./Explore').default,
+  SinglePlace: require('./SinglePlace').default,
+  ErrorPage: require('./ErrorPage').default
 }
 
 export default
