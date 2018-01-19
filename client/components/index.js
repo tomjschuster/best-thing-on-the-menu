@@ -2,11 +2,11 @@ import { connect } from 'react-redux'
 
 
 const components = {
-  Main: require('./Main').default,
-  Login: require('./Login').default,
-  Explore: require('./Explore').default,
-  SinglePlace: require('./SinglePlace').default,
-  ErrorPage: require('./ErrorPage').default
+  Main: require('./Main.js').default,
+  Login: require('./Login.js').default,
+  Explore: require('./Explore.js').default,
+  SinglePlace: require('./SinglePlace.js').default,
+  ErrorPage: require('./ErrorPage.js').default
 }
 
 export default
