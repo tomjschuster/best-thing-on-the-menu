@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
-    "postinstall": "webpack",
+    "postinstall": "webpack --display-error-details",
     "start:dev": "NODE_ENV=development nodemon server/index.js",
     "build": "webpack",
     "build-watch": "NODE_ENV=development webpack -w",
