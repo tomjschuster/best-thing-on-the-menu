@@ -29,6 +29,9 @@
     "url": "https://github.com/tomjschuster/best-thing-on-the-menu/issues"
   },
   "homepage": "https://github.com/tomjschuster/best-thing-on-the-menu#readme",
+  "engines": {
+    "node": "9.4.0"
+  },
   "dependencies": {
     "autoprefixer": "^6.7.7",
     "axios": "^0.16.1",
