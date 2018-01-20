@@ -12,7 +12,7 @@
     "build-watch": "NODE_ENV=development webpack -w",
     "db-create": "db-migrate db:create btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
     "db-drop": "db-migrate db:drop btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
-    "db-up-prod": "db-migrate up --config ./db/database.json --env 'prod'",
+    "db-up-prod": "db-migrate up --config ./db/database.json --migrations-dir ./db/migrations --env prod",
     "db-up": "db-migrate up  --config './db/database.json' --migrations-dir './db/migrations'",
     "db-down": "db-migrate reset --config './db/database.json' --migrations-dir './db/migrations'",
     "db-seed": "db-migrate up  --config './db/database.json' --migrations-dir './db/seeds' --table 'seeds'",
