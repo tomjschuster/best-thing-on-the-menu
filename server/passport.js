@@ -78,6 +78,7 @@ passport.serializeUser((email, done) => {
 })
 
 passport.deserializeUser((email, done) => {
+  console.log('top level deserialize', email)
   if (email) {
     db.call.getUserByEmail({ email })
       .then(({ output }) => {
