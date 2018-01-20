@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js",
-    "postinstall": "npm run db-up-prod && npm run build",
+    "start": "node server",
+    "postinstall": "npm run db-up:prod && npm run build:prod",
     "start:dev": "NODE_ENV=development nodemon server/index.js",
     "build": "webpack",
+    "build:prod": "webpack webpack.prod.config.js",
     "build-watch": "NODE_ENV=development webpack -w",
     "db-create": "db-migrate db:create btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
     "db-drop": "db-migrate db:drop btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
-    "db-up-prod": "db-migrate up --config ./db/database.json --migrations-dir ./db/migrations --env prod",
+    "db-up:prod": "db-migrate up --config ./db/database.json --migrations-dir ./db/migrations --env prod",
     "db-up": "db-migrate up  --config './db/database.json' --migrations-dir './db/migrations'",
     "db-down": "db-migrate reset --config './db/database.json' --migrations-dir './db/migrations'",
     "db-seed": "db-migrate up  --config './db/database.json' --migrations-dir './db/seeds' --table 'seeds'",
@@ -79,6 +80,7 @@
     "redux-thunk": "^2.2.0",
     "snake-case": "^2.1.0",
     "style-loader": "^0.17.0",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^2.5.0"
   },
   "devDependencies": {
