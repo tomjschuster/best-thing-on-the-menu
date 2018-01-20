@@ -29,6 +29,7 @@ passport.use(
       callbackURL: config.auth.GOOGLE_CALLBACK_URL
   },
   (accessToken, refreshToken, profile, done) => {
+    console.log('google done', accessToken, refreshToken, profile)
     const fullProfile = profile._json
     const { name, emails, image } = fullProfile
     const user = {
@@ -38,7 +39,6 @@ passport.use(
       photoUrl: image.isDefault ? null : image.url
     }
 
-    // TO DO: Refactor with async
     const validateEmail = JSON.parse(process.env.VALIDATE_EMAIL)
     if (validateEmail) {
       db.call.getValidDomains()
