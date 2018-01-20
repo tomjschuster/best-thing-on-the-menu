@@ -46,13 +46,13 @@ passport.use(
           if (emailHasValidDomain(user.email, output[0])) {
             db.call.updateOrCreateUser(user)
               .then(() => {
-                done(null, user)
+                done(null, user.email)
               })
           } else {
             db.call.updateUserIfExists(user)
               .then((x) => {
                 if (x.userExists) {
-                  done(null, user)
+                  done(null, user.email)
                 } else {
                   done(null, false, { message: 'invalid email'})
                 }
@@ -66,7 +66,7 @@ passport.use(
     } else {
       db.call.updateOrCreateUser(user)
         .then(() => {
-          done(null, user)
+          done(null, user.email)
         })
     }
   }
@@ -76,11 +76,13 @@ passport.serializeUser((email, done) => {
     done(null, email)
 })
 
-passport.deserializeUser(({ email }, done) => {
+passport.deserializeUser((email, done) => {
   if (email) {
     db.call.getUserByEmail({ email })
       .then(({ output }) => {
+        console.log('deserializing')
         if (output[0][0]) {
+          console.log('here', output[0][0])
           const { id, firstName, lastName, isAdmin } = output[0][0]
           done(null, { id, email, isAdmin: !!isAdmin })
         } else {
