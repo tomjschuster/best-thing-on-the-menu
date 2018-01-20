@@ -29,7 +29,6 @@ passport.use(
       callbackURL: config.auth.GOOGLE_CALLBACK_URL
   },
   (accessToken, refreshToken, profile, done) => {
-    console.log('google done', accessToken, refreshToken, profile)
     const fullProfile = profile._json
     const { name, emails, image } = fullProfile
     const user = {
@@ -64,27 +63,18 @@ passport.use(
         })
         .catch(() => { done(false, null, { message: 'error fetching domains'}) })
     } else {
-      db.call.updateOrCreateUser(user)
-        .then(() => {
-          console.log('updating or creating user', user)
-          done(null, user.email)
-        })
+      db.call.updateOrCreateUser(user).then(() => { done(null, user.email) })
     }
   }
 ))
 
-passport.serializeUser((email, done) => {
-    done(null, email)
-})
+passport.serializeUser((email, done) => { done(null, email) })
 
 passport.deserializeUser((email, done) => {
-  console.log('top level deserialize', email)
   if (email) {
     db.call.getUserByEmail({ email })
       .then(({ output }) => {
-        console.log('deserializing')
         if (output[0][0]) {
-          console.log('here', output[0][0])
           const { id, firstName, lastName, isAdmin } = output[0][0]
           done(null, { id, email, isAdmin: !!isAdmin })
         } else {
