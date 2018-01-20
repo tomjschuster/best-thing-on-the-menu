@@ -18,7 +18,6 @@
     "db-seed": "db-migrate up  --config './db/database.json' --migrations-dir './db/seeds' --table 'seeds'",
     "db-reset": "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed",
     "db-migration-check": "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed && npm run db-down && npm run db-up && npm run db-seed"
-
   },
   "repository": {
     "type": "git",
@@ -38,6 +37,7 @@
     "axios": "^0.16.1",
     "babel": "^6.23.0",
     "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
@@ -48,7 +48,11 @@
     "chalk": "^1.1.3",
     "connect-redis": "^3.3.0",
     "css-loader": "^0.28.1",
+    "db-migrate": "^0.10.2",
     "dotenv": "^4.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-fullstack": "^2.8.1",
+    "eslint-plugin-react": "^6.10.3",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
     "history": "^4.6.1",
@@ -74,11 +78,7 @@
     "redux-thunk": "^2.2.0",
     "snake-case": "^2.1.0",
     "style-loader": "^0.17.0",
-    "webpack": "^2.5.0",
-    "babel-eslint": "^7.2.3",
-    "eslint": "^3.19.0",
-    "eslint-config-fullstack": "^2.8.1",
-    "eslint-plugin-react": "^6.10.3"
+    "webpack": "^2.5.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
