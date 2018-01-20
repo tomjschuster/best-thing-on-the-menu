@@ -66,6 +66,7 @@ passport.use(
     } else {
       db.call.updateOrCreateUser(user)
         .then(() => {
+          console.log('updating or creating user', user)
           done(null, user.email)
         })
     }
