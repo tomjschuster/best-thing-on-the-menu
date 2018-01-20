@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run db-up-prod && node server/index.js",
-    "postinstall": "webpack --display-error-details",
+    "start": "node server/index.js",
+    "postinstall": "npm run db-up-prod && npm run build",
     "start:dev": "NODE_ENV=development nodemon server/index.js",
     "build": "webpack",
     "build-watch": "NODE_ENV=development webpack -w",
@@ -49,6 +49,7 @@
     "connect-redis": "^3.3.0",
     "css-loader": "^0.28.1",
     "db-migrate": "^0.10.2",
+    "db-migrate-mysql": "^1.1.10",
     "dotenv": "^4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-fullstack": "^2.8.1",
