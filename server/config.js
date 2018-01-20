@@ -17,7 +17,7 @@ const cookie = {
 
 const sessionConfig = {
   store: new RedisStore(redisOptions),
-  secret: 'supersecret',
+  secret: process.env.SESSION_SECRET,
   cookie
 }
 
