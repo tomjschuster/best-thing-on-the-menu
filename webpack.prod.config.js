@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: './client/index.js',
@@ -7,7 +8,7 @@ module.exports = {
     filename: './public/app.js'
   },
   context: __dirname,
-  devtool: 'eval',
+  devtool: 'source-map',
   module: {
     loaders: [
       {
@@ -37,6 +38,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new UglifyJsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV:
