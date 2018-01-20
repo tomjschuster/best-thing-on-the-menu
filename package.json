@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "postinstall": "npm run db-up:prod && npm run build:prod",
     "start:prod": "node server",
     "start:dev": "NODE_ENV=development nodemon server/index.js",
     "build": "webpack",
