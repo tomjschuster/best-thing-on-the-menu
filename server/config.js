@@ -8,7 +8,7 @@ const redisOptions = {
 const cookie = {
   httpOnly: true,
   // secure: true, // When https is ready
-  maxAge: 10000
+  maxAge: 1000 * 60 * 5 // 10 minutes
 }
 
 const sessionConfig = {

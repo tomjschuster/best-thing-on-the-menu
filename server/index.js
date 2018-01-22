@@ -10,6 +10,7 @@ const sessionConfig = require('./config').sessionConfig
 
 const app = express()
 const passport = require('./auth/passport')
+const { verifyAuthenticated } = require('./auth/middleware')
 const PORT = process.env.PORT || 3001
 
 app.use(bodyParser.json())
@@ -19,16 +20,8 @@ app.use(bodyParser.json())
    .use(session(sessionConfig))
    .use(passport.initialize())
    .use(passport.session())
-   .use((req, res, next) => {
-    console.log(chalk.grey('isAuthenticated:', !!req.isAuthenticated()))
-    console.log(chalk.magenta('req.user:', JSON.stringify(req.user, 2)))
-    next()
-  })
   .use('/auth', require('./auth'))
-  .use('/api', (req, res, next) => {
-    if (req.isAuthenticated()) next()
-    else res.sendStatus(403)
-    }, require('./api'))
+  .use('/api', verifyAuthenticated, require('./api'))
 
 const indexHtmlPath = path.join(__dirname, '..', 'public', 'index.html')
 
@@ -41,4 +34,4 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () =>
   console.log(chalk.italic.magenta(`Server listening on ${PORT}...`))
-  )
+)

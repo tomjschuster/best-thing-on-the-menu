@@ -5,26 +5,21 @@ const bcrypt = require('bcrypt')
 module.exports = router
 
 /*----------  CREATE  ----------*/
-router.post('/', (req, res, next) => {
-  const hash = bcrypt.hashSync(req.body.password, 9)
-  const isAdmin = false
-  const params = { ...req.body, hash, isAdmin }
+router.post('/user', (req, res, next) => {
+  const { email, password, firstName, lastName, photoUrl = null } = req.body
+  const hash = bcrypt.hashSync(password, 9)
+  const params = {  email, firstName, lastName, photoUrl, hash, isAdmin: false }
   db.call.createUser(params).then(({alreadyExists, id}) => {
     if (alreadyExists) res.status(409).send('User with email already exists')
     else res.status(201).send(String(id))
   })
 })
 
-
 router.post('/local', passport.authenticate('local'), (req, res, next) =>
   res.redirect('/explore')
 )
 
-router.post('/logout', (req, res) => {
-  req.session.destroy(() => {
-    res.send(401)
-  })
-})
+router.post('/logout', (req, res) => req.session.destroy(() => res.send(200)))
 
 
 /*----------  READ  ----------*/

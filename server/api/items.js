@@ -6,9 +6,7 @@ const db = require('../../db')
 router.post('/', (req, res, next) => {
   const { name, placeId } = req.body
   db.call.createItem({ name, placeId })
-    .then(({ id }) => {
-      res.send({ id, created: true })
-    })
+    .then(({ id }) => res.send({ id, created: true }))
     .catch(next)
 })
 
