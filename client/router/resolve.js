@@ -11,37 +11,29 @@ function matchURI(path, uri) {
     }), {})
 }
 
-export const resolve = (routes, context) => {
-  const route = routes.reduce((match, route) => {
+export const resolve = (routes, context, isAuthenticated) => {
+
+  const { route, params } = routes.reduce((match, route) => {
     const uri = context.error ? '/error' : context.pathname
     const params = matchURI(route.path, uri)
-    return !match && params ?
-      new Promise((resolve, reject) => {
-          try {
-            resolve(route.action({ ...context, params }))
-          } catch (e) {
-            reject(e)
-          }
-        }) : match
-  }, null)
+    return !match.route && params ? { route, params } : match
+  }, { route: null, params: {} })
+
   if (route) {
-    return route
+    return new Promise((resolve, reject) => {
+      if (route.isProtected && !isAuthenticated) {
+        reject(Object.assign(new Error('Not authenticated'), { status: 401 }))
+      } else {
+        try {
+          resolve(route.action({ ...context, params }))
+        } catch (e) {
+          reject(e) // Need to handle this differently before production
+        }
+      }
+    })
   }
-  const error = Object.assign(new Error('Not found', { status: 404 }))
+  const error = Object.assign(new Error('Not found'), { status: 404 })
   return Promise.reject(error)
 }
-
-// async function resolve(routes, context) {
-//   for (const route of routes) {
-//     const uri = context.error ? '/error' : context.pathname
-//     const params = matchURI(route.path, uri)
-//     if (!params) continue
-//     const result = await route.action({ ...context, params })
-//     if (result) return result
-//   }
-//   const error = new Error('Not found')
-//   error.status = 404
-//   throw error
-// }
 
 export default resolve

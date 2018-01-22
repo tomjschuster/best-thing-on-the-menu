@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { logOut } from '../utilities/auth'
 
 /*----------  INITIAL STATE  ----------*/
 export const initialState = { isAuthenticated: false }
@@ -53,6 +53,7 @@ export const actions = {
       .post('/auth/logout')
       .then(() => dispatch(actions.signOut()))
       .catch(() => dispatch(actions.signOut()))
+      .then(() => logOut())
   )
 
 }

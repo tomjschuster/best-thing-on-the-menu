@@ -5,22 +5,32 @@ const { Main, Login, Explore, SinglePlace, ErrorPage } = components
 export default [
   {
     path: '/',
-    action: () => <Main><Login /></Main>
+    action: () => <Main><Login /></Main>,
+    isProtected: false
   },
   {
     path: '/login',
-    action: () => <Main><Login /></Main>
+    action: () => <Main><Login /></Main>,
+    isProtected: false
   },
   {
     path: '/explore',
-    action: () => <Main><Explore /></Main>
+    action: () => <Main><Explore /></Main>,
+    isProtected: true
   },
   {
     path: '/places/:id',
-    action: ({ params }) => <Main><SinglePlace params={params} /></Main>
+    action: ({ params }) => <Main><SinglePlace params={params} /></Main>,
+    isProtected: true
   },
   {
     path: '/error',
-    action: ({ error }) => <Main><ErrorPage error={error} /></Main>
+    action: ({ error }) => <Main><ErrorPage title="Error" message={error.message} /></Main>,
+    isProtected: false
+  },
+  {
+    path: '/forbidden',
+    action: () => <Main><ErrorPage title="403 Forbidden" /></Main>,
+    isProtected: true
   }
 ]

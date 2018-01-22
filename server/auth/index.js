@@ -33,8 +33,8 @@ router.get('/check', (req, res) => {
   res.send({ isAuthenticated, isAdmin, email, firstName, lastName })
 })
 
-router.get('/google/callback', passport.authenticate('google',
-    { successRedirect: '/explore', failureRedirect: '/login' }
-))
+const googleConfig = { successRedirect: '/explore', failureRedirect: '/login' }
+router.get('/google/callback', passport.authenticate('google', googleConfig))
 
-router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }))
+const scope = ['email', 'profile']
+router.get('/google', passport.authenticate('google', { scope }))

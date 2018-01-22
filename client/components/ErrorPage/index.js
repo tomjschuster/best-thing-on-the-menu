@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ErrorPage = ({ error }) => (
+const ErrorPage = ({ title, message }) => (
   <div>
-    <h1>Error</h1>
-    <p>{error && error.toString()}</p>
+    <h1>{title}</h1>
+    {message && <p>{message}</p>}
   </div>
 )
 

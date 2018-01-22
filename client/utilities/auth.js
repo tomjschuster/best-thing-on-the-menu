@@ -4,9 +4,11 @@ import { history } from '../router'
 
 export const setupInterceptors = () => {
   axios.interceptors.response.use(res => res, err => {
-    if (err.response.status === 403) {
+    if (err.response.status === 401) {
       store.dispatch(actions.signOut())
       history.replace({ pathname: '/login', state: { loggedOut: true } })
+    } else if (err.response.status === 403) {
+      history.replace({ pathname: '/forbidden' })
     }
     return err
   })

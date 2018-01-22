@@ -3,10 +3,8 @@ import { history } from '../../router'
 
 export default class Login extends Component {
   componentDidMount() {
-    if (!this.props.auth.isAuthenticated) {
-      this.props.checkAuth(() => history.replace('/explore'))
-    } else {
-      history.replace('/explore')
+    if (this.props.auth.isAuthenticated) {
+     history.replace('/explore')
     }
   }
 
