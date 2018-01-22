@@ -6,18 +6,22 @@ const redisOptions = {
 }
 
 const cookie = {
-   expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-   maxAge: 1000 * 60 * 60 * 24
+  httpOnly: true,
+  // secure: true, // When https is ready
+  maxAge: 10000
 }
 
 const sessionConfig = {
   store: new RedisStore(redisOptions),
   secret: process.env.SESSION_SECRET,
+  rolling: true,
+  saveUninitialized: false,
+  resave: false,
   cookie
 }
 
 const auth = {
-  GOOGLE_CALLBACK_URL: '/api/auth/google/callback'
+  GOOGLE_CALLBACK_URL: '/auth/google/callback'
 }
 
 module.exports = { sessionConfig, auth }

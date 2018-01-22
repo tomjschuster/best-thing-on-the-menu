@@ -29,7 +29,7 @@ export const actions = {
   //  THUNK CREATORS
   checkAuth: (onSuccess, onFailure, onError) => dispatch => (
     axios
-      .get('/api/auth/check')
+      .get('/auth/check')
       .then(({ data: { isAdmin, email, firstName, lastName, isAuthenticated} }) => {
         if (isAuthenticated) {
           dispatch(actions.signIn({ isAdmin, email, firstName, lastName }))
@@ -50,7 +50,7 @@ export const actions = {
 
   endSession: () => dispatch => (
     axios
-      .post('/api/auth/logout')
+      .post('/auth/logout')
       .then(() => dispatch(actions.signOut()))
       .catch(() => dispatch(actions.signOut()))
   )

@@ -13,7 +13,7 @@ export default class Login extends Component {
   render() {
     return (
       <div>
-        <a href='/api/auth/google'>
+        <a href='/auth/google'>
           <img src='/assets/btn_google_signin_dark_normal_web@2x.png' />
         </a>
       </div>

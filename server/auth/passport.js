@@ -1,24 +1,20 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require( 'passport-google-oauth' ).OAuth2Strategy
-const config = require('./config')
-const { emailHasValidDomain } = require('./utilities')
-const db = require('../db')
+const config = require('../config')
+const { emailHasValidDomain } = require('../utilities')
+const db = require('../../db')
 const bcrypt = require('bcrypt')
 
 passport.use(new LocalStrategy({ usernameField: 'email' },
   (email, password, done) => {
-      db.call.getHash({ email })
-        .then(({ output }) =>  bcrypt.compare(password, output[0][0].hash))
-        .then(authenticated => {
-          if (authenticated) {
-            done(null, email)
-          } else {
-            done(null, false, { message: 'Invalid email or password.' })
-          }
-        })
-        .catch(done)
-
+    db.call.getHash({ email })
+      .then(({ output : [[ user ]] }) => bcrypt.compare(password, user.hash))
+      .then(authenticated => {
+        if (authenticated) done(null, email)
+        else done(null, false, { message: 'Invalid email or password.' })
+      })
+      .catch(done)
   }
 ))
 
@@ -71,20 +67,12 @@ passport.use(
 passport.serializeUser((email, done) => { done(null, email) })
 
 passport.deserializeUser((email, done) => {
-  if (email) {
-    db.call.getUserByEmail({ email })
-      .then(({ output }) => {
-        if (output[0][0]) {
-          const { id, firstName, lastName, isAdmin } = output[0][0]
-          done(null, { id, email, isAdmin: !!isAdmin })
-        } else {
-          done(false, null, { message: 'user not found'})
-        }
-      })
-      .catch(done)
-  } else {
-    done(false, null, { message: 'no email' })
-  }
+  db.call.getUserByEmail({ email })
+    .then(({ output : [[ user ]] }) => {
+      if (user) done(null, { id: user.id, email, isAdmin: !!user.isAdmin })
+      else done(false, null, { message: 'user not found'})
+    })
+    .catch(done)
 })
 
 module.exports = passport

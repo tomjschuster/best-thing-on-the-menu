@@ -1,4 +1,8 @@
 module.exports = {
+  createUser: {
+    inParams: ['firstName', 'lastName', 'email', 'hash', 'photoUrl', 'isAdmin'],
+    outParams: ['alreadyExists', 'id']
+  },
   getValidDomains: {
     inParams: [],
     outParams: []
