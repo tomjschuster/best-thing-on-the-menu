@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
 /*----------  DELETE  ----------*/
 router.delete('/:itemId', (req, res, next) => {
   const itemId = Number(req.params.itemId)
-  console.log('deleting', itemId)
+
   if (isNaN(itemId)) {
     next("invalid id")
   } else {

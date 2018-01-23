@@ -46,3 +46,17 @@ router.get('/', (req, res, next) => {
     })
     .catch(next)
 })
+
+/*----------  DELETE  ----------*/
+router.delete('/:placeId', (req, res, next) => {
+  const placeId = Number(req.params.placeId)
+
+  if (isNaN(placeId)) {
+    next("invalid id")
+  } else {
+    db.call.deletePlace({ placeId })
+      .then(() => res.send(200))
+      .catch(next)
+  }
+
+})

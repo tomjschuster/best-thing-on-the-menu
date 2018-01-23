@@ -20,3 +20,16 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+/*----------  DELETE  ----------*/
+router.delete('/:reviewId', (req, res, next) => {
+  const reviewId = Number(req.params.reviewId)
+
+  if (isNaN(reviewId)) {
+    next("invalid id")
+  } else {
+    db.call.deleteReview({ reviewId })
+      .then(() => res.send(200))
+      .catch(next)
+  }
+
+})
