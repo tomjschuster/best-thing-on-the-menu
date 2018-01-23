@@ -39,6 +39,10 @@ module.exports = {
     inParams: ['googleId', 'name', 'address'],
     outParams: ['id', 'newPlace']
   },
+  deletePlace: {
+    inParams: ['placeId'],
+    outParams: []
+  },
   createItem: {
     inParams: ['name', 'placeId'],
     outParams: ['id']
