@@ -10,3 +10,16 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
+/*----------  DELETE  ----------*/
+router.delete('/:itemId', (req, res, next) => {
+  const itemId = Number(req.params.itemId)
+  console.log('deleting', itemId)
+  if (isNaN(itemId)) {
+    next("invalid id")
+  } else {
+    db.call.deleteItem({ itemId })
+      .then(() => res.send(200))
+      .catch(next)
+  }
+
+})

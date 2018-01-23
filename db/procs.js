@@ -43,6 +43,10 @@ module.exports = {
     inParams: ['name', 'placeId'],
     outParams: ['id']
   },
+  deleteItem: {
+    inParams: ['itemId'],
+    outParams: []
+  },
   createReview: {
     inParams: ['stars', 'comment', 'itemId', 'userId'],
     outParams: ['id']

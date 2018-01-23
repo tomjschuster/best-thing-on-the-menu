@@ -4,7 +4,7 @@ const mysql = require('promise-mysql')
 const connectionString = process.env.JAWSDB_MARIA_URL
   || 'mysql://root@localhost:3306/btotm'
 
-const paramsString = '?multipleStatements=true&connectionLimit=10'
+const paramsString = '?multipleStatements=true&connectionLimit=10&debug=true'
 
 const pool = mysql.createPool(`${connectionString}${paramsString}`)
 
