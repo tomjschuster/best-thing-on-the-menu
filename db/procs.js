@@ -54,5 +54,9 @@ module.exports = {
   checkItemAndCreateReview: {
     inParams: ['placeId', 'itemName', 'stars', 'comment', 'userId'],
     outParams: ['newItem', 'id']
+  },
+  deleteReview: {
+    inParams: ['reviewId'],
+    outParams: []
   }
 }
