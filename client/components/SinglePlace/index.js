@@ -1,24 +1,15 @@
 import React, { Component } from 'react'
 import SinglePlace from './SinglePlace'
 import {
-  auth as authActions,
   currentPlace as currentPlaceActions,
   forms as formsActions,
   ux as uxActions
 } from '../../redux/actions'
-import { logOut } from '../../utilities/auth'
 
 export default class SinglePlaceWrapper extends Component {
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentDidMount() {
-    if (!this.props.auth.isAuthenticated) {
-      this.checkAuth(
-        () => this.getPlaceItemsReviews(this.props.params.id),
-        logOut
-      )
-    } else {
-      this.getPlaceItemsReviews(this.props.params.id)
-    }
+    this.getPlaceItemsReviews(this.props.params.id)
   }
 
   componentWillUnmount() {
@@ -42,9 +33,6 @@ export default class SinglePlaceWrapper extends Component {
   }
 
   /*----------  DISPATCH EVENTS  ----------*/
-  checkAuth = (onSuccess, onFailure) =>
-    this.props.dispatch(authActions.checkAuth(onSuccess, onFailure))
-
   getPlaceItemsReviews = id =>
     this.props.dispatch(currentPlaceActions.getPlaceItemsReviews(id))
 
@@ -84,17 +72,12 @@ export default class SinglePlaceWrapper extends Component {
   render() {
     return (
       <SinglePlace
-        params={this.props.params}
-        auth={this.props.auth}
-        forms={this.props.forms}
         currentPlace={this.props.currentPlace}
         ux={this.props.ux}
-        checkAuth={this.checkAuth}
-        clearCurrentPlace={this.clearCurrentPlace}
-        checkItemAndCreateReview={this.checkItemAndCreateReview}
+        showAddReview={this.showAddReview}
+        forms={this.props.forms}
         closeAndClearAddReview={this.closeAndClearAddReview}
         toggleItemExpanded={this.toggleItemExpanded}
-        showAddReview={this.showAddReview}
         updateItemName={this.updateItemName}
         updateStars={this.updateStars}
         updateComment={this.updateComment}
