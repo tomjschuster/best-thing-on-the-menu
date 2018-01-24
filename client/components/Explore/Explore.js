@@ -5,7 +5,6 @@ import { autocompleteOptions } from '../../config'
 import { logOut } from '../../utilities/auth'
 
 export default class Explore extends Component {
-
   /*----------  LIFE-CYCLE EVENTS  ----------*/
   componentDidMount() {
     if (!this.props.auth.isAuthenticated) {
@@ -19,19 +18,19 @@ export default class Explore extends Component {
   bindGoogleMapsAutocomplete = () => {
     const input = this.autocompleteInput
 
-      // Bind autocomplete functionality to input field
-      const autocomplete =
-        new window.google.maps.places.Autocomplete(input, autocompleteOptions)
+    // Bind autocomplete functionality to input field
+    const autocomplete = new window.google.maps.places.Autocomplete(
+      input,
+      autocompleteOptions
+    )
 
-      // On select, get google place and go to page
-      autocomplete.addListener('place_changed', () => {
-        const {
-          id: googleId, name, formatted_address: address
-        } = autocomplete.getPlace()
-
-        // Get place id from db, creating if not exists
-        this.props.checkPlaceAndGoToPage({ googleId, name, address })
-      })
+    // On select, get google place and go to page
+    autocomplete.addListener('place_changed', () => {
+      console.log(autocomplete.getPlace())
+      const { id: googleId, name, vicinity: address } = autocomplete.getPlace()
+      // Get place id from db, creating if not exists
+      this.props.checkPlaceAndGoToPage({ googleId, name, address })
+    })
   }
 
   /*----------  NODE REFERENCES  ----------*/
@@ -50,8 +49,10 @@ export default class Explore extends Component {
           bindGoogleMapsAutocomplete={this.bindGoogleMapsAutocomplete}
         />
         <Places
+          isAdmin={this.props.auth.isAdmin}
           places={this.props.places}
           router={this.props.router}
+          deletePlace={this.props.deletePlace}
         />
       </div>
     )

@@ -6,25 +6,22 @@ import {
   google as googleActions
 } from '../../redux/actions'
 
-
 export default class ExploreWrapper extends Component {
   /*----------  DISPATCH EVENTS  ----------*/
-  checkAuth = (onSuccess, onFailure) => this.props.dispatch(
-    authActions.checkAuth(onSuccess, onFailure)
-  )
+  checkAuth = (onSuccess, onFailure) =>
+    this.props.dispatch(authActions.checkAuth(onSuccess, onFailure))
 
-  getPlaces = () => this.props.dispatch(
-    placesActions.getPlaces()
-  )
+  getPlaces = () => this.props.dispatch(placesActions.getPlaces())
 
-  checkPlaceAndGoToPage = ({ googleId, name, address }) => this.props.dispatch(
-    placesActions.checkPlaceAndGoToPage({ googleId, name, address })
-  )
+  checkPlaceAndGoToPage = ({ googleId, name, address }) =>
+    this.props.dispatch(
+      placesActions.checkPlaceAndGoToPage({ googleId, name, address })
+    )
 
-  checkGoogleMapsLoaded = () => this.props.dispatch(
-    googleActions.checkGoogleMapsLoaded()
-  )
+  deletePlace = id => this.props.dispatch(placesActions.deletePlace(id))
 
+  checkGoogleMapsLoaded = () =>
+    this.props.dispatch(googleActions.checkGoogleMapsLoaded())
 
   /*----------  RENDER  ----------*/
   render() {
@@ -36,6 +33,7 @@ export default class ExploreWrapper extends Component {
         checkAuth={this.checkAuth}
         getPlaces={this.getPlaces}
         checkPlaceAndGoToPage={this.checkPlaceAndGoToPage}
+        deletePlace={this.deletePlace}
         checkGoogleMapsLoaded={this.checkGoogleMapsLoaded}
       />
     )
