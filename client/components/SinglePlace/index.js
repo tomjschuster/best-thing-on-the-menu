@@ -6,8 +6,41 @@ import {
   forms as formsActions,
   ux as uxActions
 } from '../../redux/actions'
+import { logOut } from '../../utilities/auth'
 
 export default class SinglePlaceWrapper extends Component {
+  /*----------  LIFE-CYCLE EVENTS  ----------*/
+  componentDidMount() {
+    if (!this.props.auth.isAuthenticated) {
+      this.checkAuth(
+        () => this.getPlaceItemsReviews(this.props.params.id),
+        logOut
+      )
+    } else {
+      this.getPlaceItemsReviews(this.props.params.id)
+    }
+  }
+
+  componentWillUnmount() {
+    this.clearCurrentPlace()
+    this.clearAddReview()
+  }
+
+  /*----------  INSTANCE METHODS  ----------*/
+  onReviewSubmit = () => {
+    const placeId = this.props.currentPlace.id
+    const { stars, comment } = this.props.forms.addReview
+    const userId = this.props.auth.id
+    const itemName = this.props.forms.addReview.itemName.trim()
+
+    const args = { placeId, itemName, stars, comment, userId }
+
+    if (itemName && stars) {
+      this.checkItemAndCreateReview(args)
+      this.closeAndClearAddReview()
+    }
+  }
+
   /*----------  DISPATCH EVENTS  ----------*/
   checkAuth = (onSuccess, onFailure) =>
     this.props.dispatch(authActions.checkAuth(onSuccess, onFailure))
@@ -57,16 +90,15 @@ export default class SinglePlaceWrapper extends Component {
         currentPlace={this.props.currentPlace}
         ux={this.props.ux}
         checkAuth={this.checkAuth}
-        getPlaceItemsReviews={this.getPlaceItemsReviews}
         clearCurrentPlace={this.clearCurrentPlace}
         checkItemAndCreateReview={this.checkItemAndCreateReview}
+        closeAndClearAddReview={this.closeAndClearAddReview}
         toggleItemExpanded={this.toggleItemExpanded}
         showAddReview={this.showAddReview}
         updateItemName={this.updateItemName}
         updateStars={this.updateStars}
         updateComment={this.updateComment}
-        clearAddReview={this.clearAddReview}
-        closeAndClearAddReview={this.closeAndClearAddReview}
+        onReviewSubmit={this.onReviewSubmit}
       />
     )
   }
