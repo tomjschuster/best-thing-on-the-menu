@@ -8,17 +8,19 @@ const Main = ({ auth, endSession, children }) => (
   <Layout>
     <Panel>
       <AppBar
-        title='The Best Thing On The Menu'
-        leftIcon={<FontIcon value='room_service' />}
+        title="The Best Thing On The Menu"
+        leftIcon={<FontIcon value="room_service" />}
         onLeftIconClick={() => auth.isAuthenticated && history.push('/explore')}
-        rightIcon={auth.isAuthenticated ? <FontIcon value='exit_to_app' /> : null}
+        rightIcon={
+          auth.isAuthenticated ? <FontIcon value="exit_to_app" /> : null
+        }
         onRightIconClick={() => endSession()}
       />
       <div style={{ flex: 1, overflowY: 'auto', padding: '0.5rem' }}>
-        <div className='tagline'>
+        <div className="tagline">
           <h4>Taskstream's Lunch Menu Review</h4>
         </div>
-        { children }
+        {children}
       </div>
     </Panel>
   </Layout>
