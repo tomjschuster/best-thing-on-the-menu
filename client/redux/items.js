@@ -5,15 +5,12 @@
 /*----------  INITIAL STATE  ----------*/
 export const initialState = []
 
-
 /*----------  ACTION TYPES  ----------*/
 const RECEIVE_ITEMS = 'RECEIVE_ITEMS'
 const ADD_ITEM = 'ADD_ITEM'
 
-
 /*----------  ACTIONS  ----------*/
 export const actions = {
-
   // ACTION CREATORS
   receiveItems: items => ({
     type: RECEIVE_ITEMS,
@@ -22,17 +19,15 @@ export const actions = {
   addItem: item => ({
     type: ADD_ITEM,
     item
-  }),
+  })
 
   // THUNK CREATORS
-
 }
 
-
 /*----------  REDUCER  ----------*/
-export const actionHandler =  {
-  [RECEIVE_ITEMS]: (state, action) => ([ ...action.items ]),
-  [ADD_ITEM]: (state, action) => ([ ...state, action.item ])
+export const actionHandler = {
+  [RECEIVE_ITEMS]: (state, action) => [...action.items],
+  [ADD_ITEM]: (state, action) => [...state, action.item]
 }
 
 export default { initialState, actionHandler, actions }

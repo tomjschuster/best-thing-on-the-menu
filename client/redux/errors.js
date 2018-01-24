@@ -1,15 +1,12 @@
 /*----------  INITIAL STATE  ----------*/
 export const initialState = { noGoogleMaps: true }
 
-
 /*----------  ACTION TYPES  ----------*/
 const SET_NO_GOOGLE_MAPS = 'SET_NO_GOOGLE_MAPS'
 const CLEAR_NO_GOOGLE_MAPS = 'CLEAR_NO_GOOGLE_MAPS'
 
-
 /*----------  ACTIONS  ----------*/
 export const actions = {
-
   // ACTION CREATORS
   // GOOGLE
   setNoGoogle: () => ({
@@ -22,27 +19,26 @@ export const actions = {
 
   // THUNK CREATORS
   checkGoogleMaps: () => dispatch => {
-    const action =
-      window.google ? actions.clearNoGoogle() : actions.setNoGoogle()
+    const action = window.google
+      ? actions.clearNoGoogle()
+      : actions.setNoGoogle()
 
     dispatch(action)
   }
-
 }
 
-
 /*----------  REDUCER  ----------*/
-export const actionHandler =  {
-
+export const actionHandler = {
   // GOOGLE
   [SET_NO_GOOGLE_MAPS]: state => ({
-    ...state, noGoogleMaps: true
+    ...state,
+    noGoogleMaps: true
   }),
 
   [CLEAR_NO_GOOGLE_MAPS]: state => ({
-    ...state, noGoogleMaps: false
+    ...state,
+    noGoogleMaps: false
   })
-
 }
 
 export default { initialState, actions, actionHandler }

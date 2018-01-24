@@ -5,29 +5,23 @@
 /*----------  INITIAL STATE  ----------*/
 export const initialState = []
 
-
 /*----------  ACTION TYPES  ----------*/
 const RECEIVE_USERS = 'RECEIVE_USERS'
 
-
 /*----------  ACTIONS  ----------*/
 export const actions = {
-
   // ACTION CREATORS
   receiveUsers: users => ({
     type: RECEIVE_USERS,
     users
-  }),
+  })
 
   // THUNK CREATORS
-
 }
-
 
 /*----------  REDUCER  ----------*/
 const actionHandler = {
-  [RECEIVE_USERS]: (state, action) => ([ ...action.users ])
+  [RECEIVE_USERS]: (state, action) => [...action.users]
 }
-
 
 export default { initialState, actions, actionHandler }

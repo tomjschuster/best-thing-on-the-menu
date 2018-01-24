@@ -4,7 +4,6 @@ import { history } from '../router'
 /*----------  INITIAL STATE  ----------*/
 export const initialState = {}
 
-
 /*----------  ACTION TYPES  ----------*/
 const RECEIVE_CURRENT_PLACE = 'RECEIVE_CURRENT_PLACE'
 const CLEAR_CURRENT_PLACE = 'CLEAR_CURRENT_PLACE'
@@ -14,7 +13,6 @@ const TOGGLE_ITEM_EXPANDED = 'TOGGLE_ITEM_EXPANDED'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
-
   // ACTION CREATORS
   receiveCurrentPlace: currentPlace => ({
     type: RECEIVE_CURRENT_PLACE,
@@ -41,16 +39,25 @@ export const actions = {
   }),
 
   // THUNK CREATORS
-  checkItemAndCreateReview: ({ placeId, itemName, stars, comment, userId }) =>
-    dispatch => {
-      post(`/api/reviews/check/item`, { placeId, itemName, stars, comment, userId })
-        .then(() => {
-          dispatch(actions.getPlaceItemsReviews(placeId))
-        })
-        .catch(console.error)
-    },
-
-  getPlaceItemsReviews: (placeId) => dispatch => {
+  checkItemAndCreateReview: ({
+    placeId,
+    itemName,
+    stars,
+    comment,
+    userId
+  }) => dispatch =>
+    post(`/api/reviews/check/item`, {
+      placeId,
+      itemName,
+      stars,
+      comment,
+      userId
+    })
+      .then(() => {
+        dispatch(actions.getPlaceItemsReviews(placeId))
+      })
+      .catch(console.error),
+  getPlaceItemsReviews: placeId => dispatch =>
     get(`/api/places/${placeId}/reviews`)
       .then(({ data }) => {
         const { found, place, items, reviews } = data
@@ -71,14 +78,10 @@ export const actions = {
         console.error(err)
         history.push('/explore')
       })
-  },
-
 }
 
-
 /*----------  REDUCER  ----------*/
-export const actionHandler =  {
-
+export const actionHandler = {
   [RECEIVE_CURRENT_PLACE]: (state, action) => ({
     ...action.currentPlace
   }),
@@ -86,28 +89,29 @@ export const actionHandler =  {
   [CLEAR_CURRENT_PLACE]: () => ({}),
 
   [ADD_ITEM_TO_CURRENT_PLACE]: (state, { item }) => ({
-    ...state, items: [ ...state.items, item ]
+    ...state,
+    items: [...state.items, item]
   }),
 
   [ADD_REVIEW_TO_CURRENT_PLACE]: (state, { review }) => ({
     ...state,
-    items: state.items.map(item => (
-      (item.id === review.itemId) ?
-        { ...item, reviews: [ ...item.reviews, review ] } :
-        item
-    ))
+    items: state.items.map(
+      item =>
+        item.id === review.itemId
+          ? { ...item, reviews: [...item.reviews, review] }
+          : item
+    )
   }),
 
   [TOGGLE_ITEM_EXPANDED]: (state, { id }) => ({
     ...state,
-    items: state.items.map((item, idx) => (
-      (item.id === id) ?
-        { ...item, expanded: !state.items[idx].expanded } :
-        item
-    ))
+    items: state.items.map(
+      (item, idx) =>
+        item.id === id
+          ? { ...item, expanded: !state.items[idx].expanded }
+          : item
+    )
   })
-
 }
-
 
 export default { initialState, actions, actionHandler }
