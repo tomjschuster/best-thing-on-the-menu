@@ -14,17 +14,16 @@ const node = document.getElementById('app')
 const renderComponent = component => {
   ReactDOM.render(
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        { component }
-      </Provider>
+      <Provider store={store}>{component}</Provider>
     </ThemeProvider>,
     node
   )
 }
 
-const render = (location) => {
-  const { auth : { isAuthenticated } } = store.getState()
-  router.resolve(routes, location, isAuthenticated)
+const render = location => {
+  const { auth: { isAuthenticated } } = store.getState()
+  router
+    .resolve(routes, location, isAuthenticated)
     .then(renderComponent)
     .catch(error => {
       if (error.status === 401) {
