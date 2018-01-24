@@ -12,7 +12,7 @@ export default class SinglePlaceWrapper extends Component {
   checkAuth = (onSuccess, onFailure) =>
     this.props.dispatch(authActions.checkAuth(onSuccess, onFailure))
 
-  getPlaceItemsReviews = (id) =>
+  getPlaceItemsReviews = id =>
     this.props.dispatch(currentPlaceActions.getPlaceItemsReviews(id))
 
   clearCurrentPlace = () =>
@@ -21,33 +21,33 @@ export default class SinglePlaceWrapper extends Component {
   checkItemAndCreateReview = ({ placeId, itemName, stars, comment, userId }) =>
     this.props.dispatch(
       currentPlaceActions.checkItemAndCreateReview({
-        placeId, itemName, stars, comment, userId
+        placeId,
+        itemName,
+        stars,
+        comment,
+        userId
       })
     )
 
-  toggleItemExpanded = (id) =>
+  toggleItemExpanded = id =>
     this.props.dispatch(currentPlaceActions.toggleItemExpanded(id))
 
-  showAddReview = () =>
-    this.props.dispatch(uxActions.showAddReview())
+  showAddReview = () => this.props.dispatch(uxActions.showAddReview())
 
-  updateItemName = (name) =>
+  updateItemName = name =>
     this.props.dispatch(formsActions.updateItemName(name))
 
-  updateStars = (stars) =>
-    this.props.dispatch(formsActions.updateStars(stars))
+  updateStars = stars => this.props.dispatch(formsActions.updateStars(stars))
 
-  updateComment = (comment) =>
+  updateComment = comment =>
     this.props.dispatch(formsActions.updateComment(comment))
 
-  clearAddReview = () =>
-    this.props.dispatch(formsActions.clearAddReview())
+  clearAddReview = () => this.props.dispatch(formsActions.clearAddReview())
 
   closeAndClearAddReview = () =>
     this.props.dispatch(formsActions.closeAndClearAddReview())
 
-
-/*----------  RENDER  ----------*/
+  /*----------  RENDER  ----------*/
   render() {
     return (
       <SinglePlace

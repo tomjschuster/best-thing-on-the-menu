@@ -6,31 +6,24 @@ import { ReviewStars } from './RatingStars'
 import Review from './Review'
 import style from './style.css'
 
-
 const Title = ({ name, avgStars, numReviews, onClick }) => (
-  <div
-    className={style.itemTitle}
-    onClick={onClick}
-  >
+  <div className={style.itemTitle} onClick={onClick}>
     <h5>{name}</h5>&nbsp;&nbsp;
-    {numReviews ?
+    {numReviews ? (
       <ReviewStars
         className={style.itemTitleStars}
         starCount={Math.round(avgStars)}
-      /> :
-      null
-    }
+      />
+    ) : null}
     <h5>{`(${numReviews})`}</h5>
   </div>
 )
 
-const calculateAverageStars = (reviews) => (
-  reviews.length > 0 ?
-    reviews
-      .map(({stars}) => stars)
-      .reduce((sum, curr) => sum + curr, 0) / reviews.length :
-    0
-)
+const calculateAverageStars = reviews =>
+  reviews.length > 0
+    ? reviews.map(({ stars }) => stars).reduce((sum, curr) => sum + curr, 0) /
+      reviews.length
+    : 0
 
 const Item = ({ item, toggleItemExpanded }) => (
   <Card key={item.id}>
@@ -45,9 +38,8 @@ const Item = ({ item, toggleItemExpanded }) => (
           }
         />
       }
-
       subtitle={
-        item.reviews.length > 0 ?
+        item.reviews.length > 0 ? (
           <Button
             icon={`keyboard_arrow_${item.expanded ? 'up' : 'down'}`}
             onClick={
@@ -55,22 +47,20 @@ const Item = ({ item, toggleItemExpanded }) => (
             }
             floating
             mini
-          /> :
-          null
+          />
+        ) : null
       }
     />
-    {item.expanded ?
+    {item.expanded ? (
       <CardText>
         {item.reviews.map(review => (
           <div key={review.id} className={style.review}>
-            <Review review={ review } />
+            <Review review={review} />
           </div>
         ))}
-      </CardText> :
-    null
-    }
+      </CardText>
+    ) : null}
   </Card>
 )
-
 
 export default Item
