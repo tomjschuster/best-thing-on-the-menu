@@ -4,12 +4,6 @@ import { history } from './index'
 export class Link extends React.Component {
   handleClick = evt => {
     this.props.onClick && this.props.onClick(evt)
-    console.log(
-      !evt.defaultPrevented,
-      evt.button === 0,
-      this.props.to,
-      !(evt.metaKey || evt.altKey || evt.ctrlKey || evt.shiftKey)
-    )
     if (
       !evt.defaultPrevented &&
       evt.button === 0 &&

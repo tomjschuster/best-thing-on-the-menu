@@ -1,23 +1,29 @@
 import toRegex from 'path-to-regexp'
 
-
 function matchURI(path, uri) {
   const keys = []
   const pattern = toRegex(path, keys)
   const match = pattern.exec(uri)
-  return match === null ? null :
-    match.slice(1).reduce((params, param, idx) => ({
-      ...params, [keys[idx].name]: param
-    }), {})
+  return match === null
+    ? null
+    : match.slice(1).reduce(
+        (params, param, idx) => ({
+          ...params,
+          [keys[idx].name]: param
+        }),
+        {}
+      )
 }
 
 export const resolve = (routes, context, isAuthenticated) => {
-
-  const { route, params } = routes.reduce((match, route) => {
-    const uri = context.error ? '/error' : context.pathname
-    const params = matchURI(route.path, uri)
-    return !match.route && params ? { route, params } : match
-  }, { route: null, params: {} })
+  const { route, params } = routes.reduce(
+    (match, route) => {
+      const uri = context.error ? '/error' : context.pathname
+      const params = matchURI(route.path, uri)
+      return !match.route && params ? { route, params } : match
+    },
+    { route: null, params: {} }
+  )
 
   if (route) {
     return new Promise((resolve, reject) => {
