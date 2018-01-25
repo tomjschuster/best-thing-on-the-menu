@@ -8,19 +8,24 @@ module.exports = router
 router.post('/user', (req, res, next) => {
   const { email, password, firstName, lastName, photoUrl = null } = req.body
   const hash = bcrypt.hashSync(password, 9)
-  const params = {  email, firstName, lastName, photoUrl, hash, isAdmin: false }
-  db.call.createUser(params).then(({alreadyExists, id}) => {
+  const params = { email, firstName, lastName, photoUrl, hash, isAdmin: false }
+  db.call.createUser(params).then(({ alreadyExists, id }) => {
     if (alreadyExists) res.status(409).send('User with email already exists')
     else res.status(201).send(String(id))
   })
 })
 
-router.post('/local', passport.authenticate('local'), (req, res, next) =>
-  res.redirect('/explore')
-)
+router.post('/local', passport.authenticate('local'), (req, res, next) => {
+  const isAuthenticated = req.isAuthenticated()
+
+  const isAdmin = req.user !== undefined ? req.user.isAdmin : false
+  const email = req.user !== undefined ? req.user.email : false
+  const firstName = req.user !== undefined ? req.user.firstName : false
+  const lastName = req.user !== undefined ? req.user.lastName : false
+  res.send({ isAuthenticated, isAdmin, email, firstName, lastName })
+})
 
 router.post('/logout', (req, res) => req.session.destroy(() => res.send(200)))
-
 
 /*----------  READ  ----------*/
 router.get('/check', (req, res) => {

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { logOut } from '../utilities/auth'
+import { actions as formActions } from './forms'
 
 /*----------  INITIAL STATE  ----------*/
 export const initialState = { isAuthenticated: false }
@@ -24,6 +25,23 @@ export const actions = {
   }),
 
   //  THUNK CREATORS
+  signInPassword: (email, password, onSuccess) => dispatch =>
+    axios
+      .post('/auth/local', { email, password })
+      .then(
+        ({
+          data: { isAdmin, email, firstName, lastName, isAuthenticated }
+        }) => {
+          if (isAuthenticated) {
+            dispatch(actions.signIn({ isAdmin, email, firstName, lastName }))
+            return onSuccess && onSuccess()
+          } else {
+            dispatch(formActions.updatePassword(''))
+          }
+        }
+      )
+      .catch(console.error),
+
   checkAuth: (onSuccess, onFailure, onError) => dispatch =>
     axios
       .get('/auth/check')

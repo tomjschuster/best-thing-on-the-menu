@@ -1,10 +1,35 @@
 import React from 'react'
 
-const Login = () => (
+const Login = ({
+  email,
+  password,
+  updateEmail,
+  updatePassword,
+  signInPassword
+}) => (
   <div>
-    <a href="/auth/google">
-      <img src="/assets/btn_google_signin_dark_normal_web@2x.png" />
-    </a>
+    <div>
+      <a href="/auth/google">
+        <img src="/assets/btn_google_signin_light_normal_web.png" />
+      </a>
+    </div>
+    <div>
+      <input
+        placeholder="Email"
+        onChange={updateEmail}
+        value={email}
+        type="email"
+      />
+      <input
+        placeholder="Password"
+        onChange={updatePassword}
+        value={password}
+        type="password"
+      />
+      <button onClick={() => signInPassword(email, password)} type="button">
+        Sign In
+      </button>
+    </div>
   </div>
 )
 

@@ -2,6 +2,10 @@ import { actions as uxActions } from './ux'
 
 /*----------  INITIAL STATE  ----------*/
 export const initialState = {
+  login: {
+    email: '',
+    password: ''
+  },
   addReview: {
     itemName: '',
     stars: null,
@@ -10,6 +14,8 @@ export const initialState = {
 }
 
 /*----------  ACTION TYPES  ----------*/
+const UPDATE_EMAIL = 'UPDATE_EMAIL'
+const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
 const UPDATE_ITEM_NAME = 'UPDATE_ITEM_NAME'
 const UPDATE_STARS = 'UPDATE_STARS'
 const UPDATE_COMMENT = 'UPDATE_COMMENT'
@@ -18,6 +24,15 @@ const CLEAR_ADD_REVIEW = 'CLEAR_ADD_REVIEW'
 /*----------  ACTIONS  ----------*/
 export const actions = {
   // ACTION CREATORS
+  // LOGIN
+  updateEmail: email => ({
+    type: UPDATE_EMAIL,
+    email
+  }),
+  updatePassword: password => ({
+    type: UPDATE_PASSWORD,
+    password
+  }),
   // ADD REVIEW
   updateItemName: name => ({
     type: UPDATE_ITEM_NAME,
@@ -48,6 +63,15 @@ export const actions = {
 
 /*----------  REDUCER  ----------*/
 export const actionHandler = {
+  // LOGIN
+  [UPDATE_EMAIL]: (state, { email }) => ({
+    ...state,
+    login: { ...state.login, email }
+  }),
+  [UPDATE_PASSWORD]: (state, { password }) => ({
+    ...state,
+    login: { ...state.login, password }
+  }),
   // ADD REVIEW
   [UPDATE_ITEM_NAME]: (state, { name }) => ({
     ...state,
