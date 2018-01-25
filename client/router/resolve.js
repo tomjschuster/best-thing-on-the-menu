@@ -1,6 +1,6 @@
 import toRegex from 'path-to-regexp'
 
-function matchURI(path, uri) {
+const matchURI = (path, uri) => {
   const keys = []
   const pattern = toRegex(path, keys)
   const match = pattern.exec(uri)
@@ -15,8 +15,8 @@ function matchURI(path, uri) {
       )
 }
 
-export const resolve = (routes, context, isAuthenticated) => {
-  const { route, params } = routes.reduce(
+const findRoute = (routes, context) =>
+  routes.reduce(
     (match, route) => {
       const uri = context.error ? '/error' : context.pathname
       const params = matchURI(route.path, uri)
@@ -25,21 +25,34 @@ export const resolve = (routes, context, isAuthenticated) => {
     { route: null, params: {} }
   )
 
-  if (route) {
-    return new Promise((resolve, reject) => {
-      if (route.isProtected && !isAuthenticated) {
-        reject(Object.assign(new Error('Not authenticated'), { status: 401 }))
-      } else {
-        try {
-          resolve(route.action({ ...context, params }))
-        } catch (e) {
-          reject(e) // Need to handle this differently before production
-        }
+const statusError = (message, status) =>
+  Object.assign(new Error(message), { status })
+
+export const resolve = (routes, context, state) =>
+  new Promise((resolve, reject) => {
+    const { route, params } = findRoute(routes, context)
+
+    if (route && route.isProtected && !state.auth.isAuthenticated) {
+      reject(statusError('Unauthorized', 401))
+    } else {
+      try {
+        const redirect =
+          route && typeof route.redirect === 'function'
+            ? route.redirect(state)
+            : route && (route.redirect || null)
+
+        const component =
+          route && route.action
+            ? route.action({ ...context, params, state })
+            : null
+
+        redirect || component
+          ? resolve({ redirect, component })
+          : reject(statusError('Not found', 404))
+      } catch (e) {
+        reject(e) // Need to handle this differently before production
       }
-    })
-  }
-  const error = Object.assign(new Error('Not found'), { status: 404 })
-  return Promise.reject(error)
-}
+    }
+  })
 
 export default resolve

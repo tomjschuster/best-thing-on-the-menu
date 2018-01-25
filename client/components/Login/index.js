@@ -1,12 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Login from './Login'
 
-export default class LoginWrapper extends Component {
-  componentWillMount() {
-    if (this.props.isAuthenticated) history.push('/explore')
-  }
+const LoginWrapper = ({ auth }) => <Login auth={auth} />
 
-  render() {
-    return <Login auth={this.props.auth} />
-  }
-}
+export default LoginWrapper

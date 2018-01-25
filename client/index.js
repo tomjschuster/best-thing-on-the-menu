@@ -20,18 +20,20 @@ const renderComponent = component => {
   )
 }
 
+const renderOrRedirect = ({ redirect, component }) =>
+  redirect ? history.push(redirect) : renderComponent(component)
+
 const render = location => {
-  const { auth: { isAuthenticated } } = store.getState()
   router
-    .resolve(routes, location, isAuthenticated)
-    .then(renderComponent)
+    .resolve(routes, location, store.getState())
+    .then(renderOrRedirect)
     .catch(error => {
       if (error.status === 401) {
         history.replace({ pathname: '/login' })
       } else {
         router
-          .resolve(routes, { ...location, error }, isAuthenticated)
-          .then(renderComponent)
+          .resolve(routes, { ...location, error }, store.getState())
+          .then(renderOrRedirect)
       }
     })
 }

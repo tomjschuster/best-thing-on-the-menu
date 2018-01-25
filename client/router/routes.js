@@ -5,15 +5,14 @@ const { Main, Login, Explore, SinglePlace, ErrorPage } = components
 export default [
   {
     path: '/',
-    action: () => (
-      <Main>
-        <Login />
-      </Main>
-    ),
+    redirect: ({ auth: { isAuthenticated } }) =>
+      isAuthenticated ? '/explore' : '/login',
     isProtected: false
   },
   {
     path: '/login',
+    redirect: ({ auth: { isAuthenticated } }) =>
+      isAuthenticated ? '/explore' : null,
     action: () => (
       <Main>
         <Login />
