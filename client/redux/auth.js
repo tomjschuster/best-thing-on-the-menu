@@ -25,14 +25,32 @@ export const actions = {
   }),
 
   //  THUNK CREATORS
-  signInPassword: (email, password, onSuccess) => dispatch =>
-    axios
-      .post('/auth/local', { email, password })
-      .then(({ data: { isAdmin, email, firstName, lastName } }) => {
-        dispatch(actions.signIn({ isAdmin, email, firstName, lastName }))
-        return onSuccess && onSuccess()
-      })
-      .catch(() => dispatch(formActions.updatePassword(''))),
+  signInPassword: (email, password, onSuccess) => dispatch => {
+    if (email === '' && password === '') {
+      dispatch(formActions.updateError('Email and password are required'))
+    } else if (email === '') {
+      dispatch(formActions.updateError('Email is required'))
+    } else if (password === '') {
+      dispatch(formActions.updateError('Password is required'))
+    } else {
+      return axios
+        .post('/auth/local', { email, password })
+        .then(({ data: { isAdmin, email, firstName, lastName } }) => {
+          dispatch(actions.signIn({ isAdmin, email, firstName, lastName }))
+          dispatch(formActions.resetLogin())
+
+          return onSuccess && onSuccess()
+        })
+        .catch(({ response }) => {
+          if (response.status === 401) {
+            dispatch(formActions.updatePassword(''))
+            dispatch(formActions.updateError('Invalid email or password.'))
+          } else {
+            dispatch(formActions.updateError('Server error.'))
+          }
+        })
+    }
+  },
 
   checkAuth: (onSuccess, onFailure, onError) => dispatch =>
     axios

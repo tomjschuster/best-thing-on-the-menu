@@ -4,7 +4,8 @@ import { actions as uxActions } from './ux'
 export const initialState = {
   login: {
     email: '',
-    password: ''
+    password: '',
+    error: null
   },
   addReview: {
     itemName: '',
@@ -16,6 +17,8 @@ export const initialState = {
 /*----------  ACTION TYPES  ----------*/
 const UPDATE_EMAIL = 'UPDATE_EMAIL'
 const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
+const UPDATE_ERROR = 'UPDATE_ERROR'
+const RESET_LOGIN = 'RESET_LOGIN'
 const UPDATE_ITEM_NAME = 'UPDATE_ITEM_NAME'
 const UPDATE_STARS = 'UPDATE_STARS'
 const UPDATE_COMMENT = 'UPDATE_COMMENT'
@@ -29,10 +32,21 @@ export const actions = {
     type: UPDATE_EMAIL,
     email
   }),
+
   updatePassword: password => ({
     type: UPDATE_PASSWORD,
     password
   }),
+
+  updateError: error => ({
+    type: UPDATE_ERROR,
+    error
+  }),
+
+  resetLogin: () => ({
+    type: RESET_LOGIN
+  }),
+
   // ADD REVIEW
   updateItemName: name => ({
     type: UPDATE_ITEM_NAME,
@@ -71,6 +85,14 @@ export const actionHandler = {
   [UPDATE_PASSWORD]: (state, { password }) => ({
     ...state,
     login: { ...state.login, password }
+  }),
+  [UPDATE_ERROR]: (state, { error }) => ({
+    ...state,
+    login: { ...state.login, error }
+  }),
+  [RESET_LOGIN]: (state, _) => ({
+    ...state,
+    login: initialState.login
   }),
   // ADD REVIEW
   [UPDATE_ITEM_NAME]: (state, { name }) => ({

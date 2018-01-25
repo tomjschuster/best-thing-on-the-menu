@@ -3,6 +3,7 @@ import React from 'react'
 const Login = ({
   email,
   password,
+  error,
   updateEmail,
   updatePassword,
   signInPassword
@@ -14,6 +15,7 @@ const Login = ({
       </a>
     </div>
     <div>
+      {error && <p>{error}</p>}
       <input
         placeholder="Email"
         onChange={updateEmail}

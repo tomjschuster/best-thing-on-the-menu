@@ -22,6 +22,7 @@ export default class LoginWrapper extends Component {
       <Login
         email={this.props.forms.login.email}
         password={this.props.forms.login.password}
+        error={this.props.forms.login.error}
         updateEmail={this.updateEmail}
         updatePassword={this.updatePassword}
         signInPassword={this.signInPassword}
