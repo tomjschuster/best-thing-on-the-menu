@@ -28,19 +28,11 @@ export const actions = {
   signInPassword: (email, password, onSuccess) => dispatch =>
     axios
       .post('/auth/local', { email, password })
-      .then(
-        ({
-          data: { isAdmin, email, firstName, lastName, isAuthenticated }
-        }) => {
-          if (isAuthenticated) {
-            dispatch(actions.signIn({ isAdmin, email, firstName, lastName }))
-            return onSuccess && onSuccess()
-          } else {
-            dispatch(formActions.updatePassword(''))
-          }
-        }
-      )
-      .catch(console.error),
+      .then(({ data: { isAdmin, email, firstName, lastName } }) => {
+        dispatch(actions.signIn({ isAdmin, email, firstName, lastName }))
+        return onSuccess && onSuccess()
+      })
+      .catch(() => dispatch(formActions.updatePassword(''))),
 
   checkAuth: (onSuccess, onFailure, onError) => dispatch =>
     axios
