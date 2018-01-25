@@ -10,10 +10,12 @@ export default class LoginWrapper extends Component {
   updatePassword = ({ target: { value: password } }) =>
     this.props.dispatch(formActions.updatePassword(password))
 
-  signInPassword = (email, password) =>
+  signInPassword = () =>
     this.props.dispatch(
-      authActions.signInPassword(email, password, () =>
-        history.push('/explore')
+      authActions.signInPassword(
+        this.props.forms.login.email,
+        this.props.forms.login.password,
+        () => history.push('/explore')
       )
     )
 

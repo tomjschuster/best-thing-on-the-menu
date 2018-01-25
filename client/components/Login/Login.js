@@ -25,10 +25,11 @@ const Login = ({
       <input
         placeholder="Password"
         onChange={updatePassword}
+        onKeyPress={({ key }) => key === 'Enter' && signInPassword()}
         value={password}
         type="password"
       />
-      <button onClick={() => signInPassword(email, password)} type="button">
+      <button onClick={signInPassword} type="button">
         Sign In
       </button>
     </div>
