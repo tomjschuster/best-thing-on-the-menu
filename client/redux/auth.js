@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { logOut } from '../utilities/auth'
+import { validateRequired } from '../utilities/validation'
 import { actions as formActions } from './forms'
 
 /*----------  INITIAL STATE  ----------*/
@@ -26,12 +27,10 @@ export const actions = {
 
   //  THUNK CREATORS
   signInPassword: (email, password, onSuccess) => dispatch => {
-    if (email === '' && password === '') {
-      dispatch(formActions.updateError('Email and password are required'))
-    } else if (email === '') {
-      dispatch(formActions.updateError('Email is required'))
-    } else if (password === '') {
-      dispatch(formActions.updateError('Password is required'))
+    const error = validateRequired({ email, password })
+    if (error) {
+      dispatch(formActions.updatePassword(''))
+      dispatch(formActions.updateError(error))
     } else {
       return axios
         .post('/auth/local', { email, password })
