@@ -19,24 +19,19 @@ const camelProps = value => {
   return value
 }
 
-
 const setParams = (inParams = []) =>
-  inParams
-    .map(param => `SET @${param} = ?; `)
-    .join('')
+  inParams.map(param => `SET @${param} = ?; `).join('')
 
-const callParams = (params) =>
-  params.outParams.concat(params.inParams)
+const callParams = params =>
+  params.outParams
+    .concat(params.inParams)
     .map(param => `@${param}`)
     .join(', ')
 
-const callProc = (name, params) =>
-  `CALL ${name}(${callParams(params)}); `
+const callProc = (name, params) => `CALL ${name}(${callParams(params)}); `
 
 const selectParams = (outParams = []) =>
-  outParams
-    .map(param => `SELECT @${param}; `)
-    .join('')
+  outParams.map(param => `SELECT @${param}; `).join('')
 
 const getOutParams = (params, results) => {
   if (params.length) {
@@ -64,29 +59,36 @@ module.exports = (db, config) => {
       if (!(name in target)) {
         throw Error(`Configuration for stored procedure '${name} not provided.`)
       }
-      return (inParams) => {
+      return inParams => {
         const configParams = target[name]
         const snakeConfigParams = snakeConfig(configParams)
-
 
         const query =
           setParams(snakeConfigParams.inParams) +
           callProc(name, snakeConfigParams) +
           selectParams(snakeConfigParams.outParams)
-        const placeHolderValues = configParams.inParams.map(param => inParams[param])
-        return db.query(query.trim(), placeHolderValues)
-                .then(response => {
-                  const results = response.filter(result => Array.isArray(result))
-                  const splitIdx = results.length - configParams.outParams.length
+        const placeHolderValues = configParams.inParams.map(
+          param => inParams[param]
+        )
+        return db
+          .query(query.trim(), placeHolderValues)
+          .then(response => {
+            const results = response.filter(result => Array.isArray(result))
+            const splitIdx = results.length - configParams.outParams.length
 
-                  const camelResults = camelProps(results.slice(0, splitIdx))
-                  const output = new Output(camelResults)
-                  const outParamsResults = results.slice(splitIdx)
-                  const outParams = getOutParams(configParams.outParams, outParamsResults)
+            const camelResults = camelProps(results.slice(0, splitIdx))
+            const output = new Output(camelResults)
+            const outParamsResults = results.slice(splitIdx)
+            const outParams = getOutParams(
+              configParams.outParams,
+              outParamsResults
+            )
 
-                  return Object.assign({}, { output }, outParams)
-                })
-                .catch(err => { throw err })
+            return Object.assign({}, { output }, outParams)
+          })
+          .catch(err => {
+            throw err
+          })
       }
     }
   })
