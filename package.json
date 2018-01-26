@@ -6,19 +6,30 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "build:prod": "webpack --config webpack.prod.config.js",
-    "start:prod": "node server",
+    "build:prod":
+      "NODE_ENV=development webpack --config webpack.prod.config.js",
+    "start:prod": "NODE_ENV=production node server",
     "build:dev": "webpack",
     "build:dev-watch": "NODE_ENV=development webpack -w",
     "start:dev": "NODE_ENV=development nodemon server --ignore public",
-    "db-create": "db-migrate db:create btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
-    "db-drop": "db-migrate db:drop btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
-    "db-up:prod": "db-migrate up --config ./db/database.json --migrations-dir ./db/migrations --env prod",
-    "db-up": "db-migrate up  --config './db/database.json' --migrations-dir './db/migrations'",
-    "db-down": "db-migrate reset --config './db/database.json' --migrations-dir './db/migrations'",
-    "db-seed": "db-migrate up  --config './db/database.json' --migrations-dir './db/seeds' --table 'seeds'",
-    "db-reset": "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed",
-    "db-migration-check": "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed && npm run db-down && npm run db-up && npm run db-seed"
+    "db-create":
+      "db-migrate db:create btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
+    "db-drop":
+      "db-migrate db:drop btotm --config './db/database.json' --env localhost --migrations-dir './db/migrations'",
+    "db-up:prod":
+      "db-migrate up --config ./db/database.json --migrations-dir ./db/migrations --env prod",
+    "db-down:prod":
+      "db-migrate down --config ./db/database.json --migrations-dir ./db/migrations --env prod",
+    "db-up":
+      "db-migrate up  --config './db/database.json' --migrations-dir './db/migrations'",
+    "db-down":
+      "db-migrate reset --config './db/database.json' --migrations-dir './db/migrations'",
+    "db-seed":
+      "db-migrate up  --config './db/database.json' --migrations-dir './db/seeds' --table 'seeds'",
+    "db-reset":
+      "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed",
+    "db-migration-check":
+      "npm run db-drop && npm run db-create && npm run db-up && npm run db-seed && npm run db-down && npm run db-up && npm run db-seed"
   },
   "repository": {
     "type": "git",
