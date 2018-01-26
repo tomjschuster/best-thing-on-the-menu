@@ -58,7 +58,7 @@ passport.use(
                     done(null, false, { message: 'invalid email' })
                   }
                 })
-                .catch(err => {
+                .catch(() => {
                   done(false, null, { message: 'error fetching user' })
                 })
             }

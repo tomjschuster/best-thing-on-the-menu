@@ -13,13 +13,14 @@ const passport = require('./auth/passport')
 const { verifyAuthenticated } = require('./auth/middleware')
 const PORT = process.env.PORT || 3001
 
-app.use(bodyParser.json())
-   .use(bodyParser.urlencoded({ extended: false }))
-   .use(morgan('dev'))
-   .use(express.static(path.join(__dirname, '..', 'public')))
-   .use(session(sessionConfig))
-   .use(passport.initialize())
-   .use(passport.session())
+app
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: false }))
+  .use(morgan('dev'))
+  .use(express.static(path.join(__dirname, '..', 'public')))
+  .use(session(sessionConfig))
+  .use(passport.initialize())
+  .use(passport.session())
   .use('/auth', require('./auth'))
   .use('/api', verifyAuthenticated, require('./api'))
 
