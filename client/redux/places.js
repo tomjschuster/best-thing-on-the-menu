@@ -8,6 +8,7 @@ export const initialState = []
 const RECEIVE_PLACE = 'RECEIVE_PLACE'
 const ADD_PLACE = 'ADD_PLACE'
 const REMOVE_PLACE = 'REMOVE_PLACE'
+const CLEAR_PLACES = 'CLEAR_PLACES'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
@@ -25,6 +26,10 @@ export const actions = {
   removePlace: id => ({
     type: REMOVE_PLACE,
     id
+  }),
+
+  clearPlaces: () => ({
+    type: CLEAR_PLACES
   }),
 
   // THUNK CREATORS
@@ -54,8 +59,12 @@ export const actions = {
 /*----------  REDUCER  ----------*/
 export const actionHandler = {
   [RECEIVE_PLACE]: (state, action) => [...action.places],
+
   [ADD_PLACE]: (state, action) => [...state, action.place],
-  [REMOVE_PLACE]: (state, action) => state.filter(({ id }) => id !== action.id)
+
+  [REMOVE_PLACE]: (state, action) => state.filter(({ id }) => id !== action.id),
+
+  [CLEAR_PLACES]: () => initialState
 }
 
 export default { initialState, actions, actionHandler }

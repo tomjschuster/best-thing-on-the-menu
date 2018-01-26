@@ -1,3 +1,5 @@
+import { actions as errorActions } from './errors'
+
 /*----------  INITIAL STATE  ----------*/
 export const initialState = { googleMapsLoaded: false, loadAttempts: 0 }
 
@@ -27,6 +29,7 @@ export const actions = {
     if (window.google) {
       dispatch(actions.setGoogleMapsLoaded(true))
       dispatch(actions.resetGoogleMapsLoadAttempts())
+      dispatch(errorActions.clearNoGoogle())
     } else {
       dispatch(actions.attemptGoogleMapsLoad())
     }

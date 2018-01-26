@@ -36,5 +36,4 @@ export const reducers = Object.keys(branches).reduce(
 export default createStore(
   combineReducers(reducers),
   applyMiddleware(createLogger(), thunk)
-  // applyMiddleware(thunk)
 )

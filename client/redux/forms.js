@@ -82,18 +82,22 @@ export const actionHandler = {
     ...state,
     login: { ...state.login, email }
   }),
+
   [UPDATE_PASSWORD]: (state, { password }) => ({
     ...state,
     login: { ...state.login, password }
   }),
+
   [UPDATE_ERROR]: (state, { error }) => ({
     ...state,
     login: { ...state.login, error }
   }),
+
   [RESET_LOGIN]: (state, _) => ({
     ...state,
     login: initialState.login
   }),
+
   // ADD REVIEW
   [UPDATE_ITEM_NAME]: (state, { name }) => ({
     ...state,

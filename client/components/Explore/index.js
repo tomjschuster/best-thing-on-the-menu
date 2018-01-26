@@ -41,6 +41,10 @@ export default class ExploreWrapper extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.clearPlaces()
+  }
+
   /*----------  REFS  ----------*/
   getAutocompleteInput = () => {
     this.autocompleteInput = document.getElementById('autocomplete-search')
@@ -58,6 +62,8 @@ export default class ExploreWrapper extends Component {
     )
 
   deletePlace = id => this.props.dispatch(placesActions.deletePlace(id))
+
+  clearPlaces = () => this.props.dispatch(placesActions.clearPlaces())
 
   checkGoogleMapsLoaded = () =>
     this.props.dispatch(googleActions.checkGoogleMapsLoaded())

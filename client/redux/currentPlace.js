@@ -20,7 +20,7 @@ export const actions = {
   }),
 
   clearCurrentPlace: () => ({
-    type: RECEIVE_CURRENT_PLACE
+    type: CLEAR_CURRENT_PLACE
   }),
 
   addItemToCurrentPlace: item => ({
@@ -57,6 +57,7 @@ export const actions = {
         dispatch(actions.getPlaceItemsReviews(placeId))
       })
       .catch(console.error),
+
   getPlaceItemsReviews: placeId => dispatch =>
     get(`/api/places/${placeId}/reviews`)
       .then(({ data }) => {
@@ -82,11 +83,9 @@ export const actions = {
 
 /*----------  REDUCER  ----------*/
 export const actionHandler = {
-  [RECEIVE_CURRENT_PLACE]: (state, action) => ({
-    ...action.currentPlace
-  }),
+  [RECEIVE_CURRENT_PLACE]: (state, { currentPlace }) => ({ ...currentPlace }),
 
-  [CLEAR_CURRENT_PLACE]: () => ({}),
+  [CLEAR_CURRENT_PLACE]: () => initialState,
 
   [ADD_ITEM_TO_CURRENT_PLACE]: (state, { item }) => ({
     ...state,
