@@ -64,7 +64,7 @@ export const actionHandler = {
 
   [REMOVE_PLACE]: (state, action) => state.filter(({ id }) => id !== action.id),
 
-  [CLEAR_PLACES]: () => initialState
+  [CLEAR_PLACES]: () => [...initialState]
 }
 
 export default { initialState, actions, actionHandler }

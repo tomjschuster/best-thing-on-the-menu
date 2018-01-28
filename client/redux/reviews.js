@@ -11,6 +11,7 @@ const ADD_REVIEW = 'ADD_REVIEW'
 const REMOVE_REVIEW = 'REMOVE_REVIEW'
 const REMOVE_ITEM_REVIEWS = 'REMOVE_ITEM_REVIEWS'
 const REMOVE_PLACE_REVIEWS = 'REMOVE_PLACE_REVIEWS'
+const CLEAR_REVIEWS = 'CLEAR_REVIEWS'
 
 /*----------  ACTIONS  ----------*/
 export const actions = {
@@ -38,6 +39,10 @@ export const actions = {
   removePlaceReviews: placeId => ({
     type: REMOVE_PLACE_REVIEWS,
     placeId
+  }),
+
+  clearReviews: () => ({
+    type: CLEAR_REVIEWS
   })
 
   // THUNK CREATORS
@@ -55,7 +60,9 @@ export const actionHandler = {
     state.filter(x => x.itemId !== itemId),
 
   [REMOVE_PLACE_REVIEWS]: (state, { placeId }) =>
-    state.filter(x => x.placeId !== placeId)
+    state.filter(x => x.placeId !== placeId),
+
+  [CLEAR_REVIEWS]: () => [...initialState]
 }
 
 export default { initialState, actions, actionHandler }
